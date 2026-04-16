@@ -1,4 +1,4 @@
-# AGENTS Book Rules
+# 📚 AGENTS Book Rules
 
 MIT licensed project rules for Codex, Cursor, and Claude Code.
 
@@ -15,7 +15,85 @@ The repository is organized as:
   claude/.claude/rules/<book>.md
 ```
 
-The `_sources/` directory contains source files used to generate the tool-specific variants. It is ignored by Git because the book directories are the intended distributable artifacts.
+## Books
+
+### A Philosophy of Software Design
+
+Author: John Ousterhout
+
+The book focuses on fighting complexity through deep modules, simple interfaces, information hiding, and design choices that reduce cognitive load. This rule set is especially useful for API design, module design, and refactoring shallow abstractions.
+
+### Clean Architecture
+
+Author: Robert C. Martin
+
+The book describes designing systems around stable boundaries, the dependency rule, and the separation of business policies from details such as frameworks, databases, and UI. This rule set helps keep code resistant to technology churn.
+
+### Clean Code
+
+Author: Robert C. Martin
+
+The book focuses on readability, naming, small functions, responsibilities, tests, and simplicity. This rule set is a strong default for everyday coding and code review.
+
+### Code Complete
+
+Author: Steve McConnell
+
+The book covers a broad range of software construction practices: routine design, variables, classes, control flow, defensive programming, coding standards, and testing. This rule set helps agents make disciplined implementation decisions.
+
+### Designing Data-Intensive Applications
+
+Author: Martin Kleppmann
+
+The book covers reliability, scalability, consistency, replication, partitioning, transactions, data streams, and schema evolution. This rule set is intended for systems where data ownership, event flows, and consistency semantics matter.
+
+### Domain-Driven Design
+
+Author: Eric Evans
+
+The book introduces domain modeling, ubiquitous language, bounded contexts, tactical patterns, and strategic design. This rule set helps agents think in terms of the business model rather than tables, controllers, or DTOs.
+
+### Domain-Driven Design Distilled
+
+Author: Vaughn Vernon
+
+The book is a short, practical introduction to DDD. It focuses on subdomains, bounded contexts, context mapping, and basic tactical patterns. This rule set is a good fit when you want the benefits of DDD without excessive ceremony.
+
+### Implementing Domain-Driven Design
+
+Author: Vaughn Vernon
+
+The book shows how to apply DDD in real systems: aggregates, domain events, contexts, integrations, and application architecture. This rule set is more implementation-focused than `domain-driven-design-distilled`.
+
+### Patterns of Enterprise Application Architecture
+
+Author: Martin Fowler
+
+The book catalogues enterprise application patterns: layers, service layer, transaction script, domain model, data mapper, repository, unit of work, identity map, DTO, and integration patterns. This rule set helps choose an appropriate pattern instead of mixing responsibilities accidentally.
+
+### Refactoring
+
+Author: Martin Fowler
+
+The book describes safe ways to improve code structure without changing observable behavior. This rule set emphasizes small steps, tests, code smell detection, and keeping refactoring separate from feature changes.
+
+### Release It!
+
+Author: Michael T. Nygard
+
+The book focuses on systems that survive production reality: failures, overload, timeouts, retries, circuit breakers, bulkheads, backpressure, observability, and deployment behavior. This rule set is useful for services, APIs, queues, integrations, and critical production paths.
+
+### The Pragmatic Programmer
+
+Authors: Andrew Hunt, David Thomas
+
+The book describes a pragmatic approach to software development: responsibility, DRY at the knowledge level, orthogonality, automation, fast feedback, prototyping, and adaptability. This rule set works well as a general engineering layer.
+
+### Working Effectively with Legacy Code
+
+Author: Michael Feathers
+
+The book explains how to safely change difficult, poorly tested code: characterization tests, seams, dependency breaking, sprout method, wrap method, and incremental risk reduction. This rule set is best for legacy work where the first goal is regaining control.
 
 ## Quick Start
 
@@ -139,86 +217,6 @@ A good default is to start with one primary rule set and add a second only when 
 These rules are inspired by the books listed below. They are not official materials from the authors or publishers, and they are not a substitute for reading the books.
 
 The files in this repository are practical engineering instructions written for AI coding tools. They intentionally avoid reproducing book text. Use them as lightweight working agreements, not as summaries or study notes.
-
-## Books
-
-### A Philosophy of Software Design
-
-Author: John Ousterhout
-
-The book focuses on fighting complexity through deep modules, simple interfaces, information hiding, and design choices that reduce cognitive load. This rule set is especially useful for API design, module design, and refactoring shallow abstractions.
-
-### Clean Architecture
-
-Author: Robert C. Martin
-
-The book describes designing systems around stable boundaries, the dependency rule, and the separation of business policies from details such as frameworks, databases, and UI. This rule set helps keep code resistant to technology churn.
-
-### Clean Code
-
-Author: Robert C. Martin
-
-The book focuses on readability, naming, small functions, responsibilities, tests, and simplicity. This rule set is a strong default for everyday coding and code review.
-
-### Code Complete
-
-Author: Steve McConnell
-
-The book covers a broad range of software construction practices: routine design, variables, classes, control flow, defensive programming, coding standards, and testing. This rule set helps agents make disciplined implementation decisions.
-
-### Designing Data-Intensive Applications
-
-Author: Martin Kleppmann
-
-The book covers reliability, scalability, consistency, replication, partitioning, transactions, data streams, and schema evolution. This rule set is intended for systems where data ownership, event flows, and consistency semantics matter.
-
-### Domain-Driven Design
-
-Author: Eric Evans
-
-The book introduces domain modeling, ubiquitous language, bounded contexts, tactical patterns, and strategic design. This rule set helps agents think in terms of the business model rather than tables, controllers, or DTOs.
-
-### Domain-Driven Design Distilled
-
-Author: Vaughn Vernon
-
-The book is a short, practical introduction to DDD. It focuses on subdomains, bounded contexts, context mapping, and basic tactical patterns. This rule set is a good fit when you want the benefits of DDD without excessive ceremony.
-
-### Implementing Domain-Driven Design
-
-Author: Vaughn Vernon
-
-The book shows how to apply DDD in real systems: aggregates, domain events, contexts, integrations, and application architecture. This rule set is more implementation-focused than `domain-driven-design-distilled`.
-
-### Patterns of Enterprise Application Architecture
-
-Author: Martin Fowler
-
-The book catalogues enterprise application patterns: layers, service layer, transaction script, domain model, data mapper, repository, unit of work, identity map, DTO, and integration patterns. This rule set helps choose an appropriate pattern instead of mixing responsibilities accidentally.
-
-### Refactoring
-
-Author: Martin Fowler
-
-The book describes safe ways to improve code structure without changing observable behavior. This rule set emphasizes small steps, tests, code smell detection, and keeping refactoring separate from feature changes.
-
-### Release It!
-
-Author: Michael T. Nygard
-
-The book focuses on systems that survive production reality: failures, overload, timeouts, retries, circuit breakers, bulkheads, backpressure, observability, and deployment behavior. This rule set is useful for services, APIs, queues, integrations, and critical production paths.
-
-### The Pragmatic Programmer
-
-Authors: Andrew Hunt, David Thomas
-
-The book describes a pragmatic approach to software development: responsibility, DRY at the knowledge level, orthogonality, automation, fast feedback, prototyping, and adaptability. This rule set works well as a general engineering layer.
-
-### Working Effectively with Legacy Code
-
-Author: Michael Feathers
-
-The book explains how to safely change difficult, poorly tested code: characterization tests, seams, dependency breaking, sprout method, wrap method, and incremental risk reduction. This rule set is best for legacy work where the first goal is regaining control.
 
 ## Adding a Book
 
