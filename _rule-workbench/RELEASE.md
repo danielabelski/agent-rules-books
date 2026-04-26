@@ -11,8 +11,8 @@ For each book:
 - keep the current canonical full file as-is:
   - `<book>/<book>.md`
 - copy the compressed release files from the workbench into the book directory:
-  - `_rule-workbench/<book>/optimal.md` -> `<book>/<book>.optimal.md`
-  - `_rule-workbench/<book>/minimal.md` -> `<book>/<book>.minimal.md`
+  - `_rule-workbench/<book>/min.md` -> `<book>/<book>.min.md`
+  - `_rule-workbench/<book>/nano.md` -> `<book>/<book>.nano.md`
 
 `traceability.md` and `full.md` stay in `_rule-workbench/` and are not part of the released public surface by default.
 
@@ -22,10 +22,10 @@ For each book:
 
 Before copying anything:
 
-- every book must have `full.md`, `traceability.md`, `optimal.md`, and `minimal.md`
+- every book must have `full.md`, `traceability.md`, `min.md`, and `nano.md`
 - `full.md` must still resolve to the canonical source file
-- `optimal.md` and `minimal.md` must follow the structure from `PROCESS.md`
-- `minimal.md` must stay small enough for always-on use
+- `min.md` and `nano.md` must follow the structure from `PROCESS.md`
+- `nano.md` must stay small enough for always-on use
 - `traceability.md` must map retained rules back to the full source
 
 ### 2. Add or update repository `README.md`
@@ -33,7 +33,7 @@ Before copying anything:
 The repository README must contain a table with:
 
 - one row per book
-- grouped columns for `full`, `optimal`, and `minimal`
+- grouped columns for `full`, `min`, and `nano`
 - for each version:
   - line count
   - rule count
@@ -42,22 +42,22 @@ The repository README must contain a table with:
 
 Recommended columns:
 
-| Book | Full lines | Full rules | Full size | Full file | Optimal lines | Optimal rules | Optimal size | Optimal file | Minimal lines | Minimal rules | Minimal size | Minimal file |
+| Book | Full lines | Full rules | Full size | Full file | Min lines | Min rules | Min size | Min file | Nano lines | Nano rules | Nano size | Nano file |
 | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- |
 
 Recommended link targets:
 
 - full: `<book>/<book>.md`
-- optimal: `<book>/<book>.optimal.md`
-- minimal: `<book>/<book>.minimal.md`
+- min: `<book>/<book>.min.md`
+- nano: `<book>/<book>.nano.md`
 
 ### 3. Copy files into the repository
 
 For each book:
 
 - keep `<book>/<book>.md` unchanged as the full version
-- copy `_rule-workbench/<book>/optimal.md` to `<book>/<book>.optimal.md`
-- copy `_rule-workbench/<book>/minimal.md` to `<book>/<book>.minimal.md`
+- copy `_rule-workbench/<book>/min.md` to `<book>/<book>.min.md`
+- copy `_rule-workbench/<book>/nano.md` to `<book>/<book>.nano.md`
 
 After copying:
 
@@ -94,7 +94,7 @@ Use one deterministic rule-counting convention across all versions:
   - code fences and code examples
   - table rows
 
-For `optimal.md` and `minimal.md`, this corresponds to bullets under:
+For `min.md` and `nano.md`, this corresponds to bullets under:
 
 - `Decision rules`
 - `Trigger rules`
@@ -111,11 +111,11 @@ find _rule-workbench -maxdepth 2 -type f | sort
 ```
 
 ```bash
-wc -l <book>/<book>.md <book>/<book>.optimal.md <book>/<book>.minimal.md
+wc -l <book>/<book>.md <book>/<book>.min.md <book>/<book>.nano.md
 ```
 
 ```bash
-wc -c <book>/<book>.md <book>/<book>.optimal.md <book>/<book>.minimal.md
+wc -c <book>/<book>.md <book>/<book>.min.md <book>/<book>.nano.md
 ```
 
 If you automate README generation later, keep the metric definitions above unchanged so historical releases remain comparable.

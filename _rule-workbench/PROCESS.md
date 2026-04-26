@@ -11,14 +11,14 @@ The compressed versions should preserve the rules that materially change an AI a
 - The canonical full rule set stays in the main book directory.
 - Each workbench directory exposes it as `full.md` via symlink.
 - Do not edit `full.md` in the workbench.
-- `optimal.md` and `minimal.md` must always trace back to the canonical full source through `traceability.md`.
+- `min.md` and `nano.md` must always trace back to the canonical full source through `traceability.md`.
 
 ## Deliverables Per Book
 
 - `full.md`: canonical full source by symlink
 - `traceability.md`: what was kept, merged, or omitted, with references to source sections
-- `optimal.md`: on-demand compressed version
-- `minimal.md`: always-on version for tight context budgets
+- `min.md`: on-demand compressed version
+- `nano.md`: always-on version for tight context budgets
 
 ## Rule Classification
 
@@ -33,7 +33,7 @@ For each source section, classify rules before compressing:
 
 ## Compression Rules
 
-### Build `optimal.md`
+### Build `min.md`
 
 - Keep every `decision-changing`, `conflict-resolver`, and strong `trigger` rule.
 - Remove `default` rules unless they counter a known model failure mode.
@@ -41,7 +41,7 @@ For each source section, classify rules before compressing:
 - Prefer short operational rules over explanatory prose.
 - Convert long review and testing lists into trigger rules and a final checklist.
 
-### Build `minimal.md`
+### Build `nano.md`
 
 - Keep only rules safe for always-on attachment in a constrained context budget.
 - Keep rules that correct known model biases:
@@ -56,14 +56,14 @@ For each source section, classify rules before compressing:
 
 ## Traceability Rules
 
-- Every retained rule in `optimal.md` gets an `O*` id in `traceability.md`.
-- Every retained rule in `minimal.md` gets an `M*` id in `traceability.md`.
+- Every retained rule in `min.md` gets an `M*` id in `traceability.md`.
+- Every retained rule in `nano.md` gets an `N*` id in `traceability.md`.
 - Each id must reference the source section names and current line ranges in `full.md`.
 - Record intentional omissions, especially when whole sections are collapsed into one compressed rule.
 
 ## Preferred Output Shape
 
-Use the same structure for `optimal.md` and `minimal.md`:
+Use the same structure for `min.md` and `nano.md`:
 
 1. title
 2. when to use
@@ -80,8 +80,8 @@ Before considering a book done:
 - each retained rule changes a real agent decision or blocks a known failure mode
 - duplicate guidance is merged
 - long lists are collapsed into triggers or checklist items
-- `minimal.md` can stand alone as an always-on attachment
-- `optimal.md` still preserves the book's unique point of view
+- `nano.md` can stand alone as an always-on attachment
+- `min.md` still preserves the book's unique point of view
 - `traceability.md` explains why anything important was removed or merged
 
 ## Interpretation Heuristics
@@ -91,4 +91,4 @@ Before considering a book done:
 - Keep book-specific biases visible. Compression must not turn all books into the same generic style guide.
 - If a rule matters only while touching a specific hotspot, move it into trigger form.
 - If a rule is obvious but agents still commonly violate it, keep it.
-- When unsure, keep a rule in `optimal.md`; make `minimal.md` stricter.
+- When unsure, keep a rule in `min.md`; make `nano.md` stricter.

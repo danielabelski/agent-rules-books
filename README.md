@@ -12,15 +12,15 @@ For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAG
 Each rule set is released in three tool-agnostic Markdown versions:
 
 - `full`: the canonical complete source
-- `optimal`: the compressed on-demand version
-- `minimal`: the compressed always-on version for tight context budgets
+- `min`: the compressed on-demand version
+- `nano`: the compressed always-on version for tight context budgets
 
 ## Quick Start
 
-- start with one primary rule set in `minimal`
+- start with one primary rule set in `nano`
 - open [USAGE.md](USAGE.md) and follow the setup for Codex, Claude Code, or Cursor
-- keep `minimal` as the always-on base layer
-- switch to `optimal` only when the task needs more book-specific pressure
+- keep `nano` as the always-on base layer
+- switch to `min` only when the task needs more book-specific pressure
 - use `full` for reference, audits, or for deriving narrower scoped rules or skills
 - avoid loading every rule at once
 
@@ -32,21 +32,21 @@ Metrics:
 - `rules`: Markdown list items counted with the deterministic release convention
 - `size`: raw bytes from `wc -c`
 
-| Rule Set | Full lines | Full rules | Full size | Full file | Optimal lines | Optimal rules | Optimal size | Optimal file | Minimal lines | Minimal rules | Minimal size | Minimal file |
+| Rule Set | Full lines | Full rules | Full size | Full file | Min lines | Min rules | Min size | Min file | Nano lines | Nano rules | Nano size | Nano file |
 | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- |
-| [A Philosophy of Software Design](a-philosophy-of-software-design/) | 320 | 151 | 10454 B | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 34 | 16 | 2169 B | [optimal](a-philosophy-of-software-design/a-philosophy-of-software-design.optimal.md) | 29 | 11 | 1032 B | [minimal](a-philosophy-of-software-design/a-philosophy-of-software-design.minimal.md) |
-| [Clean Architecture](clean-architecture/) | 471 | 226 | 14355 B | [full](clean-architecture/clean-architecture.md) | 34 | 16 | 2194 B | [optimal](clean-architecture/clean-architecture.optimal.md) | 29 | 11 | 934 B | [minimal](clean-architecture/clean-architecture.minimal.md) |
-| [Clean Code](clean-code/) | 246 | 173 | 10595 B | [full](clean-code/clean-code.md) | 34 | 16 | 2150 B | [optimal](clean-code/clean-code.optimal.md) | 29 | 11 | 856 B | [minimal](clean-code/clean-code.minimal.md) |
-| [Code Complete](code-complete/) | 288 | 144 | 8563 B | [full](code-complete/code-complete.md) | 33 | 15 | 1709 B | [optimal](code-complete/code-complete.optimal.md) | 29 | 11 | 777 B | [minimal](code-complete/code-complete.minimal.md) |
-| [Designing Data-Intensive Applications](designing-data-intensive-applications/) | 307 | 152 | 9951 B | [full](designing-data-intensive-applications/designing-data-intensive-applications.md) | 33 | 15 | 2090 B | [optimal](designing-data-intensive-applications/designing-data-intensive-applications.optimal.md) | 29 | 11 | 880 B | [minimal](designing-data-intensive-applications/designing-data-intensive-applications.minimal.md) |
-| [Domain-Driven Design](domain-driven-design/) | 986 | 517 | 38304 B | [full](domain-driven-design/domain-driven-design.md) | 34 | 16 | 2210 B | [optimal](domain-driven-design/domain-driven-design.optimal.md) | 30 | 12 | 1024 B | [minimal](domain-driven-design/domain-driven-design.minimal.md) |
-| [Domain-Driven Design Distilled](domain-driven-design-distilled/) | 283 | 136 | 8388 B | [full](domain-driven-design-distilled/domain-driven-design-distilled.md) | 34 | 16 | 1811 B | [optimal](domain-driven-design-distilled/domain-driven-design-distilled.optimal.md) | 29 | 11 | 818 B | [minimal](domain-driven-design-distilled/domain-driven-design-distilled.minimal.md) |
-| [Implementing Domain-Driven Design](implementing-domain-driven-design/) | 316 | 164 | 11249 B | [full](implementing-domain-driven-design/implementing-domain-driven-design.md) | 34 | 16 | 2040 B | [optimal](implementing-domain-driven-design/implementing-domain-driven-design.optimal.md) | 29 | 11 | 1001 B | [minimal](implementing-domain-driven-design/implementing-domain-driven-design.minimal.md) |
-| [Patterns of Enterprise Application Architecture](patterns-of-enterprise-application-architecture/) | 354 | 160 | 11192 B | [full](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.md) | 33 | 15 | 1971 B | [optimal](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.optimal.md) | 29 | 11 | 957 B | [minimal](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.minimal.md) |
-| [Refactoring](refactoring/) | 366 | 177 | 12812 B | [full](refactoring/refactoring.md) | 33 | 15 | 1859 B | [optimal](refactoring/refactoring.optimal.md) | 29 | 11 | 700 B | [minimal](refactoring/refactoring.minimal.md) |
-| [Release It!](release-it/) | 343 | 176 | 10147 B | [full](release-it/release-it.md) | 34 | 16 | 1672 B | [optimal](release-it/release-it.optimal.md) | 30 | 12 | 878 B | [minimal](release-it/release-it.minimal.md) |
-| [The Pragmatic Programmer](the-pragmatic-programmer/) | 303 | 142 | 9572 B | [full](the-pragmatic-programmer/the-pragmatic-programmer.md) | 33 | 15 | 1628 B | [optimal](the-pragmatic-programmer/the-pragmatic-programmer.optimal.md) | 29 | 11 | 770 B | [minimal](the-pragmatic-programmer/the-pragmatic-programmer.minimal.md) |
-| [Working Effectively with Legacy Code](working-effectively-with-legacy-code/) | 331 | 157 | 10497 B | [full](working-effectively-with-legacy-code/working-effectively-with-legacy-code.md) | 33 | 15 | 1718 B | [optimal](working-effectively-with-legacy-code/working-effectively-with-legacy-code.optimal.md) | 29 | 11 | 878 B | [minimal](working-effectively-with-legacy-code/working-effectively-with-legacy-code.minimal.md) |
+| [A Philosophy of Software Design](a-philosophy-of-software-design/) | 320 | 151 | 10454 B | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 34 | 16 | 2165 B | [min](a-philosophy-of-software-design/a-philosophy-of-software-design.min.md) | 29 | 11 | 1029 B | [nano](a-philosophy-of-software-design/a-philosophy-of-software-design.nano.md) |
+| [Clean Architecture](clean-architecture/) | 471 | 226 | 14355 B | [full](clean-architecture/clean-architecture.md) | 34 | 16 | 2190 B | [min](clean-architecture/clean-architecture.min.md) | 29 | 11 | 931 B | [nano](clean-architecture/clean-architecture.nano.md) |
+| [Clean Code](clean-code/) | 246 | 173 | 10595 B | [full](clean-code/clean-code.md) | 34 | 16 | 2146 B | [min](clean-code/clean-code.min.md) | 29 | 11 | 853 B | [nano](clean-code/clean-code.nano.md) |
+| [Code Complete](code-complete/) | 288 | 144 | 8563 B | [full](code-complete/code-complete.md) | 33 | 15 | 1705 B | [min](code-complete/code-complete.min.md) | 29 | 11 | 774 B | [nano](code-complete/code-complete.nano.md) |
+| [Designing Data-Intensive Applications](designing-data-intensive-applications/) | 307 | 152 | 9951 B | [full](designing-data-intensive-applications/designing-data-intensive-applications.md) | 33 | 15 | 2086 B | [min](designing-data-intensive-applications/designing-data-intensive-applications.min.md) | 29 | 11 | 877 B | [nano](designing-data-intensive-applications/designing-data-intensive-applications.nano.md) |
+| [Domain-Driven Design](domain-driven-design/) | 986 | 517 | 38304 B | [full](domain-driven-design/domain-driven-design.md) | 34 | 16 | 2206 B | [min](domain-driven-design/domain-driven-design.min.md) | 30 | 12 | 1021 B | [nano](domain-driven-design/domain-driven-design.nano.md) |
+| [Domain-Driven Design Distilled](domain-driven-design-distilled/) | 283 | 136 | 8388 B | [full](domain-driven-design-distilled/domain-driven-design-distilled.md) | 34 | 16 | 1807 B | [min](domain-driven-design-distilled/domain-driven-design-distilled.min.md) | 29 | 11 | 815 B | [nano](domain-driven-design-distilled/domain-driven-design-distilled.nano.md) |
+| [Implementing Domain-Driven Design](implementing-domain-driven-design/) | 316 | 164 | 11249 B | [full](implementing-domain-driven-design/implementing-domain-driven-design.md) | 34 | 16 | 2036 B | [min](implementing-domain-driven-design/implementing-domain-driven-design.min.md) | 29 | 11 | 998 B | [nano](implementing-domain-driven-design/implementing-domain-driven-design.nano.md) |
+| [Patterns of Enterprise Application Architecture](patterns-of-enterprise-application-architecture/) | 354 | 160 | 11192 B | [full](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.md) | 33 | 15 | 1967 B | [min](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.min.md) | 29 | 11 | 954 B | [nano](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.nano.md) |
+| [Refactoring](refactoring/) | 366 | 177 | 12812 B | [full](refactoring/refactoring.md) | 33 | 15 | 1855 B | [min](refactoring/refactoring.min.md) | 29 | 11 | 697 B | [nano](refactoring/refactoring.nano.md) |
+| [Release It!](release-it/) | 343 | 176 | 10147 B | [full](release-it/release-it.md) | 34 | 16 | 1668 B | [min](release-it/release-it.min.md) | 30 | 12 | 875 B | [nano](release-it/release-it.nano.md) |
+| [The Pragmatic Programmer](the-pragmatic-programmer/) | 303 | 142 | 9572 B | [full](the-pragmatic-programmer/the-pragmatic-programmer.md) | 33 | 15 | 1624 B | [min](the-pragmatic-programmer/the-pragmatic-programmer.min.md) | 29 | 11 | 767 B | [nano](the-pragmatic-programmer/the-pragmatic-programmer.nano.md) |
+| [Working Effectively with Legacy Code](working-effectively-with-legacy-code/) | 331 | 157 | 10497 B | [full](working-effectively-with-legacy-code/working-effectively-with-legacy-code.md) | 33 | 15 | 1714 B | [min](working-effectively-with-legacy-code/working-effectively-with-legacy-code.min.md) | 29 | 11 | 875 B | [nano](working-effectively-with-legacy-code/working-effectively-with-legacy-code.nano.md) |
 
 ## Books
 

@@ -2,8 +2,8 @@
 
 This repository ships three versions of every rule set:
 
-- `minimal`: the always-on version for tight context budgets
-- `optimal`: the stronger on-demand version
+- `nano`: the always-on version for tight context budgets
+- `min`: the stronger on-demand version
 - `full`: the complete reference version
 
 ## Start Here
@@ -11,8 +11,8 @@ This repository ships three versions of every rule set:
 Use the smallest mechanism that still changes the agent's decisions.
 
 - Start with one primary rule set.
-- Use `minimal` as the default always-on layer.
-- Add `optimal` only when the current task needs stronger book-specific pressure.
+- Use `nano` as the default always-on layer.
+- Add `min` only when the current task needs stronger book-specific pressure.
 - Use `full` for audits, one-off deep sessions, or for deriving smaller scoped rules.
 - Prefer scoped, on-demand, or retrieval-based loading over global loading.
 - Treat memories as helpers, not as the canonical source of truth.
@@ -21,17 +21,17 @@ Use the smallest mechanism that still changes the agent's decisions.
 
 | Pattern | Best for | Repo version | Notes |
 | --- | --- | --- | --- |
-| Always-on project rule | Stable defaults that should affect most tasks | `minimal` | Keep this short. |
-| Scoped rule | One directory, file type, or subsystem | `minimal` or `optimal` | Better than inflating the global prompt. |
-| On-demand rule | Refactoring passes, reviews, migrations, reliability work | `optimal` | Invoke only when the task matches. |
-| Skill or command | Multi-step procedures, checklists, workflows with examples | Usually derived from `optimal` | Better than storing procedures in a global rule file. |
+| Always-on project rule | Stable defaults that should affect most tasks | `nano` | Keep this short. |
+| Scoped rule | One directory, file type, or subsystem | `nano` or `min` | Better than inflating the global prompt. |
+| On-demand rule | Refactoring passes, reviews, migrations, reliability work | `min` | Invoke only when the task matches. |
+| Skill or command | Multi-step procedures, checklists, workflows with examples | Usually derived from `min` | Better than storing procedures in a global rule file. |
 | Retrieval or MCP | Large reference material, changing docs, external systems | `full` or source material outside the prompt | Use when the content is too large or too rarely needed for always-on context. |
 
 ## Portable Baseline
 
 If your team uses more than one editor, use a portable baseline:
 
-- Keep one canonical `AGENTS.md` with a single `minimal` rule set.
+- Keep one canonical `AGENTS.md` with a single `nano` rule set.
 - Let Codex read that file directly.
 - Let Claude Code import it from `CLAUDE.md`.
 - Let Cursor either read `AGENTS.md` directly for simple projects or translate the same content into `.cursor/rules` for better scoping.
@@ -55,7 +55,7 @@ This gives you one cross-tool source for the base layer, while still allowing ea
 
 Use Codex in two layers:
 
-1. Put one `minimal` rule set in the always-on project layer.
+1. Put one `nano` rule set in the always-on project layer.
 2. Use skills, nested instructions, or focused sessions for stronger and narrower guidance.
 
 Preferred order:
@@ -68,8 +68,8 @@ Preferred order:
 
 ### Recommended version mapping
 
-- `minimal`: project-wide default in `AGENTS.md` or `model_instructions_file`
-- `optimal`: skill, nested rule file, or temporary focused session
+- `nano`: project-wide default in `AGENTS.md` or `model_instructions_file`
+- `min`: skill, nested rule file, or temporary focused session
 - `full`: reference only
 
 ### Recommended structure
@@ -120,16 +120,16 @@ Preferred order:
 
 1. Keep root `CLAUDE.md` short.
 2. If you want one shared cross-tool base file, put the chosen repo file at `AGENTS.md` and import it from `CLAUDE.md`.
-3. Use one `minimal` rule set for always-on project context.
-4. Use `.claude/rules/` or path-scoped skills for `optimal`.
+3. Use one `nano` rule set for always-on project context.
+4. Use `.claude/rules/` or path-scoped skills for `min`.
 5. Put procedures, large checklists, and long references into skills instead of the root `CLAUDE.md`.
 6. Use `disable-model-invocation: true` for side-effectful manual workflows such as deploy or release flows.
 7. Use subagents or `context: fork` skills when a side task would otherwise flood the main context.
 
 ### Recommended version mapping
 
-- `minimal`: imported from `CLAUDE.md` or written directly into it
-- `optimal`: `.claude/rules/` or `.claude/skills/`
+- `nano`: imported from `CLAUDE.md` or written directly into it
+- `min`: `.claude/rules/` or `.claude/skills/`
 - `full`: reference only, or a narrowly imported file for a specific session
 
 ### Recommended structure
@@ -187,16 +187,16 @@ Cursor's strongest native mechanism is `.cursor/rules`.
 Preferred order:
 
 1. Prefer `.cursor/rules` over `AGENTS.md` for serious use.
-2. Use at most one short `Always` rule for project-wide `minimal` guidance.
-3. Turn `optimal` into `Agent Requested`, `Manual`, or `Auto Attached` rules by topic or path.
+2. Use at most one short `Always` rule for project-wide `nano` guidance.
+3. Turn `min` into `Agent Requested`, `Manual`, or `Auto Attached` rules by topic or path.
 4. Use `@Cursor Rules` when you want explicit on-demand application.
 5. Keep large reference material in attached files, indexed docs, or MCP, not in `Always` rules.
 6. Use root `AGENTS.md` only for simple projects or when you want a portable cross-tool baseline.
 
 ### Recommended version mapping
 
-- `minimal`: short `Always` rule or simple root `AGENTS.md`
-- `optimal`: `Agent Requested`, `Manual`, or `Auto Attached` project rules
+- `nano`: short `Always` rule or simple root `AGENTS.md`
+- `min`: `Agent Requested`, `Manual`, or `Auto Attached` project rules
 - `full`: reference only
 
 ### Recommended structure
@@ -213,7 +213,7 @@ project/
 
 Suggested split:
 
-- `base.mdc`: one short `Always` rule derived from `minimal`
+- `base.mdc`: one short `Always` rule derived from `nano`
 - `payments.mdc`: `Auto Attached` for `payments/**`
 - `refactor.mdc`: `Manual` for explicit refactoring passes
 - `ddd.mdc`: `Agent Requested` for modeling-heavy tasks
@@ -252,8 +252,8 @@ If your team already has a RAG system, keep the long reference material there an
 
 ## Decision Guide
 
-- Need a steady repo-wide bias: use one `minimal` rule set.
-- Need stronger guidance for a specific task: load `optimal` on demand.
+- Need a steady repo-wide bias: use one `nano` rule set.
+- Need stronger guidance for a specific task: load `min` on demand.
 - Need a multi-step workflow: create a skill or command.
 - Need subsystem-specific pressure: use scoped rules or nested files.
 - Need long reference material: use retrieval, indexing, or MCP.
