@@ -20,10 +20,12 @@ Consistency boundaries are more important than convenient object graphs.
 
 - When one transaction wants many aggregates, revisit the invariant.
 - When object graph traversal crosses boundaries, switch to identity plus coordination.
+- When names drift to generic placeholders or one term starts meaning several things in the same context, rename back to the domain language.
 - When context models leak into each other, add translation.
 
 ## Final checklist
 
 - Clear boundary?
+- One term per concept?
 - Clear invariant root?
 - Clear translation?

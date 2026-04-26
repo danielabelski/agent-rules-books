@@ -5,9 +5,9 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun found no new process bug and no new book-specific miss; existing `min.md` and `nano.md` already preserve the book thesis and repeated micro-decisions.
-- `min.md` and `nano.md` stayed unchanged on this rerun.
-- Detailed review, testing, and repeated explanatory prose stay compressed because the operational pressure already survives through context boundaries, aggregate discipline, repository shape, and context integration rules.
+- Manual fix on 2026-04-26 restored ubiquitous-language pressure as an explicit trigger in `min.md` and `nano.md`.
+- This was treated as a book-specific miss, not a `PROCESS.md` change: the source makes naming and one-term-per-concept discipline operational at implementation level.
+- Detailed review, testing, and repeated explanatory prose stay compressed because the operational pressure already survives through context boundaries, aggregate discipline, repository shape, context integration, and now explicit naming pressure.
 
 ## Min mapping
 
@@ -27,10 +27,11 @@ Trigger rules:
 - `M9` When code starts navigating across aggregate internals, replace graph coupling with identity references and coordination. Source: `Aggregate Rules of Thumb` (92-109), `Domain Event Rules` (146-161).
 - `M10` When one context starts reusing another context's terms or model types directly, add translation instead of sharing the model. Source: `Strategic Design Rules` (37-63), `Context Integration Rules` (192-213).
 - `M11` When a repository API starts looking generic and pattern-driven, narrow it back to aggregate needs. Source: `Repository Rules` (130-145).
+- `M12` When names drift to generic technical placeholders or one term starts carrying multiple meanings inside a context, rename back to one domain term per concept across code, tests, commands, events, and repositories. Source: `Ubiquitous Language Rules` (64-77).
 
 Final checklist:
 
-- The checklist restates `M1`, `M3`, `M6`, and `M7` as a final scan rather than introducing new rules.
+- The checklist restates `M1`, `M3`, `M6`, `M7`, and `M12` as a final scan rather than introducing new rules.
 
 ## Nano mapping
 
@@ -47,17 +48,18 @@ Trigger rules:
 - `N6` When one transaction wants many aggregates, revisit the invariant. Source: `Aggregate Rules of Thumb` (78-109).
 - `N7` When object graph traversal crosses boundaries, switch to identity plus coordination. Source: `Aggregate Rules of Thumb` (92-109), `Domain Event Rules` (146-161).
 - `N8` When context models leak into each other, add translation. Source: `Context Integration Rules` (192-213).
+- `N9` When names drift to generic placeholders or one term starts meaning several things in the same context, rename back to the domain language. Source: `Ubiquitous Language Rules` (64-77).
 
 Final checklist:
 
-- The checklist restates `N1`, `N2`, and `N5` as a final scan rather than introducing new rules.
+- The checklist restates `N1`, `N2`, `N5`, and `N9` as a final scan rather than introducing new rules.
 
 ## Section coverage review
 
 - `Purpose` (3-20): framing merged into `When to use`, `Primary bias to correct`, and `M1`-`M3`.
 - `Primary Directive` (21-36): covered by `M1`, `M3`, `M6`, and `M7`.
 - `Strategic Design Rules` (37-63): covered by `M1`, `M2`, and `N1`.
-- `Ubiquitous Language Rules` (64-77): covered by `M1`; standalone wording is intentionally lost because context boundary pressure survives through `M1` and `M7`.
+- `Ubiquitous Language Rules` (64-77): covered by `M12` and `N9`.
 - `Aggregate Rules of Thumb` (78-109): covered by `M3`, `M4`, `M8`, `M9`, `N2`, `N3`, `N6`, and `N7`.
 - `Entity and Value Object Rules` (110-129): covered by `M5`.
 - `Repository Rules` (130-145): covered by `M6`, `M11`, and `N4`.
@@ -68,7 +70,7 @@ Final checklist:
 - `Multi-Tenancy and Identity Discipline` (214-223): covered by `M7`.
 - `Practical Simplicity Rule` (224-237): covered by `M2`.
 - `Code Generation Rules` (238-260): covered by `M1`, `M3`, `M5`, `M6`, and `M7`.
-- `Review Rules` (261-276): covered by `M1`, `M3`, `M6`, and `M7`; collapsed into trigger rules and checklist.
+- `Review Rules` (261-276): covered by `M1`, `M3`, `M6`, `M7`, and `M12`; collapsed into trigger rules and checklist.
 - `Testing Rules` (277-288): covered by `M3`, `M5`, and `M6`; collapsed into trigger rules and checklist.
-- `Review Checklist` (289-306): covered by `M1`, `M3`, `M6`, and `M7`; collapsed into the final checklist.
-- `Final Instruction` (307-316): covered by `M1`, `M3`, `M6`, and `M7`.
+- `Review Checklist` (289-306): covered by `M1`, `M3`, `M6`, `M7`, and `M12`; collapsed into the final checklist.
+- `Final Instruction` (307-316): covered by `M1`, `M3`, `M6`, `M7`, and `M12`.

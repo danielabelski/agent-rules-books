@@ -23,12 +23,14 @@ Do not let object graphs or ORM convenience erase consistency boundaries.
 
 - When a transaction wants to update multiple aggregates synchronously, re-check whether the invariant is truly immediate.
 - When code starts navigating across aggregate internals, replace graph coupling with identity references and coordination.
+- When names drift to generic technical placeholders or one term starts carrying multiple meanings inside a context, rename back to one domain term per concept across code, tests, commands, events, and repositories.
 - When one context starts reusing another context's terms or model types directly, add translation instead of sharing the model.
 - When a repository API starts looking generic and pattern-driven, narrow it back to aggregate needs.
 
 ## Final checklist
 
 - Clear bounded context?
+- One term per concept inside the context?
 - One aggregate per immediate invariant?
 - Cross-context translation explicit?
 - Application services coordinating rather than deciding?

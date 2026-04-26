@@ -5,9 +5,9 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun found no new process bug and no new book-specific miss; current `min.md` and `nano.md` already preserve the book thesis plus repeated construction-level decisions.
-- `min.md` and `nano.md` stayed unchanged on this rerun.
-- Broad comment hygiene, coding-standards prose, and review scaffolding stay compressed because the construction pressure already survives through routine shape, data meaning, defensive programming, and control-flow rules.
+- Manual fix on 2026-04-26 restored explicit comment discipline as a trigger in `min.md` and `nano.md`.
+- This was treated as a book-specific miss, not a `PROCESS.md` change: the source makes comment usefulness and anti-narration behavior operational, not merely stylistic.
+- Broader coding-standards prose and review scaffolding still stay compressed because the main construction pressure survives through routine shape, data meaning, defensive programming, control-flow rules, and now explicit comment discipline.
 
 ## Min mapping
 
@@ -28,10 +28,11 @@ Trigger rules:
 - `M10` When a variable carries units, status, or lifecycle implicitly, turn that meaning into a clearer type, constant, or name. Source: `Variable and Data Rules` (63-78).
 - `M11` When branching grows around a stable mapping, check whether a table or policy object would make the logic more inspectable. Source: `Control Flow Rules` (79-95), `Table-Driven and Data-Driven Rules` (121-129).
 - `M12` When a clever shortcut saves lines but costs inspection effort, prefer the boring form. Source: `Primary Directive` (20-34), `Forbidden Patterns / Cleverness over Clarity` (209-212).
+- `M13` When a comment explains obvious code, rewrite or delete it; keep comments for intent, rationale, contracts, and non-obvious facts. Source: `Comment Rules` (164-172).
 
 Final checklist:
 
-- The checklist restates `M1`, `M3`, `M4`, and `M7` as a final scan rather than introducing new rules.
+- The checklist restates `M1`, `M3`, `M4`, `M7`, and `M13` as a final scan rather than introducing new rules.
 
 ## Nano mapping
 
@@ -50,10 +51,11 @@ Trigger rules:
 - `N8` When a routine mixes several phases, split the concerns. Source: `Routine Design Rules` (45-62).
 - `N9` When branches multiply, consider a table. Source: `Control Flow Rules` (79-95), `Table-Driven and Data-Driven Rules` (121-129).
 - `N10` When a value carries hidden meaning, model it. Source: `Variable and Data Rules` (63-78).
+- `N11` When a comment explains obvious mechanics, rewrite the code or delete the comment. Source: `Comment Rules` (164-172).
 
 Final checklist:
 
-- The checklist restates `N1`, `N3`, `N4`, and `N6` as a final scan rather than introducing new rules.
+- The checklist restates `N1`, `N3`, `N4`, `N6`, and `N11` as a final scan rather than introducing new rules.
 
 ## Section coverage review
 
@@ -69,12 +71,12 @@ Final checklist:
 - `Class and Module Design Rules` (130-143): covered by `M6`.
 - `Complexity Management Rules` (145-154): covered by `M6` and `M7`.
 - `Construction with Preconditions and Postconditions` (155-163): covered by `M4` and `N3`.
-- `Comment Rules` (164-172): covered indirectly by `M1` and `M7`; standalone wording is intentionally lost.
+- `Comment Rules` (164-172): covered by `M13` and `N11`.
 - `Coding Standards Rules` (173-181): covered by `M1` and `M7`; standalone wording is intentionally lost.
 - `Incremental Construction Rules` (182-190): covered by `M7`.
-- `Review Rules` (191-206): covered by `M7`; collapsed into trigger rules and checklist.
+- `Review Rules` (191-206): covered by `M7` and `M13`; collapsed into trigger rules and checklist.
 - `Forbidden Patterns` (207-231): covered by `M1`, `M2`, `M4`, `M7`, `M9`, and `M12`.
 - `Code Generation Rules` (232-251): covered by `M1`-`M6`; standalone prose is intentionally lost.
 - `Testing Rules` (252-260): covered by `M4`, `M7`, `N3`, and `N4`; collapsed into trigger rules and checklist.
-- `Review Checklist` (261-278): covered by `M1`, `M3`, `M4`, and `M7`; collapsed into the final checklist.
+- `Review Checklist` (261-278): covered by `M1`, `M3`, `M4`, `M7`, and `M13`; collapsed into the final checklist.
 - `Final Instruction` (279-288): covered by `M1`, `M4`, `M5`, and `N1`.

@@ -23,10 +23,12 @@ A working implementation can still be structurally careless.
 - When a routine mixes several phases, split the concerns.
 - When branches multiply, consider a table.
 - When a value carries hidden meaning, model it.
+- When a comment explains obvious mechanics, rewrite the code or delete the comment.
 
 ## Final checklist
 
 - Clear?
 - Defended?
 - Readable normal path?
+- Comments purposeful?
 - Explicit?

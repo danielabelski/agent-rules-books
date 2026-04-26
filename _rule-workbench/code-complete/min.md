@@ -27,10 +27,12 @@ Do not let local cleverness outrun construction discipline.
 - When a variable carries units, status, or lifecycle implicitly, turn that meaning into a clearer type, constant, or name.
 - When branching grows around a stable mapping, check whether a table or policy object would make the logic more inspectable.
 - When a clever shortcut saves lines but costs inspection effort, prefer the boring form.
+- When a comment explains obvious code, rewrite or delete it; keep comments for intent, rationale, contracts, and non-obvious facts.
 
 ## Final checklist
 
 - Defect risk lower?
 - Data meaning explicit?
 - Normal path readable?
+- Comments explain something the code should not carry alone?
 - Small reviewable step?
