@@ -1,30 +1,52 @@
-# 📚 AGENTS Book Rules
+# AGENTS Book Rules
 
 ![AGENTS Book Rules](books-ai-rules.png)
 
-MIT licensed project rules for Codex, Cursor, and Claude Code.
+MIT licensed universal project rules for coding agents.
 
-This repository contains ready-to-use project rules for coding agents, based on well-known books about software design, architecture, refactoring, legacy code, reliability, and data-intensive systems.
+This repository contains ready-to-use rule sets inspired by well-known books on software design, architecture, refactoring, legacy code, reliability, and data-intensive systems.
 
-Each set is a practical interpretation of a book's principles as instructions for AI coding tools. The goal is not to replace the books or copy their content. The goal is to make their most important engineering decisions easy to apply during everyday agent-assisted development.
+For constructive criticism from Reddit, see [CRITICISM.md](CRITICISM.md).
+For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAGE.md). It covers always-on vs on-demand usage, skills, scoped rules, MCP or RAG patterns, and the preferred setup for each editor.
 
-The repository is organized as:
+Each rule set is released in three tool-agnostic Markdown versions:
 
-```text
-<book>/
-  codex/AGENTS.md
-  cursor/.cursor/rules/<book>.mdc
-  claude/.claude/rules/<book>.md
-```
+- `full`: the canonical complete source
+- `optimal`: the compressed on-demand version
+- `minimal`: the compressed always-on version for tight context budgets
 
-The repository also includes a synthesized default rule set:
+## Quick Start
 
-```text
-unified-software-engineering/
-  codex/AGENTS.md
-  cursor/.cursor/rules/unified-software-engineering.mdc
-  claude/.claude/rules/unified-software-engineering.md
-```
+- start with one primary rule set in `minimal`
+- open [USAGE.md](USAGE.md) and follow the setup for Codex, Claude Code, or Cursor
+- keep `minimal` as the always-on base layer
+- switch to `optimal` only when the task needs more book-specific pressure
+- use `full` for reference, audits, or for deriving narrower scoped rules or skills
+- avoid loading every rule at once
+
+## Release Matrix
+
+Metrics:
+
+- `lines`: physical line count from `wc -l`
+- `rules`: Markdown list items counted with the deterministic release convention
+- `size`: raw bytes from `wc -c`
+
+| Rule Set | Full lines | Full rules | Full size | Full file | Optimal lines | Optimal rules | Optimal size | Optimal file | Minimal lines | Minimal rules | Minimal size | Minimal file |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- |
+| A Philosophy of Software Design | 320 | 151 | 10454 B | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 34 | 16 | 2169 B | [optimal](a-philosophy-of-software-design/a-philosophy-of-software-design.optimal.md) | 29 | 11 | 1032 B | [minimal](a-philosophy-of-software-design/a-philosophy-of-software-design.minimal.md) |
+| Clean Architecture | 471 | 226 | 14355 B | [full](clean-architecture/clean-architecture.md) | 34 | 16 | 2194 B | [optimal](clean-architecture/clean-architecture.optimal.md) | 29 | 11 | 934 B | [minimal](clean-architecture/clean-architecture.minimal.md) |
+| Clean Code | 246 | 173 | 10595 B | [full](clean-code/clean-code.md) | 34 | 16 | 2150 B | [optimal](clean-code/clean-code.optimal.md) | 29 | 11 | 856 B | [minimal](clean-code/clean-code.minimal.md) |
+| Code Complete | 288 | 144 | 8563 B | [full](code-complete/code-complete.md) | 33 | 15 | 1709 B | [optimal](code-complete/code-complete.optimal.md) | 29 | 11 | 777 B | [minimal](code-complete/code-complete.minimal.md) |
+| Designing Data-Intensive Applications | 307 | 152 | 9951 B | [full](designing-data-intensive-applications/designing-data-intensive-applications.md) | 33 | 15 | 2090 B | [optimal](designing-data-intensive-applications/designing-data-intensive-applications.optimal.md) | 29 | 11 | 880 B | [minimal](designing-data-intensive-applications/designing-data-intensive-applications.minimal.md) |
+| Domain-Driven Design | 986 | 517 | 38304 B | [full](domain-driven-design/domain-driven-design.md) | 34 | 16 | 2210 B | [optimal](domain-driven-design/domain-driven-design.optimal.md) | 30 | 12 | 1024 B | [minimal](domain-driven-design/domain-driven-design.minimal.md) |
+| Domain-Driven Design Distilled | 283 | 136 | 8388 B | [full](domain-driven-design-distilled/domain-driven-design-distilled.md) | 34 | 16 | 1811 B | [optimal](domain-driven-design-distilled/domain-driven-design-distilled.optimal.md) | 29 | 11 | 818 B | [minimal](domain-driven-design-distilled/domain-driven-design-distilled.minimal.md) |
+| Implementing Domain-Driven Design | 316 | 164 | 11249 B | [full](implementing-domain-driven-design/implementing-domain-driven-design.md) | 34 | 16 | 2040 B | [optimal](implementing-domain-driven-design/implementing-domain-driven-design.optimal.md) | 29 | 11 | 1001 B | [minimal](implementing-domain-driven-design/implementing-domain-driven-design.minimal.md) |
+| Patterns of Enterprise Application Architecture | 354 | 160 | 11192 B | [full](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.md) | 33 | 15 | 1971 B | [optimal](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.optimal.md) | 29 | 11 | 957 B | [minimal](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.minimal.md) |
+| Refactoring | 366 | 177 | 12812 B | [full](refactoring/refactoring.md) | 33 | 15 | 1859 B | [optimal](refactoring/refactoring.optimal.md) | 29 | 11 | 700 B | [minimal](refactoring/refactoring.minimal.md) |
+| Release It! | 343 | 176 | 10147 B | [full](release-it/release-it.md) | 34 | 16 | 1672 B | [optimal](release-it/release-it.optimal.md) | 30 | 12 | 878 B | [minimal](release-it/release-it.minimal.md) |
+| The Pragmatic Programmer | 303 | 142 | 9572 B | [full](the-pragmatic-programmer/the-pragmatic-programmer.md) | 33 | 15 | 1628 B | [optimal](the-pragmatic-programmer/the-pragmatic-programmer.optimal.md) | 29 | 11 | 770 B | [minimal](the-pragmatic-programmer/the-pragmatic-programmer.minimal.md) |
+| Working Effectively with Legacy Code | 331 | 157 | 10497 B | [full](working-effectively-with-legacy-code/working-effectively-with-legacy-code.md) | 33 | 15 | 1718 B | [optimal](working-effectively-with-legacy-code/working-effectively-with-legacy-code.optimal.md) | 29 | 11 | 878 B | [minimal](working-effectively-with-legacy-code/working-effectively-with-legacy-code.minimal.md) |
 
 ## Books
 
@@ -106,29 +128,12 @@ Author: Michael Feathers
 
 The book explains how to safely change difficult, poorly tested code: characterization tests, seams, dependency breaking, sprout method, wrap method, and incremental risk reduction. This rule set is best for legacy work where the first goal is regaining control.
 
-## Unified Rule Set
-
-`unified-software-engineering` is a synthesized rule set that combines the unique principles from all supported books into one coherent agent instruction file.
-
-It is not a concatenation of the book-specific rules. Repeated guidance is merged, and apparent conflicts are resolved through context-specific decision rules. For example, it tells the agent when a simple transaction script is enough, when richer domain modeling is justified, when production resilience matters more than ideal-path elegance, and how to preserve behavior during refactoring.
-
-Use it when you want one broad default for general engineering work. Do not usually enable it together with every individual book rule set; that duplicates context and can make the agent less consistent. If a task needs a strong specialized lens, use `unified-software-engineering` alone or pair it with one focused rule set such as `release-it`, `refactoring`, or `working-effectively-with-legacy-code`.
-
 ## Choosing Rules
 
-Do not enable all rules at once.
-
-Reasons:
-
-- they consume model context
-- they may repeat the same ideas in different words
-- they may have different priorities depending on the work
-- the agent may follow an overly broad or inconsistent instruction set less reliably
-- some books are situational, for example `Release It!` is critical for production systems but should not necessarily steer every simple UI change
+For criticism and caveats about combining rule sets, see [CRITICISM.md](CRITICISM.md).
 
 Choose rules based on the task:
 
-- broad default: `unified-software-engineering`
 - everyday code quality: `clean-code`, `code-complete`
 - architecture and boundaries: `clean-architecture`, `domain-driven-design`, `patterns-of-enterprise-application-architecture`
 - domain modeling: `domain-driven-design`, `domain-driven-design-distilled`, `implementing-domain-driven-design`
@@ -136,81 +141,7 @@ Choose rules based on the task:
 - legacy code: `working-effectively-with-legacy-code`, optionally `refactoring`
 - production systems: `release-it`
 - data systems: `designing-data-intensive-applications`
-- general engineering style: `the-pragmatic-programmer`
-
-A good default is to start with one primary rule set and add a second only when it materially changes the agent's decisions. For a specific task, you can temporarily copy a rule into the project, use it during the work, then remove or disable it.
-
-## Repository Layout
-
-Each book directory contains the same three tool-specific variants:
-
-```text
-clean-code/
-  codex/
-    AGENTS.md
-  cursor/
-    .cursor/
-      rules/
-        clean-code.mdc
-  claude/
-    .claude/
-      rules/
-        clean-code.md
-```
-
-The naming convention is lowercase kebab-case:
-
-```text
-working-effectively-with-legacy-code/
-designing-data-intensive-applications/
-patterns-of-enterprise-application-architecture/
-```
-
-## Supported Tools
-
-### Codex
-
-Convention: `AGENTS.md`
-
-Usage:
-
-```bash
-cp clean-code/codex/AGENTS.md /path/to/project/AGENTS.md
-```
-
-Codex loads `AGENTS.md` from the project directory and relevant parent directories based on where it is started. If you want rules to apply only to part of a repository, place `AGENTS.md` closer to that subdirectory.
-
-### Cursor
-
-Convention: `.cursor/rules/*.mdc`
-
-Usage:
-
-```bash
-mkdir -p /path/to/project/.cursor/rules
-cp refactoring/cursor/.cursor/rules/refactoring.mdc /path/to/project/.cursor/rules/
-```
-
-Cursor rule files include frontmatter with `description` and `alwaysApply`. If you copy multiple rules, consider changing `alwaysApply: true` to a more selective mode, or keep only the rules that should genuinely apply to every task.
-
-### Claude Code
-
-Convention: `.claude/rules/*.md`
-
-Usage:
-
-```bash
-mkdir -p /path/to/project/.claude/rules
-cp working-effectively-with-legacy-code/claude/.claude/rules/working-effectively-with-legacy-code.md /path/to/project/.claude/rules/
-```
-
-Claude can load rules from `.claude/rules/`. For larger rule sets, prefer a few well-chosen rules over one huge instruction file. Shorter, more specific context is easier for the model to follow consistently.
-
-## Important Note
-
-These rules are inspired by the books listed below. They are not official materials from the authors or publishers, and they are not a substitute for reading the books.
-
-The files in this repository are practical engineering instructions written for AI coding tools. They intentionally avoid reproducing book text. Use them as lightweight working agreements, not as summaries or study notes.
+- general engineering style: `clean-code`, `code-complete`, `the-pragmatic-programmer`
 
 ## Constructive criticism from Reddit
 
@@ -296,29 +227,25 @@ AI changes the economics of writing, rewriting, and refactoring code. However, m
 
 ## Adding a Book
 
-Use this convention when adding a new rule set:
+Use lowercase kebab-case for the book directory name.
 
-```text
-new-book-title/
-  codex/AGENTS.md
-  cursor/.cursor/rules/new-book-title.mdc
-  claude/.claude/rules/new-book-title.md
-```
+Workflow:
 
-Guidelines:
+1. Ask the chatbot for the book and every chapter in it. Then ask it to expand the chapter list with all sections. Then ask it to expand the section list with all rules contained in each section.
+2. Ask the chatbot to produce an `AGENTS.md` file that expresses the entire content as rules for AI agents.
+3. Move that file to `_rule-workbench/<book-name>/full.md`.
+4. Ask the chatbot to run the workflow from [_rule-workbench/PROCESS.md](/Users/maciej/Projects/AGENTS/_rule-workbench/PROCESS.md:1) for that book.
+5. Ask the chatbot to execute the release instructions from [_rule-workbench/RELEASE.md](/Users/maciej/Projects/AGENTS/_rule-workbench/RELEASE.md:1).
 
-- use lowercase kebab-case for directory and file names
-- provide all three variants: Codex, Cursor, and Claude Code
-- keep rules operational and specific, not descriptive summaries
-- avoid copying book text
-- adapt principles into project guidance for implementation, refactoring, review, and testing
-- keep Cursor `.mdc` files with frontmatter including `description` and `alwaysApply`
-- add the book to the Books section with author and a short description
-- avoid enabling every rule by default in downstream projects
+## Important Note
+
+These rules are inspired by the books listed above. They are not official materials from the authors or publishers, and they are not a substitute for reading the books.
+
+The files in this repository are practical engineering instructions written for AI coding tools. They intentionally avoid reproducing book text. Use them as lightweight working agreements, not as summaries or study notes.
 
 ## License
 
-The code and rules in this repository are released under the MIT License. It is one of the simplest and most widely accepted open source licenses: it allows use, copying, modification, publication, distribution, and sublicensing with minimal restrictions.
+The code and rules in this repository are released under the MIT License.
 
 See [LICENSE](LICENSE) for details.
 
