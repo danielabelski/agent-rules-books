@@ -13,7 +13,7 @@ All code generation, edits, and reviews must optimize for:
 - strong routine and class design
 - practical correctness over style theater
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -52,7 +52,7 @@ Do not optimize for cleverness, minimal keystrokes, or fashionable idioms at the
 6. Return values should be meaningful and hard to misuse.
 7. Prefer guard clauses and straightforward structure over deeply nested logic.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - routines that do several unrelated things
 - routines whose names describe implementation detail instead of purpose
 - many hidden side effects
@@ -69,7 +69,7 @@ Anti-patterns:
 5. Avoid magic numbers and unexplained sentinel values.
 6. Use stronger data types when primitives hide meaning.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - reused loop/index/temp variables beyond their purpose
 - long-lived mutable locals carrying many meanings
 - values whose units or semantics are unclear
@@ -85,7 +85,7 @@ Anti-patterns:
 5. Eliminate impossible paths and dead branches.
 6. Avoid surprising exits unless they clarify the routine.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - deeply nested conditionals
 - complicated loop exits with hidden state changes
 - control flow dependent on side effects in expressions
@@ -101,7 +101,7 @@ Anti-patterns:
 4. Fail in a way that preserves diagnosability.
 5. Do not silently continue from corrupted or impossible state.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - assuming all callers are correct
 - burying invalid state until it causes distant failures
 - swallowing exceptions without context
@@ -135,7 +135,7 @@ Anti-patterns:
 4. Keep classes cohesive.
 5. Reduce coupling through clear contracts and limited knowledge of internals.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - god classes
 - modules with mixed persistence, formatting, business logic, and integration concerns
 - public surfaces that expose internal bookkeeping

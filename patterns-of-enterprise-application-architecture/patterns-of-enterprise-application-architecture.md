@@ -13,7 +13,7 @@ All code generation, edits, and reviews must optimize for:
 - clear mapping between in-memory objects and external systems
 - code that is maintainable under real enterprise constraints
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -44,12 +44,12 @@ Use layering as a default organizing principle:
 3. domain logic
 4. data source and integration access
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - upper layers may depend on lower ones
 - lower layers must not reach into presentation concerns
 - each layer must earn its existence by reducing coupling or clarifying responsibility
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - controllers reaching directly into SQL and transaction details
 - domain logic embedded in views or handlers
 - repositories returning HTTP-shaped DTOs
@@ -65,7 +65,7 @@ Use when:
 - each request or use case is mostly independent
 - rich domain modeling is unnecessary
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - scripts must remain short and use-case focused
 - do not let transaction scripts become dumping grounds for all business logic
 - if duplication, lifecycle, or invariant complexity grows, escalate to a stronger pattern
@@ -76,7 +76,7 @@ Use when:
 - calculations are set-oriented
 - object identity is not the key organizing force
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - keep behavior centered on the table abstraction
 - do not fake entities if the real model is fundamentally tabular
 - isolate tabular logic from presentation and transport
@@ -87,7 +87,7 @@ Use when:
 - business rules, invariants, and lifecycles matter
 - identity, collaboration, and behavior belong in the model
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - rich domain logic belongs in model objects
 - keep application coordination separate from domain decisions
 - avoid anemic models in behavior-rich domains
@@ -99,7 +99,7 @@ Rules:
 ### Service Layer
 Use a service layer to define application operations.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Application services coordinate use cases.
 2. They define transaction boundaries and orchestration.
 3. They must not absorb all domain logic by default.
@@ -111,7 +111,7 @@ Use when:
 - coarse-grained APIs reduce chatty calls
 - transport shape differs from internal design
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - expose coarse remote operations
 - translate between remote contracts and internal model
 - keep remote transport concerns at the boundary
@@ -122,7 +122,7 @@ Use when:
 - batching values reduces remote or serialization cost
 - translation protects the internal model
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - DTOs are transport structures, not domain models
 - keep mapping explicit
 - do not move business behavior into DTOs
@@ -134,7 +134,7 @@ Rules:
 ### Repository
 Use repositories to present a collection-like interface over domain or aggregate access.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Repositories must speak in domain terms.
 2. Repository interfaces should reflect use cases or aggregate access patterns.
 3. Repository implementations hide query, mapping, and storage details.
@@ -146,7 +146,7 @@ Use when:
 - object-relational mismatch is real
 - persistence logic deserves isolation
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - mapping code belongs outside the domain objects
 - do not force domain objects to know SQL, record formats, or mapping mechanics
 - keep mapping explicit and testable
@@ -179,7 +179,7 @@ Do not default to Active Record for complex domains.
 - know where lazy loading may trigger remote/database chatter
 - avoid lazy loading surprises in loops and serialization paths
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - invisible N+1 behavior everywhere
 - hidden auto-persistence with surprising write timing
 - saving each object ad hoc from random callers
@@ -191,7 +191,7 @@ Anti-patterns:
 ### Optimistic Offline Lock
 Use when conflicts are possible but uncommon.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - detect conflicting concurrent updates
 - fail safely and explicitly
 - surface retry or merge semantics intentionally
@@ -225,7 +225,7 @@ Choose Page Controller vs Front Controller pragmatically, but keep routing conce
 3. Integration events/messages are not domain objects.
 4. Do not allow integration convenience to dominate internal design.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - internal code shaped around partner API payloads
 - direct vendor DTOs used across the application
 - business logic embedded in serialization code
@@ -239,7 +239,7 @@ Anti-patterns:
 3. Separate local object design from remote contract design.
 4. Budget explicitly for latency, serialization, versioning, and partial failure.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - chatty remote object interfaces
 - assuming local method-call semantics over a network
 - leaking domain internals through remote endpoints

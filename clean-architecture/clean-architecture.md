@@ -12,7 +12,7 @@ When writing, modifying, or reviewing code, prefer decisions that preserve:
 - testability
 - replaceable details
 
-Treat this file as a binding implementation policy.
+Treat this file as a binding implementation policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 

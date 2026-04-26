@@ -14,7 +14,7 @@ All code generation, edits, and reviews must optimize for:
 - clear separation between interface and implementation
 - strategic design over tactical patching
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -22,7 +22,7 @@ This file is a binding engineering policy.
 
 Complexity is anything that makes software hard to understand or hard to change.
 
-When uncertain, choose the design that:
+When uncertain, prefer the design that:
 1. reduces the number of things a reader must know at once
 2. hides more details behind a stable interface
 3. eliminates exceptions and awkward cases
@@ -59,7 +59,7 @@ When a feature feels awkward, first ask:
 ### Prefer Deep Modules
 A deep module offers a simple interface but hides substantial complexity behind it.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Design modules to hide meaningful internal complexity.
 2. Prefer a small interface with strong semantics over a large surface with minor helpers.
 3. Make each module carry its own weight.
@@ -71,7 +71,7 @@ Shallow modules are bad when:
 - layers exist mostly to redirect calls
 - small wrappers multiply concepts without reducing reader burden
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - pass-through service classes
 - thin wrappers around libraries with no simplification
 - helper modules that only rename obvious operations
@@ -86,7 +86,7 @@ Anti-patterns:
 4. Keep callers from depending on implementation detail, performance hacks, or storage shape.
 5. Encapsulate messy edge conditions and normalization logic.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - exposing internal collections for direct mutation
 - leaking SQL, HTTP, framework, or file-format details through domain APIs
 - callers coordinating object internals across multiple modules
@@ -101,13 +101,13 @@ Anti-patterns:
 4. Eliminate arguments that only exist to expose internal implementation choices.
 5. Use names and method shapes that reveal the abstraction, not the mechanism.
 
-Good interface signs:
+Good interface signs (SHOULD):
 - few methods
 - strong semantic guarantees
 - limited required context
 - callers do not need to understand internals
 
-Bad interface signs:
+Bad interface signs (warning; usually MUST NOT):
 - many configuration flags
 - call-order traps
 - multiple setup methods required before use
@@ -149,7 +149,7 @@ Avoid:
 4. Use special/general decomposition when unusual cases clutter the main abstraction.
 5. Keep the normal path obvious and the exceptional path isolated.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - APIs that require every caller to repeat defensive ceremony
 - “special case” branches scattered across many call sites
 - exposing half-valid objects and asking callers to tiptoe around them
@@ -194,7 +194,7 @@ Do not use comments to compensate for:
 4. Use variables to capture meaning, not to mirror syntax.
 5. Keep local details local.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - chains of tiny functions where readers must jump constantly to understand one idea
 - variables introduced only to satisfy style rather than clarity
 - exposing intermediate states that should stay internal
@@ -208,7 +208,7 @@ Anti-patterns:
 3. Initialization steps, processing phases, and cleanup stages should not force readers to reconstruct the design from time-order alone.
 4. Keep call ordering simple and explicit where it matters.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - `prepare/process/finalize` everywhere without domain concepts
 - APIs that require secret temporal knowledge
 - partial objects whose meaning depends on which phase has already run
@@ -219,7 +219,7 @@ Anti-patterns:
 
 Use special-general decomposition when a small number of exceptions are cluttering the main logic.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Keep the general case simple.
 2. Isolate the unusual or rare behavior.
 3. Do not pollute the main abstraction with every edge case.
@@ -310,7 +310,7 @@ If any answer is no, revise before shipping.
 
 ## Final Instruction
 
-When uncertain, choose the design that:
+When uncertain, prefer the design that:
 1. creates a deeper module
 2. hides more complexity
 3. reduces special cases

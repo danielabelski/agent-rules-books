@@ -13,7 +13,7 @@ All code generation, edits, and reviews must optimize for:
 - schema evolution awareness
 - realistic distributed systems assumptions
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -40,7 +40,7 @@ Do not design distributed behavior as if everything were local, ordered, and exa
 3. Avoid hidden assumptions about durable success.
 4. Design for restart, replay, and partial failure recovery.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - side effects that cannot be retried safely
 - no distinction between accepted, persisted, and applied
 - assuming one successful response means all downstream effects succeeded
@@ -62,7 +62,7 @@ For every important piece of data, identify:
 - update path
 - consistency expectation
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - many writable copies with no ownership
 - cache quietly becoming the real source of truth
 - denormalized copies with no repair strategy
@@ -84,7 +84,7 @@ Document or encode:
 - whether readers may see stale data
 - how conflicts are detected or resolved
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - “eventual consistency” used as a slogan instead of a contract
 - stale-read bugs blamed on infrastructure with no product decision behind them
 - no conflict model for concurrent updates
@@ -98,7 +98,7 @@ Anti-patterns:
 3. Design processing to survive replay after crashes.
 4. Never assume exactly-once delivery unless the system boundary truly provides it and the design proves it.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - duplicate billing/order/send on retry
 - handlers with non-repeatable side effects and no guard
 - event processors depending on “it probably won't happen twice”
@@ -116,7 +116,7 @@ Anti-patterns:
    - per aggregate
 4. Keep ordering-sensitive logic close to the key or stream that defines the order.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - implicit reliance on total ordering
 - out-of-order events corrupting state because no versioning or sequence policy exists
 - parallel consumers updating the same key with no ordering plan
@@ -137,7 +137,7 @@ Anti-patterns:
 - version payloads carefully
 - keep semantics explicit
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - event payloads tied to one serializer or internal object layout
 - projections that cannot be rebuilt
 - assuming consumers keep up forever
@@ -152,7 +152,7 @@ Anti-patterns:
 4. Keep old readers and writers in mind during rollout.
 5. Distinguish internal refactors from contract changes.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - breaking payloads or DB semantics without migration strategy
 - reusing fields with new meaning
 - silently changing enum or status semantics across services
@@ -166,7 +166,7 @@ Anti-patterns:
 3. Be explicit about hot-key risk and skew.
 4. Design cross-partition operations carefully.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - partitioning that makes every common query cross-node
 - no plan for skew or hotspots
 - requiring cross-partition transactions for ordinary operations
@@ -180,7 +180,7 @@ Anti-patterns:
 3. Prefer outbox, idempotent consumers, and compensating workflows where cross-boundary coordination is required.
 4. Make atomicity scope explicit.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - multi-system two-phase coordination by default
 - side effects emitted outside transactional boundaries with no repair path
 - pretending asynchronous side effects are atomic because they “usually happen”
@@ -194,7 +194,7 @@ Anti-patterns:
 3. Know how lag affects user-visible behavior.
 4. Keep derivation pipelines observable.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - no way to rebuild projections
 - no lag visibility
 - mixing primary writes directly into derived stores with no ownership model
@@ -297,7 +297,7 @@ If any answer is no, revise before shipping.
 
 ## Final Instruction
 
-When uncertain, choose the design that:
+When uncertain, prefer the design that:
 1. makes data ownership explicit
 2. makes consistency semantics explicit
 3. survives retries, duplicates, and replay

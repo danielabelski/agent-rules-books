@@ -14,7 +14,7 @@ All code generation, edits, and reviews must optimize for:
 - observability
 - survivability over ideal-path elegance
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -22,7 +22,7 @@ This file is a binding engineering policy.
 
 Assume production will be messy.
 
-When uncertain, choose the design that:
+When uncertain, prefer the design that:
 1. fails visibly instead of hanging silently
 2. limits blast radius instead of maximizing coupling
 3. sheds load instead of collapsing
@@ -70,7 +70,7 @@ The code must assume these conditions, not merely tolerate them by accident.
 2. One failing integration must not consume all threads, connections, or worker capacity.
 3. Isolate slow or risky work from core request paths.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - nested retries at multiple layers
 - no timeout around remote calls
 - one shared pool for all outbound work
@@ -101,7 +101,7 @@ Anti-patterns:
 2. Shed low-value work first.
 3. Preserve core functions whenever possible.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - unbounded queues
 - accepting work with no plan to finish it
 - letting best-effort tasks crowd out critical work
@@ -123,7 +123,7 @@ Required when:
 - events may redeliver
 - timeouts may obscure whether work completed
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - duplicate charge/order/send operations on retry
 - side effects before durable state change with no recovery plan
 - hidden dependence on “exactly once”
@@ -144,7 +144,7 @@ Anti-patterns:
 4. Use streaming or pagination for large payloads where appropriate.
 5. Guard memory-heavy operations.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - one huge in-memory batch by default
 - blocking worker threads on slow I/O when a better model exists
 - connection pools sized by guess and then ignored
@@ -186,7 +186,7 @@ At minimum, capture:
 - circuit-breaker state
 - saturation signals
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - only logging stack traces without context
 - no metrics for slow dependencies
 - health checks that always return green despite broken downstreams
@@ -220,7 +220,7 @@ Anti-patterns:
 3. Avoid dogpiles with request coalescing or appropriate expiry strategies.
 4. Define what happens when the cache is unavailable.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - assuming cache hit rate is always high
 - rebuilding the whole cache synchronously on miss
 - hiding correctness assumptions inside cache behavior
@@ -333,7 +333,7 @@ If any answer is no, revise before shipping.
 
 ## Final Instruction
 
-When uncertain, choose the design that:
+When uncertain, prefer the design that:
 1. survives partial failure
 2. limits blast radius
 3. fails fast or degrades gracefully

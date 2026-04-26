@@ -11,18 +11,24 @@ For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAG
 
 Each rule set is released in three tool-agnostic Markdown versions:
 
-- `full`: the canonical complete source
-- `min`: the compressed on-demand version
-- `nano`: the compressed always-on version for tight context budgets
+- `min`: the recommended version for most real task use
+- `nano`: the always-on version for tight context budgets
+- `full`: the canonical complete source and reference version
 
 ## Quick Start
 
-- start with one primary rule set in `nano`
+- if you want to use one book directly, start with `min`
 - open [USAGE.md](USAGE.md) and follow the setup for Codex, Claude Code, or Cursor
-- keep `nano` as the always-on base layer
-- switch to `min` only when the task needs more book-specific pressure
-- use `full` for reference, audits, or for deriving narrower scoped rules or skills
+- use `min` as the default recommended choice for focused work with one book
+- keep `nano` only as the always-on base layer or when context is very tight
+- use `full` for audits, one-off deep sessions, or for deriving narrower scoped rules or skills
 - avoid loading every rule at once
+
+## Which Version To Use
+
+- use `min` by default when you actively want a given book to shape the agent's decisions; this is the recommended starting point for most task-scoped use
+- use `nano` when the rule set must stay always-on, travel well across tools, or fit into a very small context budget
+- use `full` when you need the complete source: audits, compression review, deriving skills or scoped rules, or checking what was intentionally omitted
 
 ## Release Matrix
 
@@ -34,10 +40,10 @@ Metrics:
 
 | Rule Set | Full lines | Full rules | Full size | Full file | Min lines | Min rules | Min size | Min file | Nano lines | Nano rules | Nano size | Nano file |
 | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- |
-| [A Philosophy of Software Design](a-philosophy-of-software-design/) | 320 | 151 | 10454 B | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 34 | 16 | 2165 B | [min](a-philosophy-of-software-design/a-philosophy-of-software-design.min.md) | 29 | 11 | 1029 B | [nano](a-philosophy-of-software-design/a-philosophy-of-software-design.nano.md) |
+| [A Philosophy of Software Design](a-philosophy-of-software-design/) | 320 | 151 | 10454 B | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 36 | 18 | 2496 B | [min](a-philosophy-of-software-design/a-philosophy-of-software-design.min.md) | 29 | 11 | 1029 B | [nano](a-philosophy-of-software-design/a-philosophy-of-software-design.nano.md) |
 | [Clean Architecture](clean-architecture/) | 471 | 226 | 14355 B | [full](clean-architecture/clean-architecture.md) | 34 | 16 | 2190 B | [min](clean-architecture/clean-architecture.min.md) | 29 | 11 | 931 B | [nano](clean-architecture/clean-architecture.nano.md) |
-| [Clean Code](clean-code/) | 246 | 173 | 10595 B | [full](clean-code/clean-code.md) | 34 | 16 | 2146 B | [min](clean-code/clean-code.min.md) | 29 | 11 | 853 B | [nano](clean-code/clean-code.nano.md) |
-| [Code Complete](code-complete/) | 288 | 144 | 8563 B | [full](code-complete/code-complete.md) | 33 | 15 | 1705 B | [min](code-complete/code-complete.min.md) | 29 | 11 | 774 B | [nano](code-complete/code-complete.nano.md) |
+| [Clean Code](clean-code/) | 246 | 173 | 10595 B | [full](clean-code/clean-code.md) | 39 | 21 | 2581 B | [min](clean-code/clean-code.min.md) | 31 | 13 | 1087 B | [nano](clean-code/clean-code.nano.md) |
+| [Code Complete](code-complete/) | 288 | 144 | 8563 B | [full](code-complete/code-complete.md) | 36 | 18 | 2138 B | [min](code-complete/code-complete.min.md) | 32 | 14 | 917 B | [nano](code-complete/code-complete.nano.md) |
 | [Designing Data-Intensive Applications](designing-data-intensive-applications/) | 307 | 152 | 9951 B | [full](designing-data-intensive-applications/designing-data-intensive-applications.md) | 33 | 15 | 2086 B | [min](designing-data-intensive-applications/designing-data-intensive-applications.min.md) | 29 | 11 | 877 B | [nano](designing-data-intensive-applications/designing-data-intensive-applications.nano.md) |
 | [Domain-Driven Design](domain-driven-design/) | 986 | 517 | 38304 B | [full](domain-driven-design/domain-driven-design.md) | 34 | 16 | 2206 B | [min](domain-driven-design/domain-driven-design.min.md) | 30 | 12 | 1021 B | [nano](domain-driven-design/domain-driven-design.nano.md) |
 | [Domain-Driven Design Distilled](domain-driven-design-distilled/) | 283 | 136 | 8388 B | [full](domain-driven-design-distilled/domain-driven-design-distilled.md) | 34 | 16 | 1807 B | [min](domain-driven-design-distilled/domain-driven-design-distilled.min.md) | 29 | 11 | 815 B | [nano](domain-driven-design-distilled/domain-driven-design-distilled.nano.md) |
@@ -45,7 +51,7 @@ Metrics:
 | [Patterns of Enterprise Application Architecture](patterns-of-enterprise-application-architecture/) | 354 | 160 | 11192 B | [full](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.md) | 33 | 15 | 1967 B | [min](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.min.md) | 29 | 11 | 954 B | [nano](patterns-of-enterprise-application-architecture/patterns-of-enterprise-application-architecture.nano.md) |
 | [Refactoring](refactoring/) | 366 | 177 | 12812 B | [full](refactoring/refactoring.md) | 33 | 15 | 1855 B | [min](refactoring/refactoring.min.md) | 29 | 11 | 697 B | [nano](refactoring/refactoring.nano.md) |
 | [Release It!](release-it/) | 343 | 176 | 10147 B | [full](release-it/release-it.md) | 34 | 16 | 1668 B | [min](release-it/release-it.min.md) | 30 | 12 | 875 B | [nano](release-it/release-it.nano.md) |
-| [The Pragmatic Programmer](the-pragmatic-programmer/) | 303 | 142 | 9572 B | [full](the-pragmatic-programmer/the-pragmatic-programmer.md) | 33 | 15 | 1624 B | [min](the-pragmatic-programmer/the-pragmatic-programmer.min.md) | 29 | 11 | 767 B | [nano](the-pragmatic-programmer/the-pragmatic-programmer.nano.md) |
+| [The Pragmatic Programmer](the-pragmatic-programmer/) | 303 | 142 | 9572 B | [full](the-pragmatic-programmer/the-pragmatic-programmer.md) | 39 | 21 | 2439 B | [min](the-pragmatic-programmer/the-pragmatic-programmer.min.md) | 31 | 13 | 928 B | [nano](the-pragmatic-programmer/the-pragmatic-programmer.nano.md) |
 | [Working Effectively with Legacy Code](working-effectively-with-legacy-code/) | 331 | 157 | 10497 B | [full](working-effectively-with-legacy-code/working-effectively-with-legacy-code.md) | 33 | 15 | 1714 B | [min](working-effectively-with-legacy-code/working-effectively-with-legacy-code.min.md) | 29 | 11 | 875 B | [nano](working-effectively-with-legacy-code/working-effectively-with-legacy-code.nano.md) |
 
 ## Books
@@ -149,11 +155,13 @@ Use lowercase kebab-case for the book directory name.
 
 Workflow:
 
-1. Ask the chatbot for the book and every chapter in it. Then ask it to expand the chapter list with all sections. Then ask it to expand the section list with all rules contained in each section.
-2. Ask the chatbot to produce an `AGENTS.md` file that expresses the entire content as rules for AI agents.
-3. Move that file to `_rule-workbench/<book-name>/full.md`.
-4. Ask the chatbot to run the workflow from [_rule-workbench/PROCESS.md](/Users/maciej/Projects/AGENTS/_rule-workbench/PROCESS.md:1) for that book.
-5. Ask the chatbot to execute the release instructions from [_rule-workbench/RELEASE.md](/Users/maciej/Projects/AGENTS/_rule-workbench/RELEASE.md:1).
+1. Ask the chatbot for the complete book outline: every chapter, every section inside each chapter, and every operational rule stated or strongly implied by each section.
+2. Ask the chatbot to expand the extraction until nothing material is missing. In particular, recover non-negotiable rules, tradeoff rules, trigger rules, anti-patterns, review and testing guidance, and any “when uncertain” guidance.
+3. Ask the chatbot to produce a full `AGENTS.md` in this repository's `full` standard, not a loose summary. It should preserve the book's structure and distinctive bias, express obligations as `MUST`, strong defaults as `SHOULD`, prohibitions as `MUST NOT`, and keep anti-patterns explicit.
+4. Review the generated `AGENTS.md` before importing it. Check that no important local discipline was flattened into generic advice, that modal strength matches the book's intent, and that the chatbot did not invent unsupported rules.
+5. Move the approved file to `_rule-workbench/<book-name>/full.md`.
+6. Ask the chatbot to run the workflow from [_rule-workbench/PROCESS.md](/Users/maciej/Projects/AGENTS/_rule-workbench/PROCESS.md:1) for that book.
+7. Ask the chatbot to execute the release instructions from [_rule-workbench/RELEASE.md](/Users/maciej/Projects/AGENTS/_rule-workbench/RELEASE.md:1).
 
 ## Important Note
 

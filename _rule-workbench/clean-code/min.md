@@ -2,33 +2,41 @@
 
 ## When to use
 
-Use when readability, local reasoning, and maintainable code shape are the main concerns.
+Use when readability, local reasoning, and maintainable code shape are the main concerns, especially during everyday implementation and review.
 
 ## Primary bias to correct
 
-Do not preserve confusing structure just because the code already works.
+Working code is not automatically clean code.
 
 ## Decision rules
 
-- Use precise names and one term per concept. Rename code when the current name hides meaning, overloads a familiar word, or forces comments to explain it.
-- Keep functions cohesive and at one level of abstraction. Split behavior instead of hiding mode switches behind boolean flags or mixed responsibilities.
-- Separate commands from queries and eliminate hidden side effects so callers can reason locally about what changes state.
-- Keep parameters few and meaningful. If a function needs a cluster of inputs, model the concept instead of passing a grab bag.
-- Use comments only for rationale, constraints, warnings, or external contracts. If a comment explains what the code is doing, improve the code instead.
-- Expose behavior rather than raw representation. Avoid train-wreck access, utility dumping grounds, and arbitrary mixing of plain data and business behavior.
-- When touching code, remove the smell that most directly increases change cost: duplication, deep nesting, long parameter lists, primitive obsession, hidden dependency, or misleading control flow.
-- Isolate unstable external dependencies behind local boundaries when direct coupling would leak vendor quirks into the core.
+- Write for local reasoning. A reader should understand the path without reconstructing hidden state, wide jumps, or naming trivia.
+- Use precise names and one term per concept. Rename code when vocabulary hides intent, overloads meaning, or forces comments to compensate.
+- Keep functions small, focused, and at one level of abstraction. Tell the story top-down so intent appears before detail.
+- Keep parameters few and meaningful. Avoid boolean flags, output parameters, and grab-bag argument lists; model the concept instead.
+- Separate commands from queries and eliminate hidden side effects. A function that answers should not also mutate behind the reader's back.
+- Keep the happy path readable. Isolate error handling, invalid-state handling, and cleanup; prefer explicit optionality or typed results over null-like sentinel flow when the language supports it.
+- Expose behavior rather than raw representation. Avoid train-wreck access, utility dumping grounds, and classes or modules with mixed responsibilities.
+- Make public APIs small, explicit, and hard to misuse. Organize code so likely changes stay local.
+- Use comments only for rationale, constraints, warnings, or external contracts. Do not narrate code instead of improving it.
+- Treat tests as production code: readable, deterministic, aligned with the behavior or contract they protect, and backed by proportionate validation before calling the change done.
+- When touching code, remove the smell that most increases change cost, but do not silently broaden the task beyond the smallest cleanup that makes the requested change safe.
 
 ## Trigger rules
 
-- When adding a boolean flag, consider separate entry points or a richer type first.
-- When adding a comment to explain code flow, simplify names or structure before keeping the comment.
-- When a function both answers a question and mutates state, split the responsibilities.
-- When a change requires touching many unrelated places, look for duplication, hidden dependency, or the wrong abstraction boundary.
+- When a function mixes setup, validation, computation, and side effects, split the phases.
+- When a comment explains control flow, simplify names or structure before keeping the comment.
+- When a function both mutates and answers, or hides a mode switch behind a flag, separate the responsibilities.
+- When async or concurrency enters, minimize shared mutable state and make cancellation, timeouts, and cleanup explicit.
+- When a boundary leaks framework, vendor, or persistence quirks inward, add or strengthen a local adapter.
+- When fixing a bug or changing behavior, add or update the test that protects the intended contract.
+- When cleanup starts spreading into unrelated areas, cut back to the smallest refactor that keeps the requested change safe and readable.
 
 ## Final checklist
 
-- Are the names carrying the meaning without extra narration?
-- Can a reader tell what mutates state and what only reads it?
-- Did the touched code get simpler instead of merely longer?
-- Did I remove at least one smell that would slow the next change?
+- Can a reader follow the change locally?
+- Are names and APIs carrying the meaning without narration?
+- Is mutation explicit and the happy path still clear?
+- Did I remove at least one smell from the touched area?
+- Do tests protect the changed behavior or contract?
+- Did I actually run the relevant tests or checks for this change?

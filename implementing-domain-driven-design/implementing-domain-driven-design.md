@@ -14,7 +14,7 @@ All code generation, edits, and reviews must optimize for:
 - context mapping instead of shared muddled models
 - practical DDD implementation instead of theory theater
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -53,7 +53,7 @@ Reject designs that sound like DDD but behave like generic CRUD plus renamed cla
 2. Spend the richest modeling effort where competitive or operational complexity truly lives.
 3. Keep supporting subdomains simpler.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - one global company model
 - shared `common-domain` package crossing all contexts
 - context boundaries existing only in diagrams but not in code
@@ -99,7 +99,7 @@ Required behavior:
 2. Do not stretch transactions across many aggregates out of convenience.
 3. Use events, policies, or process coordination when consistency can be eventual.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - aggregates sized to fit ORM navigation
 - transactions updating many aggregates by default
 - aggregate roots exposing mutable child collections
@@ -135,7 +135,7 @@ Required behavior:
 4. Repository APIs should reflect aggregate access needs, not generic table CRUD.
 5. Repositories must return domain objects or domain-oriented results, not ORM rows.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - giant generic repository abstractions
 - repository per table without aggregate thinking
 - business rules inside repository implementations
@@ -151,7 +151,7 @@ Anti-patterns:
 4. Use events to coordinate across aggregates or contexts when immediate consistency is not required.
 5. Keep event payloads meaningful and local to the model.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - using events for every property change
 - event names that describe commands instead of facts
 - domain events carrying framework request objects or persistence artifacts
@@ -167,7 +167,7 @@ Anti-patterns:
 4. Application services must be thin enough that the model still matters.
 5. Application services may own transaction boundaries and integration coordination.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - application services containing all branching business rules
 - controllers duplicating application service orchestration
 - repositories and application services both implementing the same invariants
@@ -194,7 +194,7 @@ Preferred structure examples:
 ### Anti-Corruption Layer
 Use when integrating with legacy systems or foreign models.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Translate foreign language into the local context's language.
 2. Keep foreign schemas and statuses out of local domain objects.
 3. Own the translation explicitly.
@@ -204,7 +204,7 @@ Rules:
 2. Do not pass local aggregates directly across context boundaries.
 3. Keep contract models separate from local models.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - importing another context's domain package
 - shared enums across contexts with different semantics
 - direct DB coupling between contexts
@@ -228,7 +228,7 @@ Where tenancy, ownership, or partitioning exists:
 3. Use simpler patterns in supporting areas.
 4. However, once invariants and lifecycle complexity appear, model them honestly.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - using DDD vocabulary without changing design
 - over-modeling trivial CRUD subdomains
 - refusing to model real complexity because “simple services are enough”

@@ -15,15 +15,17 @@ Local code changes still have system-level consequences.
 - Preserve orthogonality so changes stay local.
 - Use tracer bullets and prototypes to learn quickly, but do not fossilize them.
 - Automate repeatable work and shorten feedback loops.
+- Make important assumptions explicit and leave touched code slightly better than before.
 
 ## Trigger rules
 
 - When knowledge is copied, choose one owner.
 - When changes fan out widely, look for missing orthogonality.
-- When manual steps repeat, automate them.
+- When manual steps or hidden assumptions repeat, automate them or encode them explicitly.
 
 ## Final checklist
 
 - One owner?
 - Localized change?
 - Faster loop?
+- Touched area better?

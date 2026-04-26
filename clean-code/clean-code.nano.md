@@ -10,9 +10,10 @@ Readable code is not the same as code with nice formatting.
 
 ## Decision rules
 
+- Write for local reasoning: readers should not reconstruct hidden state or jump widely to understand the path.
 - Use precise names and one term per concept.
 - Split boolean flags, mixed abstraction levels, and hidden side effects out of functions.
-- Separate commands from queries.
+- Separate commands from queries and keep parameters small and meaningful.
 - Use comments only for rationale or contracts, not to explain confusing code.
 - When touching code, remove the smell most likely to make the next change risky or unclear.
 
@@ -20,10 +21,11 @@ Readable code is not the same as code with nice formatting.
 
 - When a function both mutates and answers, split it.
 - When a comment explains the flow, simplify the code first.
-- When a change spreads, look for duplication or hidden dependency.
+- When a change spreads or depends on framework quirks, look for duplication, hidden dependency, or the wrong boundary.
 
 ## Final checklist
 
+- Local reasoning preserved?
 - Clear names?
 - Clear mutation boundaries?
 - One smell removed?

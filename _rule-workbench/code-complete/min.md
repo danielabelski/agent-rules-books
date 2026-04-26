@@ -10,24 +10,27 @@ Do not let local cleverness outrun construction discipline.
 
 ## Decision rules
 
-- Choose clarity and maintainability over clever compactness or novelty.
-- Keep routines cohesive, with small hard-to-misuse interfaces and local scope that does not carry multiple meanings.
-- Use explicit validation for external input and assertions or contracts for programmer assumptions. Make invalid states visible instead of silently tolerated.
-- Prefer straightforward control flow. When the logic is a stable mapping, use table-driven or data-driven structure instead of growing branch forests.
-- Replace magic values and unexplained sentinels with constants, enums, richer types, or explicit optionality.
-- Keep class and module responsibilities cohesive so likely changes stay local.
-- Build incrementally: take small steps, review against consistency and defect risk, and avoid speculative structure that has not earned its keep.
+- Treat construction quality as defect prevention, not as cleanup after the fact.
+- Choose clarity, locality, and explicitness over clever compactness or novelty.
+- Keep routines with one clear purpose and hard-to-misuse interfaces. Separate setup, validation, computation, and side effects when they are different concerns.
+- Keep data meaning explicit: small scope, deliberate initialization, clear units, strong types, constants, and no magic sentinels.
+- Validate inputs at trust boundaries and use assertions or contracts for programmer assumptions. Make invalid or impossible states visible instead of silently tolerated.
+- Handle errors at the right level, preserve diagnostic context, and keep the normal path readable.
+- Prefer straightforward control flow. Replace stable condition forests with table-driven or data-driven logic when that makes the rules plainer.
+- Keep classes and modules cohesive, hide incidental detail, and reduce coupling through clear contracts and limited knowledge.
+- Build in small, verifiable increments. Review code for defect risk, consistency, and rising complexity while constructing it, not only afterward.
 
 ## Trigger rules
 
-- When adding input at a trust boundary, decide explicitly what is validated, asserted, or rejected.
-- When branching expands around a stable mapping, check whether a table or policy object would make the rules clearer.
-- When a variable starts carrying units, lifecycle, or status implicitly, turn that meaning into a clearer type or name.
-- When tempted by a clever shortcut, prefer the version the next maintainer can debug at 2 a.m.
+- When input crosses a trust boundary, decide what is validated, asserted, rejected, or recovered from.
+- When a routine accumulates several phases or a long signature, split the responsibility or model the data more clearly.
+- When a variable carries units, status, or lifecycle implicitly, turn that meaning into a clearer type, constant, or name.
+- When branching grows around a stable mapping, check whether a table or policy object would make the logic more inspectable.
+- When a clever shortcut saves lines but costs inspection effort, prefer the boring form.
 
 ## Final checklist
 
-- Clear over clever?
-- Invalid states visible?
-- Stable mappings explicit?
+- Defect risk lower?
+- Data meaning explicit?
+- Normal path readable?
 - Small reviewable step?

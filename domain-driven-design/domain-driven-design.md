@@ -12,7 +12,7 @@ All code generation, modification, and review must optimize for:
 - protection of invariants
 - clear separation between domain model and supporting infrastructure
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -57,20 +57,20 @@ DDD here **does** mean:
 
 ## Knowledge Crunching and Deep Models
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Treat the model as discovered, not invented from technical structure.
 2. Before adding abstractions, identify what domain experts would call the concept.
 3. When requirements are ambiguous, look for missing domain distinctions instead of forcing generic names.
 4. Let awkward code, contradictory language, and repeated conditionals trigger deeper modeling.
 5. Update names and boundaries when new domain insight appears.
 
-### Required behavior
+### Required behavior (MUST)
 - Ask what business rule, policy, lifecycle, or invariant the code is expressing.
 - Prefer a deeper model that clarifies behavior over a shallow model that merely stores data.
 - Capture newly discovered concepts in names, tests, APIs, and modules.
 - Treat refactoring as part of model discovery, not just code cleanup.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Starting from database tables and calling the result the domain model
 - Preserving vague names after discovering sharper domain language
 - Hiding domain complexity behind `type`, `status`, or `metadata` fields
@@ -80,19 +80,19 @@ DDD here **does** mean:
 
 ## Model-Driven Design
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. The implemented design must reflect the model used in discussion.
 2. If the model cannot guide code, refine the model or the code until they align.
 3. Domain objects must represent behavior and meaning, not just persistence state.
 4. Keep modelers close to implementation. Do not separate analysis from coding so far that the model becomes theoretical.
 
-### Required behavior
+### Required behavior (MUST)
 - Make important model concepts visible in classes, functions, modules, tests, and interfaces.
 - Prefer executable examples and tests over disconnected documentation.
 - Keep diagrams and documents lightweight, current, and tied to code.
 - Use explanatory models only to teach or reason; do not confuse them with the implementation model unless they are intended to drive code.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - A design document that uses different names than the code
 - Analysts producing models that developers cannot or do not implement
 - Code that follows framework conventions while ignoring the domain model
@@ -102,19 +102,19 @@ DDD here **does** mean:
 
 ## Breakthrough and Deeper Insight
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Expect useful models to change after deeper insight.
 2. Treat a breakthrough model as a candidate for deliberate refactoring, not as churn.
 3. When a better model appears, compare its explanatory power against migration cost.
 4. Preserve working behavior while moving toward the deeper model in safe steps.
 
-### Required behavior
+### Required behavior (MUST)
 - Look for concepts that simplify many special cases at once.
 - Prefer changes that make future business rules easier to express.
 - Use awkwardness, contradictions, and repeated failed attempts as signals that the model is shallow.
 - Keep focus on the basics when the model becomes too elaborate.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Rejecting a better model only because the current one already works
 - Big-bang rewrites when incremental migration is possible
 - Elaborate abstractions that do not improve domain insight
@@ -123,18 +123,18 @@ DDD here **does** mean:
 
 ## Making Implicit Concepts Explicit
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Listen for domain language that is not represented in code.
 2. Scrutinize awkward APIs, repeated branches, and contradictory names.
 3. Read domain references, policies, regulations, and prior art when available.
 4. Try multiple model shapes before settling on one for complex concepts.
 
-### Required behavior
+### Required behavior (MUST)
 - Promote hidden constraints, policies, and processes into explicit domain concepts.
 - Name the concept before choosing the implementation form.
 - Prefer clear domain objects over anonymous helpers when behavior has business meaning.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Burying business rules in comments
 - Treating contradictions as edge cases instead of modeling signals
 - Keeping vague technical flags after discovering the real concept
@@ -143,14 +143,14 @@ DDD here **does** mean:
 
 ## Ubiquitous Language
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Use the exact business terms used by domain experts inside a bounded context.
 2. One concept must have one name inside a bounded context.
 3. One name must not mean different concepts inside a bounded context.
 4. Method names, test names, events, and modules must use the same vocabulary as the domain.
 5. Rename code when the domain understanding improves.
 
-### Required behavior
+### Required behavior (MUST)
 - Prefer `Quote`, `Policy`, `Settlement`, `Reservation`, `LedgerEntry`, `Claim`, `Invoice`.
 - Prefer methods like `approve()`, `expire()`, `settle()`, `reserve()`, `cancel()`, `renew()`.
 - Avoid generic names such as:
@@ -161,7 +161,7 @@ DDD here **does** mean:
   - `Info`
   - `Service` when a more precise domain name exists
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Using technical names where the business has precise names
 - Using synonyms for the same concept in the same context
 - Reusing the same term for different meanings because it is convenient
@@ -171,18 +171,18 @@ DDD here **does** mean:
 
 ## Communication Artifacts
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Documents and diagrams must support the ubiquitous language.
 2. Written design material must be short enough to stay maintained.
 3. Executable tests are preferred for rules that can be verified.
 4. Diagrams should emphasize boundaries, relationships, invariants, and lifecycle over class inventory.
 
-### Required behavior
+### Required behavior (MUST)
 - Use examples and scenario tests as living documentation.
 - Keep glossary-like explanations close to the bounded context they describe.
 - Update documents when terminology or context boundaries change.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Long design documents that drift away from code
 - Diagrams that show every class but hide the model's meaning
 - Documentation that introduces vocabulary not used by code or tests
@@ -191,18 +191,18 @@ DDD here **does** mean:
 
 ## Scenario Walkthroughs
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Validate the model by walking through real application scenarios.
 2. Use scenarios to test whether entities, value objects, aggregates, repositories, and factories collaborate naturally.
 3. When a scenario feels procedural or awkward, look for missing model concepts or wrong boundaries.
 4. Revisit aggregate and module boundaries after scenario walkthroughs reveal pressure.
 
-### Required behavior
+### Required behavior (MUST)
 - Prefer examples that exercise real business decisions, not only CRUD paths.
 - Use scenarios to verify object creation, lifecycle transitions, and cross-context translation.
 - Let performance tuning follow model clarity; do not distort the model prematurely for optimization.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Designing model elements only in isolation
 - Treating scenario code as an afterthought after infrastructure is complete
 - Optimizing persistence paths before the model expresses the business correctly
@@ -211,19 +211,19 @@ DDD here **does** mean:
 
 ## Bounded Contexts
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Every substantial domain area must belong to a clearly identified bounded context.
 2. A model is valid only inside its own bounded context.
 3. Concepts from another context must not be imported directly as if they were native.
 4. Translation across contexts must be explicit.
 5. Shared models across multiple contexts are forbidden unless intentionally governed as a shared kernel.
 
-### Required behavior
+### Required behavior (MUST)
 - Keep package, module, or namespace ownership explicit.
 - Model `Customer` separately in different contexts if meanings differ.
 - Prefer context-specific contracts, IDs, published events, or anti-corruption layers over shared classes.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - One giant company-wide domain model
 - A `shared/domain` package that erases boundaries
 - Copying foreign terms into the local model without translation
@@ -248,7 +248,7 @@ DDD here **does** mean:
 2. Ownership of translation must be explicit.
 3. Upstream and downstream influence must be reflected in adapters and contracts.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Spending more design effort on plumbing than on the core domain
 - Modeling authentication utilities more richly than the pricing engine
 - Allowing a legacy system vocabulary to dominate the core model
@@ -272,12 +272,12 @@ Use context relationship patterns intentionally:
 - `Open Host Service` when a context exposes a stable integration protocol.
 - `Published Language` when contexts need a documented exchange language.
 
-### Required behavior
+### Required behavior (MUST)
 - Make context maps visible in package structure, integration adapters, documentation, or tests.
 - Name adapters after the relationship they implement when that improves clarity.
 - Keep foreign model terms out of the local core unless deliberately accepted as conformist.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Accidental shared kernels with no ownership rules
 - Calling every integration an anti-corruption layer without translation
 - Letting upstream APIs silently define downstream domain language
@@ -301,12 +301,12 @@ Use these patterns when they clarify priority and investment:
 - `Segregated Core` when the core is tangled with supporting concerns.
 - `Abstract Core` when related specialized models need a stable conceptual foundation.
 
-### Required behavior
+### Required behavior (MUST)
 - Make the core domain easy to find in code.
 - Keep supporting and generic subdomains simpler unless their complexity is real.
 - Choose refactoring targets based on strategic importance, not just local messiness.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Spending equal modeling effort on every subsystem
 - Letting technical mechanisms dominate the core model
 - Hiding the core behind generic `common`, `shared`, or `platform` packages
@@ -316,7 +316,7 @@ Use these patterns when they clarify priority and investment:
 
 ## Large-Scale Structure
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Large-scale structure should help people understand the system, not freeze it.
 2. Let structure evolve as the model evolves.
 3. Use a guiding structure only when it reduces cognitive load across contexts.
@@ -330,12 +330,12 @@ Use these patterns deliberately:
 - `Knowledge Level` when rules or policies must be represented explicitly and changed by configuration or data.
 - `Pluggable Component Framework` when variation points are stable and worth formalizing.
 
-### Required behavior
+### Required behavior (MUST)
 - Combine bounded contexts, distillation, and large-scale structure into one coherent strategy.
 - Revisit structure when it no longer fits the model.
 - Prefer communication and self-discipline over heavy structural machinery where possible.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - A master plan that blocks model learning
 - A metaphor that sounds clever but misleads design decisions
 - Overly restrictive layers that fight the domain
@@ -345,20 +345,20 @@ Use these patterns deliberately:
 
 ## Strategic Decision Making
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Assess the current model and context map before prescribing a strategic structure.
 2. Decide who owns strategic design choices explicitly.
 3. Let application development inform strategy; do not impose strategy detached from implementation feedback.
 4. Architecture teams must stay customer-focused and model-focused, not framework-focused.
 5. Strategic decisions must remain revisable as domain understanding changes.
 
-### Required behavior
+### Required behavior (MUST)
 - Combine bounded contexts with distillation and large-scale structure when system complexity requires it.
 - Make strategy visible enough that teams can coordinate without a rigid master plan.
 - Keep technical frameworks subordinate to the domain strategy.
 - Treat strategic design as team decision-making, not just diagram production.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - A top-down master plan that ignores model learning
 - Strategy owned by people disconnected from implementation
 - Technical architecture decisions presented as domain strategy
@@ -374,18 +374,18 @@ Use these patterns deliberately:
 - continuity matters beyond current attributes
 - business rules depend on “which one” rather than only “what value”
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Entities must have explicit identity.
 2. Entities must protect their own valid state transitions.
 3. Entities must expose intention-revealing behavior, not arbitrary mutation.
 4. Entities must not be treated as passive records in behavior-rich domains.
 
-### Required behavior
+### Required behavior (MUST)
 - Prefer `order.cancel(reason)`, `account.withdraw(amount)`, `subscription.renew(untilDate)`.
 - Hide direct mutation behind methods that encode domain meaning.
 - Keep identity stable and explicit.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Public setters for every field
 - Application services manually editing all entity state
 - Controllers deciding which transitions are valid
@@ -401,14 +401,14 @@ Use these patterns deliberately:
 - the concept has behavior
 - passing a primitive would hide meaning
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Value objects must be immutable by default.
 2. Construction must guarantee validity.
 3. Equality must be by value, not by identity.
 4. Validation for the concept should live inside the value object.
 5. Replace primitive obsession aggressively where the concept matters.
 
-### Required behavior
+### Required behavior (MUST)
 Use value objects for concepts such as:
 - `Money`
 - `EmailAddress`
@@ -419,7 +419,7 @@ Use value objects for concepts such as:
 - `Quantity`
 - `Currency`
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Repeating email validation across handlers
 - Passing raw decimals for money
 - Passing raw strings for account identifiers
@@ -441,12 +441,12 @@ Use value objects for concepts such as:
 3. Keep related concepts together when they change together.
 4. Avoid infrastructure-driven packaging that hides the domain.
 
-### Required behavior
+### Required behavior (MUST)
 - Use package names that match the ubiquitous language.
 - Keep model concepts discoverable from the directory structure.
 - Split modules when different concepts evolve independently.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - `models`, `services`, `utils`, and `helpers` as the dominant structure
 - Associations created only because the ORM supports them
 - Object graphs that make aggregate boundaries invisible
@@ -459,20 +459,20 @@ Use value objects for concepts such as:
 ### Purpose
 Aggregates are **consistency boundaries**, not just object graphs.
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Design aggregates around invariants that must be consistent immediately.
 2. Keep aggregates as small as possible.
 3. All modifications that affect aggregate invariants must go through the aggregate root.
 4. Reference other aggregates by identity unless stronger consistency is truly required.
 5. Modify one aggregate per transaction by default.
 
-### Required behavior
+### Required behavior (MUST)
 - Put invariant-protecting methods on the aggregate root.
 - Keep internal members encapsulated.
 - Prefer eventual consistency across aggregates when possible.
 - Model transactional boundaries deliberately.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Large graph aggregates built for ORM convenience
 - Aggregate roots exposing internal collections for arbitrary external mutation
 - Transactions modifying many aggregates because object references make it easy
@@ -487,16 +487,16 @@ Aggregates are **consistency boundaries**, not just object graphs.
 - the behavior does not naturally belong on one entity or value object
 - the operation still belongs to the ubiquitous language
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. A domain service must express a domain concept, not a technical convenience.
 2. If behavior clearly belongs to an entity or value object, keep it there.
 3. Do not move behavior into services merely to keep entities thin.
 
-### Required behavior
+### Required behavior (MUST)
 - Domain services should sound like the business.
 - Domain services should coordinate domain concepts, not infrastructure details.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - `OrderService` containing all order rules
 - `BillingService` containing dozens of unrelated policies
 - “Domain services” that are only wrappers for repositories or SDKs
@@ -506,19 +506,19 @@ Aggregates are **consistency boundaries**, not just object graphs.
 
 ## Explicit Concepts and Specifications
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Make implicit constraints explicit in the model.
 2. Model domain processes as domain objects when the process has business meaning.
 3. Use specifications for named, combinable business rules that answer whether something satisfies a criterion.
 4. Keep specifications in domain language, not query language.
 
-### Required behavior
+### Required behavior (MUST)
 - Extract repeated conditionals into named domain concepts.
 - Prefer `EligibleForRenewal`, `RouteSatisfiesPolicy`, or `InvoiceIsOverdue` over anonymous boolean expressions.
 - Keep persistence querying concerns separate from domain specifications unless the project deliberately provides translation.
 - Use specifications to clarify policy, validation, selection, and compatibility rules.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Complex business conditions duplicated across services
 - Boolean flags that hide a named domain rule
 - Specifications that are just ORM query builders
@@ -531,21 +531,21 @@ Aggregates are **consistency boundaries**, not just object graphs.
 ### Purpose
 Repositories provide access to aggregates as part of the model.
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Repositories exist for aggregate roots, not for every table.
 2. Repository interfaces must be defined by the domain or application model that uses them.
 3. Repositories must return domain objects or domain-oriented results.
 4. Repository contracts must reflect intent where useful.
 5. Repositories must not become universal query utilities.
 
-### Required behavior
+### Required behavior (MUST)
 - Use repositories to reconstitute and persist aggregates.
 - Keep infrastructure mapping hidden behind the repository implementation.
 - Prefer focused repository methods over giant generic CRUD interfaces when domain intent matters.
 - Keep reconstitution paths separate from normal creation paths when that protects invariants.
 - Make client code independent of repository implementation details, while repository implementers understand those details.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Generic repository abstractions that erase domain meaning
 - Returning ORM models directly into the domain
 - Putting business rules into repository implementations
@@ -562,12 +562,12 @@ Repositories provide access to aggregates as part of the model.
 - valid creation requires multiple collaborating values
 - the creation itself has domain meaning
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Factories must create valid objects.
 2. Factories must encode domain creation rules, not technical object assembly.
 3. Controllers and mappers must not contain business construction logic.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Building invalid objects first and fixing them later
 - Letting endpoints stitch together aggregates directly
 - Using a factory only to hide a trivial constructor
@@ -579,21 +579,21 @@ Repositories provide access to aggregates as part of the model.
 ### Purpose
 Domain events represent meaningful facts that occurred in the domain.
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Emit domain events only for meaningful domain facts.
 2. Event names must be in the past tense.
 3. Event payloads must contain domain-relevant facts.
 4. Domain events must not become a generic escape hatch for poor modeling.
 5. Prefer direct modeling first, events second.
 
-### Required behavior
+### Required behavior (MUST)
 Examples:
 - `OrderPlaced`
 - `InvoiceIssued`
 - `PaymentCaptured`
 - `ReservationExpired`
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Event names like `DoInvoice`, `ProcessPayment`, `HandleReservation`
 - Publishing events for every setter-like change
 - Using events to hide missing aggregate boundaries
@@ -607,18 +607,18 @@ Examples:
 The application layer orchestrates use cases.
 It does not replace the domain model.
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Application services or use cases load aggregates, call domain behavior, persist results, and coordinate side effects.
 2. Application services must not hold core business invariants that belong in the domain.
 3. Application services must speak the ubiquitous language.
 4. Application services may coordinate transactions and integration publication, but should not become procedural god classes.
 
-### Required behavior
+### Required behavior (MUST)
 - Keep one use case focused on one application action.
 - Let domain objects make domain decisions.
 - Keep orchestration distinct from business rules.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Application services containing all branching business logic
 - Use cases manipulating entity internals directly
 - Repositories, controllers, and application services all implementing overlapping rules
@@ -627,13 +627,13 @@ It does not replace the domain model.
 
 ## Infrastructure
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Infrastructure is subordinate to the model.
 2. ORM mappings, serializers, SDK clients, HTTP clients, brokers, caches, and framework types must stay out of the domain model.
 3. Infrastructure must adapt to the model, not the reverse.
 4. Persistence shape must not define the domain shape.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Naming domain concepts after database tables
 - Designing aggregates around lazy loading
 - Adding methods to entities only because the ORM needs them
@@ -643,18 +643,18 @@ It does not replace the domain model.
 
 ## Translation at Boundaries
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Translation is mandatory at context boundaries.
 2. Translation is usually mandatory between domain objects and transport or persistence representations.
 3. Anti-corruption layers must preserve the local model rather than mirror foreign models.
 4. Foreign terms must not silently invade the local ubiquitous language.
 
-### Required behavior
+### Required behavior (MUST)
 - Translate external IDs, statuses, and vocabularies explicitly.
 - Map transport DTOs to local commands or domain inputs.
 - Keep persistence models and integration models outside the core domain.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Passing external API models deep into the domain
 - Reusing one DTO as HTTP input, ORM record, domain object, and event
 - Adopting vendor status codes as native domain terminology
@@ -663,7 +663,7 @@ It does not replace the domain model.
 
 ## Supple Design
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Design interfaces that reveal intention in domain language.
 2. Prefer side-effect-free functions for calculations and queries.
 3. Make assertions and invariants explicit in the model.
@@ -672,14 +672,14 @@ It does not replace the domain model.
 6. Favor operations that are closed under meaningful domain types when that improves clarity.
 7. Use declarative design when it makes rules easier to read, combine, and verify.
 
-### Required behavior
+### Required behavior (MUST)
 - Name methods after what the business is trying to accomplish.
 - Separate commands from queries where side effects would surprise readers.
 - Put invariant checks where invalid states enter the model.
 - Look for cohesive concepts hidden inside long methods, conditionals, or parameter groups.
 - Consider a domain-specific language only when it simplifies real domain expression.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Technically named APIs that hide intent
 - Methods that both ask a question and mutate domain state
 - Invariants expressed only in comments or controller validation
@@ -700,12 +700,12 @@ Use design patterns only when they express the domain model:
 - `Composite` for part-whole structures that domain experts recognize.
 - Avoid patterns that optimize implementation while hiding model meaning.
 
-### Required behavior
+### Required behavior (MUST)
 - Reach for established formalisms when the domain already has mature concepts.
 - Make pattern names subordinate to domain names.
 - Prefer domain-specific names over generic pattern names in public APIs.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Applying design patterns because they are familiar rather than because the model needs them
 - Naming domain objects after patterns instead of business concepts
 - Importing a reference model without validating it against local domain language
@@ -823,7 +823,7 @@ Prioritize tests for:
 - application use cases
 - context translation and anticorruption layers
 
-### Rules
+### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Tests must read in the ubiquitous language.
 2. Tests must verify allowed and forbidden state transitions.
 3. Tests must verify that invalid objects cannot be created through supported paths.
@@ -831,7 +831,7 @@ Prioritize tests for:
 5. Infrastructure tests must stay separate from domain tests.
 6. Tests for the core domain should read like executable examples of the model.
 
-### Anti-patterns
+### Anti-patterns (MUST NOT)
 - Tests named in transport or controller vocabulary instead of domain vocabulary
 - Tests that verify ORM details instead of domain meaning
 - Missing tests for invalid transitions and invariant protection

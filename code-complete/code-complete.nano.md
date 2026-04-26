@@ -13,12 +13,14 @@ A working implementation can still be structurally careless.
 - Choose clarity over cleverness.
 - Keep routines cohesive and interfaces small.
 - Validate external input; use assertions or contracts for programmer assumptions.
+- Keep invalid states visible and the normal path readable.
 - Replace repetitive stable branching with table-driven logic when it clarifies the rule.
 - Use constants or richer types instead of magic values and ambiguous state.
 
 ## Trigger rules
 
 - When input crosses a trust boundary, decide what gets validated.
+- When a routine mixes several phases, split the concerns.
 - When branches multiply, consider a table.
 - When a value carries hidden meaning, model it.
 
@@ -26,4 +28,5 @@ A working implementation can still be structurally careless.
 
 - Clear?
 - Defended?
+- Readable normal path?
 - Explicit?

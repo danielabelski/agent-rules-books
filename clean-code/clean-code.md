@@ -4,7 +4,7 @@ This file defines mandatory working rules for this repository. Follow these inst
 
 ## Priority and behavior
 
-- Treat every rule in this file as mandatory unless the user explicitly overrides it.
+- Treat every unqualified rule in this file as `MUST`; treat `Prefer` as `SHOULD`; treat `Do not`, `Avoid`, and `Never` as `MUST NOT` unless the user explicitly overrides it.
 - Prefer readability, maintainability, correctness, and safe change over cleverness or speed hacks.
 - Optimize for the next human reader.
 - When trade-offs exist, choose the option that reduces long-term complexity.

@@ -13,7 +13,7 @@ All code generation, edits, and reviews must optimize for:
 - practical implementation over ceremony
 - collaboration between model and software design
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -43,7 +43,7 @@ Classify major areas as:
 - supporting subdomain
 - generic subdomain
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Invest the most design effort in the core domain.
 2. Keep supporting and generic subdomains simpler unless complexity proves otherwise.
 3. Do not waste the best modeling effort on commodity concerns.
@@ -60,7 +60,7 @@ Rules:
 3. Own integration contracts deliberately.
 4. Protect the local model from foreign language.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - one model reused across billing, identity, catalog, fulfillment, and support
 - shared domain classes with subtly different meanings
 - context boundaries documented but ignored in code
@@ -90,7 +90,7 @@ Avoid:
 ### Entities
 Use entities when identity and lifecycle matter.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Entities must have explicit identity.
 2. Entities must protect meaningful state transitions.
 3. Do not expose unrestricted mutation by default.
@@ -98,7 +98,7 @@ Rules:
 ### Value Objects
 Use value objects aggressively when a primitive hides meaning.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Value objects are immutable by default.
 2. They validate themselves.
 3. They make code read in domain language.
@@ -106,7 +106,7 @@ Rules:
 ### Aggregates
 Use aggregates only where invariants require a consistency boundary.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Keep aggregates small.
 2. Protect invariants through the aggregate root.
 3. Reference other aggregates by identity.
@@ -115,7 +115,7 @@ Rules:
 ### Repositories
 Use repositories to access aggregates in domain terms.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Repository contracts belong to the model or application that needs them.
 2. Repositories return domain objects or domain-shaped results.
 3. Repositories are not generic table CRUD bags.
@@ -123,7 +123,7 @@ Rules:
 ### Domain Events
 Use domain events for meaningful facts.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 1. Name events in the past tense.
 2. Use events when they clarify collaboration or integration.
 3. Do not publish trivial noise for every field change.
@@ -131,7 +131,7 @@ Rules:
 ### Domain Services
 Use a domain service only when behavior is domain-significant and fits no single entity or value object naturally.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - moving all behavior into services
 - creating services that are only wrappers around repositories
 
@@ -145,7 +145,7 @@ Anti-patterns:
 4. Use IDs for references across aggregate boundaries.
 5. One transaction should usually change one aggregate.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - aggregate designed around a screen
 - one request loading and mutating a whole graph
 - aggregate roots exposing mutable children directly
@@ -159,7 +159,7 @@ Anti-patterns:
 3. They must not become the real domain model.
 4. They should stay thin enough that the model still carries meaning.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - all business decisions in application services
 - controllers duplicating application orchestration
 - application services shaped only by transport
@@ -173,7 +173,7 @@ Anti-patterns:
 3. Persist aggregates without letting persistence define the model.
 4. Translate transport and integration data at the boundary.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - persistence-first modeling
 - reusing DTOs as domain objects
 - domain methods depending on framework types
@@ -187,7 +187,7 @@ Anti-patterns:
 3. Make domain assumptions explicit in names, tests, and events.
 4. Where a concept is fuzzy, do not hide the ambiguity behind technical abstractions.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - generic code that could belong to any business
 - unexplained status codes and flags with domain meaning
 - enums and booleans where a richer concept is needed
@@ -201,7 +201,7 @@ Anti-patterns:
 3. Once invariants, lifecycle, and language complexity rise, strengthen the model.
 4. Prefer incremental improvement over massive design overhauls.
 
-Anti-patterns:
+Anti-patterns (MUST NOT):
 - dismissing DDD because not every module needs it
 - over-modeling a generic subsystem
 - introducing aggregates, factories, repositories, and events before knowing why

@@ -13,7 +13,7 @@ All code generation, edits, and reviews must optimize for:
 - reducing fear around modification
 - incremental improvement instead of heroic rewrites
 
-This file is a binding engineering policy.
+This file is a binding engineering policy: `MUST` is binding, `SHOULD` is a strong default, and `MUST NOT` is forbidden.
 
 ---
 
@@ -160,7 +160,7 @@ When legacy code is hard to test, first look for these dependency types:
 ### Sprout Method
 Use when new behavior can be added without deeply editing fragile code.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - extract the new behavior into a new method
 - keep the old code mostly untouched
 - route to the new method from a small insertion point
@@ -168,7 +168,7 @@ Rules:
 ### Sprout Class
 Use when a new responsibility does not fit the old class or the old class is too risky to reshape first.
 
-Rules:
+Rules (MUST unless marked SHOULD or MUST NOT):
 - add a focused new collaborator
 - delegate from the legacy class
 - slowly move behavior over if later justified
