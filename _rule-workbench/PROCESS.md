@@ -20,7 +20,7 @@ This process should generalize across books. If review of one book exposes a rec
 - `full.md`: canonical full source by symlink
 - `traceability.md`: what was kept, merged, or omitted, with references to source sections
 - `min.md`: on-demand compressed version
-- `nano.md`: always-on version for tight context budgets
+- `nano.md`: compact fallback version for very tight always-on context budgets
 
 ## Rule Classification
 
@@ -53,7 +53,7 @@ For each source section, classify rules before compressing:
 
 ### Build `nano.md`
 
-- Keep only rules safe for always-on attachment in a constrained context budget.
+- Keep only rules safe for fallback always-on attachment in a constrained context budget.
 - Keep rules that correct known model biases and the smallest set of `book-thesis` rules needed to keep the base bias visible:
   - shallow wrappers mistaken for good abstraction
   - framework-first design
@@ -139,7 +139,7 @@ Before considering a book done:
 - each omitted section or rule has a traceable disposition: `covered by Mx`, `covered by Nx`, or `intentionally lost`
 - duplicate guidance is merged
 - long lists are collapsed into triggers or checklist items
-- `nano.md` can stand alone as an always-on attachment
+- `nano.md` can stand alone as a compact always-on fallback attachment
 - `min.md` adds clear value beyond `nano.md`; it is not just a slightly longer restatement
 - `min.md` still preserves the book's unique point of view
 - the book's central thesis is still recognizable without reading the title

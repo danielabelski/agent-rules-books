@@ -22,7 +22,7 @@ Many of the generated rule files contain a large number of individual instructio
 
 **Current status: largely addressed, about 8/10 solved.**
 
-This was addressed through the three-level release model in [README.md](README.md): `nano` for always-on use, `min` for stronger on-demand use, and `full` for reference only. [USAGE.md](USAGE.md) now explicitly recommends the smallest mechanism that still changes agent decisions, warns against global loading, and shows scoped and retrieval-based alternatives. The remaining gap is behavioral rather than structural: the repo cannot stop a user from still attaching too much at once.
+This was addressed through the three-level release model in [README.md](README.md): `min` for the recommended working layer, `nano` for very tight always-on budgets, and `full` for reference only. [USAGE.md](USAGE.md) now explicitly recommends the smallest mechanism that still changes agent decisions, warns against global loading, and shows scoped and retrieval-based alternatives. The remaining gap is behavioral rather than structural: the repo cannot stop a user from still attaching too much at once.
 
 ### 3. Skills, RAG, or progressive loading may be better than putting everything into `AGENTS.md`
 
@@ -42,7 +42,7 @@ A compact `AGENTS.md` with 10–15 strong, testable, project-specific instructio
 
 **Current status: partially addressed, about 6/10 solved.**
 
-This is partly addressed by [README.md](README.md) and [USAGE.md](USAGE.md), which now recommend one short primary base layer, usually `nano`, and scoped or on-demand additions instead of stacking many generic books. That said, the repo still mainly ships book-derived rule packs, not automatically generated project-specific rules based on one team's codebase, incidents, and conventions. So the criticism is mitigated operationally, but not fully solved at the content level.
+This is partly addressed by [README.md](README.md) and [USAGE.md](USAGE.md), which now recommend one primary `min` layer when the context budget allows it, `nano` only as a compact fallback, and scoped or on-demand additions instead of stacking many generic books. That said, the repo still mainly ships book-derived rule packs, not automatically generated project-specific rules based on one team's codebase, incidents, and conventions. So the criticism is mitigated operationally, but not fully solved at the content level.
 
 ### 5. The model may ignore many of the rules anyway
 
@@ -126,7 +126,7 @@ This is partly true, but incomplete. Models may know the principles, yet still f
 
 **Current status: moderately addressed, about 6/10 solved.**
 
-The repository now essentially agrees with the criticism. [README.md](README.md) and [USAGE.md](USAGE.md) no longer imply that full-book-sized context is the default. Instead they push `nano` and `min` as targeted reminders and treat `full` as reference material. So the value proposition shifted from "the model needs the whole book" to "the model benefits from a short, decision-changing reminder." What is still missing is experimental proof that these reminders outperform model priors alone.
+The repository now essentially agrees with the criticism. [README.md](README.md) and [USAGE.md](USAGE.md) no longer imply that full-book-sized context is the default. Instead they push `min` as the recommended targeted reminder, keep `nano` as the compact fallback, and treat `full` as reference material. So the value proposition shifted from "the model needs the whole book" to "the model benefits from a short, decision-changing reminder." What is still missing is experimental proof that these reminders outperform model priors alone.
 
 ### 13. Some principles may be outdated in the AI coding era
 

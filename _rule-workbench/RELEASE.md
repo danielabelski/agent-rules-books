@@ -25,7 +25,7 @@ Before copying anything:
 - every book must have `full.md`, `traceability.md`, `min.md`, and `nano.md`
 - `full.md` must still resolve to the canonical source file
 - `min.md` and `nano.md` must follow the structure from `PROCESS.md`
-- `nano.md` must stay small enough for always-on use
+- `nano.md` must stay small enough for compact always-on fallback use
 - `traceability.md` must map retained rules back to the full source
 
 ### 2. Add or update repository `README.md`

@@ -12,7 +12,7 @@ For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAG
 Each rule set is released in three tool-agnostic Markdown versions:
 
 - `min`: the recommended version for most real task use
-- `nano`: the always-on version for tight context budgets
+- `nano`: the compact fallback for very tight context budgets
 - `full`: the canonical complete source and reference version
 
 ## Quick Start
@@ -20,7 +20,7 @@ Each rule set is released in three tool-agnostic Markdown versions:
 - if you want to use one book directly, start with `min`
 - open [USAGE.md](USAGE.md) and follow the setup for Codex, Claude Code, or Cursor
 - use `min` as the default recommended choice for focused work with one book
-- keep `nano` only as the always-on base layer or when context is very tight
+- keep `nano` only as the compact always-on fallback when context is very tight
 - use `full` for audits, one-off deep sessions, or for deriving narrower scoped rules or skills
 - avoid loading every rule at once
 
