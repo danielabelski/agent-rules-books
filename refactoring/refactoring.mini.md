@@ -1,4 +1,4 @@
-# Refactoring: Min
+# Refactoring: Mini
 
 ## When to use
 

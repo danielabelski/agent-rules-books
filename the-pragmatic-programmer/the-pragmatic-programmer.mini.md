@@ -1,4 +1,4 @@
-# The Pragmatic Programmer: Min
+# The Pragmatic Programmer: Mini
 
 ## When to use
 

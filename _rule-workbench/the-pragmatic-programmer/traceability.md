@@ -5,11 +5,11 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun found no new process bug and no new book-specific miss; current `min.md` and `nano.md` already preserve the book thesis plus repeated local implementation decisions.
-- `min.md` and `nano.md` stayed unchanged on this rerun.
+- This rerun found no new process bug and no new book-specific miss; current `mini.md` and `nano.md` already preserve the book thesis plus repeated local implementation decisions.
+- `mini.md` and `nano.md` stayed unchanged on this rerun.
 - Some broad review wording, estimation detail, and explanatory prose stay compressed because the pragmatic pressure already survives through ownership, DRY, orthogonality, prototypes, automation, feedback loops, and explicit contracts.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

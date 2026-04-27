@@ -1,4 +1,4 @@
-# Designing Data-Intensive Applications: Min
+# Designing Data-Intensive Applications: Mini
 
 ## When to use
 

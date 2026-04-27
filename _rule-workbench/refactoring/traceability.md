@@ -5,11 +5,11 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun found no new process bug and no new book-specific miss; existing `min.md` and `nano.md` already preserve the book thesis and repeated micro-decisions.
-- `min.md` and `nano.md` stayed unchanged on this rerun.
+- This rerun found no new process bug and no new book-specific miss; existing `mini.md` and `nano.md` already preserve the book thesis and repeated micro-decisions.
+- `mini.md` and `nano.md` stayed unchanged on this rerun.
 - The long smell taxonomy and move catalog stay compressed because the core refactoring pressure already survives through behavior preservation, small verified steps, safety nets, and stopping discipline.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

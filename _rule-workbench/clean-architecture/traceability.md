@@ -6,11 +6,11 @@ Canonical full source: [full.md](full.md)
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
 - This rerun identified book-specific misses, not a new process bug: the source explicitly treats inner ownership of ports and role-based naming as operational Clean Architecture pressure.
-- `min.md` was strengthened to keep entity and invariant placement explicit, to preserve inner ownership of ports, and to preserve role-based naming and anti-god-service pressure as repeated micro-decisions.
+- `mini.md` was strengthened to keep entity and invariant placement explicit, to preserve inner ownership of ports, and to preserve role-based naming and anti-god-service pressure as repeated micro-decisions.
 - `nano.md` stayed unchanged because the new misses belong in on-demand pressure, not in the always-on budget.
 - Detailed naming examples, output-shape prose, and repeated checklist wording stay compressed unless they change a concrete architectural decision.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

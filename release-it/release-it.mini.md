@@ -1,4 +1,4 @@
-# Release It!: Min
+# Release It!: Mini
 
 ## When to use
 

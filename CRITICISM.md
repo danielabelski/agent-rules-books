@@ -12,7 +12,7 @@ This is the strongest criticism. Without benchmarks, before/after comparisons, d
 
 **Current status: weakly addressed, about 2/10 solved.**
 
-We partially improved measurability by adding the release matrix in [README.md](README.md), deterministic `full` / `min` / `nano` outputs, and per-book [traceability](./_rule-workbench/) plus section-by-section coverage in [_rule-workbench/PROCESS.md](_rule-workbench/PROCESS.md). This makes compression auditable, but it does not measure real coding outcomes yet. The core criticism still stands because the repo still lacks evals, before/after task comparisons, defect-rate data, and review-time data.
+We partially improved measurability by adding the release matrix in [README.md](README.md), deterministic `full` / `mini` / `nano` outputs, and per-book [traceability](./_rule-workbench/) plus section-by-section coverage in [_rule-workbench/PROCESS.md](_rule-workbench/PROCESS.md). This makes compression auditable, but it does not measure real coding outcomes yet. The core criticism still stands because the repo still lacks evals, before/after task comparisons, defect-rate data, and review-time data.
 
 ### 2. This can burn tokens and pollute the context
 
@@ -22,7 +22,7 @@ Many of the generated rule files contain a large number of individual instructio
 
 **Current status: largely addressed, about 8/10 solved.**
 
-This was addressed through the three-level release model in [README.md](README.md): `min` for the recommended working layer, `nano` for very tight always-on budgets, and `full` for reference only. [USAGE.md](USAGE.md) now explicitly recommends the smallest mechanism that still changes agent decisions, warns against global loading, and shows scoped and retrieval-based alternatives. The remaining gap is behavioral rather than structural: the repo cannot stop a user from still attaching too much at once.
+This was addressed through the three-level release model in [README.md](README.md): `mini` for the recommended working layer, `nano` for very tight always-on budgets, and `full` for reference only. [USAGE.md](USAGE.md) now explicitly recommends the smallest mechanism that still changes agent decisions, warns against global loading, and shows scoped and retrieval-based alternatives. The remaining gap is behavioral rather than structural: the repo cannot stop a user from still attaching too much at once.
 
 ### 3. Skills, RAG, or progressive loading may be better than putting everything into `AGENTS.md`
 
@@ -42,7 +42,7 @@ A compact `AGENTS.md` with 10–15 strong, testable, project-specific instructio
 
 **Current status: partially addressed, about 6/10 solved.**
 
-This is partly addressed by [README.md](README.md) and [USAGE.md](USAGE.md), which now recommend one primary `min` layer when the context budget allows it, `nano` only as a compact fallback, and scoped or on-demand additions instead of stacking many generic books. That said, the repo still mainly ships book-derived rule packs, not automatically generated project-specific rules based on one team's codebase, incidents, and conventions. So the criticism is mitigated operationally, but not fully solved at the content level.
+This is partly addressed by [README.md](README.md) and [USAGE.md](USAGE.md), which now recommend one primary `mini` layer when the context budget allows it, `nano` only as a compact fallback, and scoped or on-demand additions instead of stacking many generic books. That said, the repo still mainly ships book-derived rule packs, not automatically generated project-specific rules based on one team's codebase, incidents, and conventions. So the criticism is mitigated operationally, but not fully solved at the content level.
 
 ### 5. The model may ignore many of the rules anyway
 
@@ -52,7 +52,7 @@ LLMs do not reliably obey hundreds of instructions at the same time. More rules 
 
 **Current status: partially addressed, about 6/10 solved.**
 
-This is one of the main reasons [_rule-workbench/PROCESS.md](_rule-workbench/PROCESS.md) now compresses toward decision-equivalent `min` and `nano` files instead of keeping everything. The process explicitly prioritizes decision-changing rules, micro-decisions, triggers, and known shortcut blockers, and it requires evidence before calling a rule a safe default. That reduces instruction overload, but we still do not have empirical obedience data showing how often models follow the final compressed sets.
+This is one of the main reasons [_rule-workbench/PROCESS.md](_rule-workbench/PROCESS.md) now compresses toward decision-equivalent `mini` and `nano` files instead of keeping everything. The process explicitly prioritizes decision-changing rules, micro-decisions, triggers, and known shortcut blockers, and it requires evidence before calling a rule a safe default. That reduces instruction overload, but we still do not have empirical obedience data showing how often models follow the final compressed sets.
 
 ### 6. Rules should also come from real project failures
 
@@ -126,7 +126,7 @@ This is partly true, but incomplete. Models may know the principles, yet still f
 
 **Current status: moderately addressed, about 6/10 solved.**
 
-The repository now essentially agrees with the criticism. [README.md](README.md) and [USAGE.md](USAGE.md) no longer imply that full-book-sized context is the default. Instead they push `min` as the recommended targeted reminder, keep `nano` as the compact fallback, and treat `full` as reference material. So the value proposition shifted from "the model needs the whole book" to "the model benefits from a short, decision-changing reminder." What is still missing is experimental proof that these reminders outperform model priors alone.
+The repository now essentially agrees with the criticism. [README.md](README.md) and [USAGE.md](USAGE.md) no longer imply that full-book-sized context is the default. Instead they push `mini` as the recommended targeted reminder, keep `nano` as the compact fallback, and treat `full` as reference material. So the value proposition shifted from "the model needs the whole book" to "the model benefits from a short, decision-changing reminder." What is still missing is experimental proof that these reminders outperform model priors alone.
 
 ### 13. Some principles may be outdated in the AI coding era
 

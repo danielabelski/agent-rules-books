@@ -6,11 +6,11 @@ Canonical full source: [full.md](full.md)
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
 - This rerun identified book-specific misses, not a new process bug: the source explicitly treats validation discipline and anti-scope-broadening as operational Clean Code rules, not mere reporting preferences.
-- `min.md` was strengthened to keep invalid-state handling explicit, to preserve async/concurrency discipline as a trigger, and to retain proportionate validation plus anti-scope-broadening pressure.
+- `mini.md` was strengthened to keep invalid-state handling explicit, to preserve async/concurrency discipline as a trigger, and to retain proportionate validation plus anti-scope-broadening pressure.
 - `nano.md` stayed unchanged because these additional rules belong in the stronger on-demand layer rather than the always-on budget.
 - Detailed formatting mechanics, output-reporting prose, and repeated review wording stay compressed unless they change a repeated coding decision.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

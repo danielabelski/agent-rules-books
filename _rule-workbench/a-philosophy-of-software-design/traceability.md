@@ -5,11 +5,11 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun found no new process bug and no further book-specific miss; the previously strengthened `min.md` already preserves the book's local-complexity pressure from `Function and Variable Rules`.
-- `min.md` and `nano.md` stayed unchanged on this rerun.
+- This rerun found no new process bug and no further book-specific miss; the previously strengthened `mini.md` already preserves the book's local-complexity pressure from `Function and Variable Rules`.
+- `mini.md` and `nano.md` stayed unchanged on this rerun.
 - Generic review, testing, and codegen scaffolding stays compressed because the book's decision pressure is carried by depth, information hiding, interface design, and complexity movement.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

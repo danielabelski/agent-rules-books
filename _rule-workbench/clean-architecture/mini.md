@@ -1,4 +1,4 @@
-# Clean Architecture: Min
+# Clean Architecture: Mini
 
 ## When to use
 

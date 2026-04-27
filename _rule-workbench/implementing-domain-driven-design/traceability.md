@@ -5,11 +5,11 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- Manual fix on 2026-04-26 restored ubiquitous-language pressure as an explicit trigger in `min.md` and `nano.md`.
+- Manual fix on 2026-04-26 restored ubiquitous-language pressure as an explicit trigger in `mini.md` and `nano.md`.
 - This was treated as a book-specific miss, not a `PROCESS.md` change: the source makes naming and one-term-per-concept discipline operational at implementation level.
 - Detailed review, testing, and repeated explanatory prose stay compressed because the operational pressure already survives through context boundaries, aggregate discipline, repository shape, context integration, and now explicit naming pressure.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

@@ -13,13 +13,13 @@ This process should generalize across books. If review of one book exposes a rec
 - The canonical full rule set stays in the main book directory.
 - Each workbench directory exposes it as `full.md` via symlink.
 - Do not edit `full.md` in the workbench.
-- `min.md` and `nano.md` must always trace back to the canonical full source through `traceability.md`.
+- `mini.md` and `nano.md` must always trace back to the canonical full source through `traceability.md`.
 
 ## Deliverables Per Book
 
 - `full.md`: canonical full source by symlink
 - `traceability.md`: what was kept, merged, or omitted, with references to source sections
-- `min.md`: on-demand compressed version
+- `mini.md`: on-demand compressed version
 - `nano.md`: compact fallback version for very tight always-on context budgets
 
 ## Rule Classification
@@ -37,7 +37,7 @@ For each source section, classify rules before compressing:
 
 ## Compression Rules
 
-### Build `min.md`
+### Build `mini.md`
 
 - Keep every `book-thesis`, even when it acts through local code-shape or API-shape discipline rather than architecture.
 - Keep every `decision-changing` and `conflict-resolver`.
@@ -46,10 +46,10 @@ For each source section, classify rules before compressing:
 - Merge duplicated rules across purpose, codegen, review, testing, and forbidden-pattern sections only when they have the same operational consequence.
 - Prefer short operational rules over explanatory prose.
 - Convert long review and testing lists into trigger rules and a final checklist.
-- Preserve enough of the book's own bias and vocabulary that `min.md` still feels like that book instead of a generic style guide.
-- `min.md` does not have a target line count. Different books may need materially different sizes.
-- If `min.md` adds little beyond `nano.md`, strengthen `min.md` or collapse the distinction intentionally.
-- If unsure whether a rule is a harmless omission or a book-central correction, keep it in `min.md`.
+- Preserve enough of the book's own bias and vocabulary that `mini.md` still feels like that book instead of a generic style guide.
+- `mini.md` does not have a target line count. Different books may need materially different sizes.
+- If `mini.md` adds little beyond `nano.md`, strengthen `mini.md` or collapse the distinction intentionally.
+- If unsure whether a rule is a harmless omission or a book-central correction, keep it in `mini.md`.
 
 ### Build `nano.md`
 
@@ -67,7 +67,7 @@ For each source section, classify rules before compressing:
 
 ## Traceability Rules
 
-- Every retained rule in `min.md` gets an `M*` id in `traceability.md`.
+- Every retained rule in `mini.md` gets an `M*` id in `traceability.md`.
 - Every retained rule in `nano.md` gets an `N*` id in `traceability.md`.
 - Each id must reference the source section names and current line ranges in `full.md`.
 - Record intentional omissions, especially when whole sections are collapsed into one compressed rule.
@@ -82,12 +82,12 @@ For each source section, classify rules before compressing:
 
 Before a book is done, walk every source section in `full.md` and assign it to one of these outcomes:
 
-- kept directly in `min.md`
+- kept directly in `mini.md`
 - merged into specific `M*` rules
 - kept only in `nano.md`
 - intentionally lost
 
-This review is mandatory even when no text changes are made to `min.md` or `nano.md`.
+This review is mandatory even when no text changes are made to `mini.md` or `nano.md`.
 
 ## Process vs Book Diagnosis
 
@@ -121,7 +121,7 @@ If the finding is a `book-specific miss`:
 
 ## Preferred Output Shape
 
-Use the same structure for `min.md` and `nano.md`:
+Use the same structure for `mini.md` and `nano.md`:
 
 1. title
 2. when to use
@@ -140,12 +140,12 @@ Before considering a book done:
 - duplicate guidance is merged
 - long lists are collapsed into triggers or checklist items
 - `nano.md` can stand alone as a compact always-on fallback attachment
-- `min.md` adds clear value beyond `nano.md`; it is not just a slightly longer restatement
-- `min.md` still preserves the book's unique point of view
+- `mini.md` adds clear value beyond `nano.md`; it is not just a slightly longer restatement
+- `mini.md` still preserves the book's unique point of view
 - the book's central thesis is still recognizable without reading the title
 - removed rules have explicit reasons: verified default, true redundancy, too situational, or preserved only in `full.md`
 - any rule labeled `default` has explicit supporting evidence, not just intuition
-- a full-to-min gap review has been completed section by section
+- a full-to-mini gap review has been completed section by section
 - post-review book edits are justified by source plus process, not by reviewer preference alone
 - if a review finding would apply as a reusable compression principle across books, it has been written back into `PROCESS.md` before changing book outputs
 - `traceability.md` explains why anything important was removed or merged
@@ -166,4 +166,4 @@ Before considering a book done:
 - If a rule is obvious but agents still commonly violate it, keep it.
 - If a book's distinctive point is enforced through repeated local discipline rather than one big architectural choice, treat that local discipline as core rather than secondary.
 - Prefer re-running a book from a better process over manually sculpting the output after the fact.
-- When unsure, keep a rule in `min.md`; make `nano.md` stricter.
+- When unsure, keep a rule in `mini.md`; make `nano.md` stricter.

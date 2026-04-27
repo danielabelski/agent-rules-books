@@ -1,4 +1,4 @@
-# Working Effectively with Legacy Code: Min
+# Working Effectively with Legacy Code: Mini
 
 ## When to use
 

@@ -1,4 +1,4 @@
-# Domain-Driven Design Distilled: Min
+# Domain-Driven Design Distilled: Mini
 
 ## When to use
 

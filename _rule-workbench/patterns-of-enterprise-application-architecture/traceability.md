@@ -5,11 +5,11 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun found no new process bug and no new book-specific miss; existing `min.md` and `nano.md` already preserve the book thesis and repeated micro-decisions.
-- `min.md` and `nano.md` stayed unchanged on this rerun.
+- This rerun found no new process bug and no new book-specific miss; existing `mini.md` and `nano.md` already preserve the book thesis and repeated micro-decisions.
+- `mini.md` and `nano.md` stayed unchanged on this rerun.
 - Long pattern catalogs and presentation-layer detail stay compressed because the first-order pressure already survives through business-logic pattern choice, persistence pattern choice, transaction boundaries, and coarse-grained remote design.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

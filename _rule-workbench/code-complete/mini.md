@@ -1,4 +1,4 @@
-# Code Complete: Min
+# Code Complete: Mini
 
 ## When to use
 

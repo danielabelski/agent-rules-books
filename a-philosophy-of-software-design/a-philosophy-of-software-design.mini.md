@@ -1,4 +1,4 @@
-# A Philosophy of Software Design: Min
+# A Philosophy of Software Design: Mini
 
 ## When to use
 

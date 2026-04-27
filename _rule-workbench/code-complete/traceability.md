@@ -5,11 +5,11 @@ Canonical full source: [full.md](full.md)
 ## Compression decisions
 
 - Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- Manual fix on 2026-04-26 restored explicit comment discipline as a trigger in `min.md` and `nano.md`.
+- Manual fix on 2026-04-26 restored explicit comment discipline as a trigger in `mini.md` and `nano.md`.
 - This was treated as a book-specific miss, not a `PROCESS.md` change: the source makes comment usefulness and anti-narration behavior operational, not merely stylistic.
 - Broader coding-standards prose and review scaffolding still stay compressed because the main construction pressure survives through routine shape, data meaning, defensive programming, control-flow rules, and now explicit comment discipline.
 
-## Min mapping
+## Mini mapping
 
 Decision rules:
 

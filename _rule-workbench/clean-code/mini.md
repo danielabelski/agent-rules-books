@@ -1,4 +1,4 @@
-# Clean Code: Min
+# Clean Code: Mini
 
 ## When to use
 

@@ -1,4 +1,4 @@
-# Patterns of Enterprise Application Architecture: Min
+# Patterns of Enterprise Application Architecture: Mini
 
 ## When to use
 
