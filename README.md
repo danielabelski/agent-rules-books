@@ -6,7 +6,6 @@ MIT licensed universal project rules for coding agents.
 
 This repository contains ready-to-use rule sets inspired by well-known books on software design, architecture, refactoring, legacy code, reliability, and data-intensive systems.
 
-For constructive criticism from Reddit, see [CRITICISM.md](CRITICISM.md).
 For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAGE.md). It covers always-on vs on-demand usage, skills, scoped rules, MCP or RAG patterns, and the preferred setup for each editor.
 
 Each rule set is released in three tool-agnostic Markdown versions:
@@ -15,20 +14,7 @@ Each rule set is released in three tool-agnostic Markdown versions:
 - `nano`: the compact fallback for very tight context budgets
 - `full`: the canonical complete source and reference version
 
-## Quick Start
-
-- if you want to use one book directly, start with `mini`
-- open [USAGE.md](USAGE.md) and follow the setup for Codex, Claude Code, or Cursor
-- use `mini` as the default recommended choice for focused work with one book
-- keep `nano` only as the compact always-on fallback when context is very tight
-- use `full` for audits, one-off deep sessions, or for deriving narrower scoped rules or skills
-- avoid loading every rule at once
-
-## Which Version To Use
-
-- use `mini` by default when you actively want a given book to shape the agent's decisions; this is the recommended starting point for most task-scoped use
-- use `nano` when the rule set must stay always-on, travel well across tools, or fit into a very small context budget
-- use `full` when you need the complete source: audits, compression review, deriving skills or scoped rules, or checking what was intentionally omitted
+For constructive criticism from Reddit, see [CRITICISM.md](CRITICISM.md).
 
 ## Release Matrix
 
@@ -135,8 +121,6 @@ Author: [Michael Feathers](https://www.r7krecon.com/)
 The book explains how to safely change difficult, poorly tested code: characterization tests, seams, dependency breaking, sprout method, wrap method, and incremental risk reduction. This rule set is best for legacy work where the first goal is regaining control.
 
 ## Choosing Rules
-
-For criticism and caveats about combining rule sets, see [CRITICISM.md](CRITICISM.md).
 
 Choose rules based on the task:
 
