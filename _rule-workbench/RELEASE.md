@@ -42,8 +42,8 @@ The repository README must contain a table with:
 
 Recommended columns:
 
-| Book | Full lines | Full rules | Full size | Full file | Mini lines | Mini rules | Mini size | Mini file | Nano lines | Nano rules | Nano size | Nano file |
-| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- |
+| Book | Full file | Full lines | Full rules | Full size | Mini file | Mini lines | Mini rules | Mini size | Nano file | Nano lines | Nano rules | Nano size |
+| --- | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: |
 
 Recommended link targets:
 
