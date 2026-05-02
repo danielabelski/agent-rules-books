@@ -7,7 +7,7 @@ work pragmatically, take responsibility for quality, automate what is repetitive
 
 All code generation, edits, and reviews must optimize for:
 - clear ownership and responsibility
-- DRY at the knowledge level
+- avoiding duplicated knowledge
 - orthogonality
 - incremental delivery
 - ruthless feedback
@@ -49,6 +49,15 @@ Do not follow style or process rituals that do not improve outcomes.
 1. Build systems that are easy to observe, test, and change.
 2. Prefer flexible boundaries over brittle cleverness.
 3. Avoid premature commitment when requirements are still moving.
+
+### Named Pragmatic Habits
+1. Treat quality as a requirement to negotiate with users and sponsors, not as an abstract pursuit of perfection.
+2. Stop polishing when the software is good enough for its real users and risks.
+3. Keep a knowledge portfolio: invest in learning, diversify skills, and revisit stale assumptions.
+4. Communicate decisions, risks, and tradeoffs clearly enough that others can act on them.
+5. Watch for entropy and small broken windows before they become normal.
+6. Use Stone Soup tactics only to create real progress, not to hide missing agreement.
+7. Watch for boiled-frog drift where gradual degradation becomes invisible.
 
 ---
 
@@ -98,6 +107,19 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Reversibility, Domain Languages, and Requirements
+
+1. Preserve reversibility when requirements, vendors, platforms, databases, or deployment environments may change.
+2. Avoid irreversible commitments until evidence makes them worth the cost.
+3. Use a small domain language when it expresses domain rules more directly than general-purpose code.
+4. Keep domain languages readable by the people who must validate or change them.
+5. Dig for real requirements; do not accept current implementation details as requirements.
+6. Do not fall into the specification trap where prose keeps growing but uncertainty does not fall.
+7. Start building a working slice when further specification no longer reduces meaningful risk.
+8. Respect informed hesitation: if the team is not ready, identify the missing information or feedback.
+
+---
+
 ## Prototyping Rules
 
 1. Use prototypes to learn, not to pretend you are done.
@@ -112,7 +134,7 @@ Anti-patterns (MUST NOT):
 1. Automate repetitive, error-prone, or easy-to-forget tasks.
 2. Prefer repeatable scripts over tribal-knowledge commands.
 3. Build, test, lint, format, package, and deploy steps should be reproducible.
-4. Keep local automation aligned with CI/CD behavior.
+4. Keep local automation aligned with the project's shared build, test, and release automation.
 
 Anti-patterns (MUST NOT):
 - “works on my machine” build steps
@@ -125,7 +147,7 @@ Anti-patterns (MUST NOT):
 
 1. Shorten the time between change and feedback.
 2. Run relevant tests early and often.
-3. Use static analysis, linters, and type checks where they reduce real risk.
+3. Use automated checks where they reduce real risk.
 4. Make failure visible fast.
 5. Prefer a cheap early signal over a late expensive surprise.
 
@@ -197,6 +219,40 @@ Anti-patterns (MUST NOT):
 2. Do not hand-do tasks that should be scripted.
 3. Keep editor, formatter, lint, tests, and local scripts aligned with team standards.
 4. Improve the toolchain when repeated friction appears.
+
+### Basic Tool Rules
+- Use source control for every meaningful project, including small or solo work.
+- Prefer inspectable plain text for long-lived scripts, configs, data, and generated sources when practical.
+- Use shell tools for exploration, automation, and repeatable transformations where they fit.
+- Use editor capabilities to reduce repetitive manual edits.
+- Use text manipulation languages or scripts for systematic changes that would be error-prone by hand.
+- Use code generators to remove duplicated mechanical work, but keep the source specification authoritative.
+- When debugging, do not guess: reproduce, observe, isolate, explain, fix, and verify.
+- Do not rely on generated code, tools, specifications, or formal methods you do not understand.
+
+---
+
+## Resource and Coupling Rules
+
+1. Finish what you start when allocating, opening, locking, or otherwise acquiring resources.
+2. Release every resource you acquire, preferably in the opposite order from acquisition.
+3. Keep resource ownership local and explicit.
+4. Apply shy-code and Law of Demeter discipline so modules reveal only necessary information.
+5. Avoid temporal coupling; make ordering requirements explicit or remove them.
+6. Use metaprogramming only when it reduces duplication or improves adaptability without hiding behavior.
+7. Use blackboard-style coordination only when uncertain order, multiple sources, or opportunistic collaboration justify it.
+8. Understand algorithmic growth before writing or accepting performance-sensitive code.
+
+---
+
+## Project and Team Rules
+
+1. Build pragmatic teams around shared responsibility, automation, fast feedback, and visible quality.
+2. Test unit behavior, integration, validation and verification, resource exhaustion, errors and recovery, performance, usability, and tests themselves where relevant.
+3. Treat writing as engineering work: docs, comments, commit messages, scripts, and tests must communicate intent.
+4. Set expectations explicitly with users and stakeholders.
+5. Take pride in code, tests, documentation, and generated artifacts.
+6. Be skeptical of methods, diagrams, and ceremonies that do not improve the work.
 
 ---
 

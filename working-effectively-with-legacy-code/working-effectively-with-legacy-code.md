@@ -69,6 +69,8 @@ Do not begin with a rewrite unless explicitly required.
 7. Make the functional change.
 8. Refactor for clarity and keep the seam or new structure if it still pays for itself.
 
+Short form: identify change points, find test points, break dependencies, write tests, make changes, then refactor.
+
 Do not start by cleaning the whole module.
 
 ---
@@ -81,6 +83,8 @@ Do not start by cleaning the whole module.
 3. Prefer narrow tests around the slice you are about to modify.
 4. Capture ugly behavior if real consumers rely on it.
 5. Once behavior is protected, improve structure safely.
+6. Mark suspicious current behavior for clarification instead of silently "fixing" it during characterization.
+7. Use sensing variables or temporary probes only to confirm that a test reaches the intended path; remove them after use.
 
 ### New Behavior Tests
 1. Add focused tests for the requested change.
@@ -108,7 +112,7 @@ Examples:
 - adapter around framework object
 - factory indirection
 - module boundary
-- link seam or import seam
+- link seam, import seam, or preprocessing seam where the language/build system supports it
 - subclass seam when forced by language constraints
 
 ### Required Behavior
@@ -116,6 +120,8 @@ Examples:
 2. Prefer explicit seams over magical test hooks.
 3. Prefer seams that remain useful after the current task.
 4. Create seams near hard dependencies, not randomly in the code.
+5. Separate sensing from separation: decide whether the seam observes behavior, substitutes a dependency, or both.
+6. Use link and preprocessing seams carefully; they can unlock tests but do not usually improve design by themselves.
 
 ---
 
@@ -148,10 +154,24 @@ When legacy code is hard to test, first look for these dependency types:
 
 ### Required Moves
 - wrap static and global access
-- inject clocks, RNGs, gateways, and repositories
+- inject clocks, random generators, external interfaces, and hard collaborators
 - split construction from use
 - extract side effects behind explicit collaborators
 - narrow the code under test to a manageable slice
+
+---
+
+## Test Selection and Understanding Rules
+
+1. Use effect sketches when the impact of a change is unclear.
+2. Start from the change point and trace affected values, calls, fields, outputs, and collaborators outward.
+3. Choose test points where effects can be observed with useful precision.
+4. Use interception points when several planned changes can be protected by one broader test.
+5. Use pinch points when many effects pass through one narrow point.
+6. Treat broad tests at interception points as a first step toward narrower tests.
+7. Use scratch refactoring to understand code, but discard it unless later backed by tests and review.
+8. Sketch, mark, or group responsibilities in large code before moving behavior.
+9. Do not check in exploratory restructuring that was only used to learn.
 
 ---
 
@@ -174,7 +194,7 @@ Rules (MUST unless marked SHOULD or MUST NOT):
 - slowly move behavior over if later justified
 
 ### Wrap Method
-Use when you need pre/post behavior around a risky method or better observability.
+Use when you need pre/post behavior around a risky method or a better way to observe effects.
 
 ### Wrap Class
 Use when a class is too hard to test directly and behavior can be mediated through a new abstraction.
@@ -182,6 +202,26 @@ Use when a class is too hard to test directly and behavior can be mediated throu
 ### Extract and Override Call
 Use only when language constraints leave few better options.
 Prefer composition once a cleaner route appears.
+
+---
+
+## Dependency-Breaking Technique Index
+
+- USE Adapt Parameter when a method needs only a narrow view of a hard-to-create parameter.
+- USE Break Out Method Object when a large method has local state that blocks extraction and testing.
+- USE Definition Completion when missing definitions block tests in languages that allow completion in test code.
+- USE Encapsulate Global References when globals or singletons prevent substitution.
+- USE Expose Static Method when useful logic does not need instance state but is trapped behind instance setup.
+- USE Extract and Override Factory Method when construction of a hard dependency must vary under test.
+- USE Extract Implementer or Extract Interface when concrete dependencies make compilation or substitution hard.
+- USE Introduce Instance Delegator when static behavior needs an instance seam.
+- USE Parameterize Constructor or Parameterize Method when hidden collaborators should become explicit inputs.
+- USE Primitivize Parameter only when the real type is too costly to bring into a harness and primitive data is enough for the new logic.
+- USE Pull Up Feature or Push Down Dependency to move behavior or dependencies to a more testable level in a hierarchy.
+- USE Replace Global Reference with Getter when direct global access needs a seam.
+- USE Subclass and Override Method only when safer composition seams are not available.
+- USE Supersede Instance Variable when a test needs to replace a hard dependency held in a field.
+- USE Template Redefinition, Text Redefinition, link seams, or preprocessing seams only when language or build constraints make ordinary object seams impractical.
 
 ---
 
@@ -285,7 +325,7 @@ Preferred first moves:
 - add a narrow characterization test
 
 Preferred avoidance:
-- huge dependency injection rewrites
+- huge dependency-breaking rewrites
 - replacing old modules wholesale
 - introducing large new architectures before basic seams exist
 - mocking untestable structure instead of improving it

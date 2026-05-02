@@ -2,33 +2,48 @@
 
 ## When to use
 
-Use for systems where business rules must stay stable while frameworks, databases, transports, and vendors change.
+Use when adding, changing, reviewing, or refactoring code whose business rules should survive changes in frameworks, databases, delivery mechanisms, services, devices, vendors, deployment shape, or schedule pressure.
 
 ## Primary bias to correct
 
-Do not let framework structure or adapter convenience become the architecture.
+Do not let details become the architecture. Business policy stays independent, dependencies point inward, and volatile mechanisms remain replaceable.
 
 ## Decision rules
 
-- Enforce the dependency rule: source dependencies point toward policy, never toward frameworks or delivery mechanisms.
-- Keep the domain pure. Business rules must not read HTTP objects, ORM models, framework context, queue SDK types, or vendor payloads directly.
-- Let the application layer coordinate use cases, transactions, and ports. It should orchestrate business work, not become a dumping ground for domain rules.
-- Keep interface adapters responsible for translation: requests to use-case input, domain results to responses, and persistence/transport models to domain-friendly shapes.
-- Treat infrastructure as replaceable detail. Put databases, frameworks, SDKs, mailers, queues, and storage behind ports or gateways.
-- Define the use case and its boundary models before wiring details. The shape of the framework code should follow the use case, not the reverse.
-- Prefer feature-oriented structure so the boundary around a use case stays visible instead of being split across controller/service/repository buckets.
-- Test the core without real infrastructure. Add focused adapter tests where translation or integration behavior is the risk.
+- Preserve independent business rules, inward dependencies, testability, and replaceable details even when the immediate feature would be shorter without them.
+- Source dependencies must point inward toward higher-level policy. Domain and use cases must not import frameworks, databases, web handlers, queues, external service clients, UI types, or other details.
+- Put enterprise rules and invariants in entities or equivalent domain objects; put application-specific orchestration in focused use cases.
+- Pass plain request and response models across use-case boundaries. Do not pass web requests, framework contexts, ORM rows, database-bound structures, or framework response objects into or out of core policy.
+- Treat frameworks, databases, web delivery, messaging, filesystems, clocks, service clients, networks, devices, and vendors as outer-layer details behind ports, gateways, presenters, mappers, or adapters.
+- Inner layers own the interfaces they need; outer layers implement them. Object construction and concrete wiring belong in the composition root or other outer-layer main component.
+- Keep adapters humble. Controllers, endpoints, presenters, gateway adapters, service listeners, and hardware adapters translate external formats to use-case calls and back; they do not own business decisions.
+- Organize by use case, feature, or business capability before generic technical buckets. The structure should reveal domain intent and application actions.
+- Choose boundaries by volatility, policy importance, substitution value, testability, and cost. Use the lightest enforceable boundary, including partial boundaries, when full deployment or runtime separation is too expensive.
+- Do not merge unrelated use cases or eliminate duplication when sharing would couple actors, change reasons, team ownership, deployment needs, or release pressure.
+- Use structured code, dependency inversion, role-sized interfaces, substitutable implementations, controlled mutation, acyclic components, and stability-directed dependencies to protect policy from volatile details.
+- Enforce boundaries with package structure, dependency rules, build constraints, tests, visibility, or narrow APIs. A diagram, service split, package name, or shared `common` folder is not enough.
+- Test entities, use cases, and boundary contracts first, without the real framework, database, network, external service, or target hardware. Test adapters separately at the seams.
+- Preserve behavior while improving dependency direction. Prefer incremental boundary extraction over rewrites, and call out architectural debt when it cannot be fixed safely now.
 
 ## Trigger rules
 
-- When framework or ORM types appear in domain or use-case code, stop and move translation to an adapter.
-- When a controller, handler, or job starts carrying business rules, move policy inward to the use case or domain.
-- When adding a new external dependency, introduce a port if the core would otherwise learn vendor details.
-- When a cross-layer call bypasses the intended path, fix the boundary instead of normalizing the shortcut.
+- When urgent delivery would skip architecture, state the future change, test, replacement, or operational cost before accepting the shortcut.
+- When framework annotations, request/response objects, serializers, ORM rows, schemas, vendor SDKs, config, environment reads, device registers, or transport formats enter core policy, move translation outward.
+- When controllers, jobs, handlers, views, presenters, gateways, repositories, SQL, service listeners, scripts, or hardware adapters contain business branching or validation, move the rule inward.
+- When a use case instantiates infrastructure, calls a volatile dependency directly, or depends on a concrete implementation, introduce a policy-owned port and wire the concrete detail at the edge.
+- When a `*Service`, utility folder, shared module, base package, or generic `core` package becomes an escape hatch, split by use case, role, or ownership and restore dependency direction.
+- When an adapter bypasses a use case, a presenter reads persistence directly, or infrastructure is both imported by and importing inward code, restore the intended boundary.
+- When service boundaries, process boundaries, remote calls, deployment boundaries, or embedded hardware appear, still verify source dependencies, data ownership, I/O cost, and policy independence.
+- When tests need the framework, database, network, service, or hardware to verify business rules, move tests to use cases/entities with fakes or add a stable boundary contract.
+- When a compromise is unavoidable, keep it at the outermost layer possible, document the violation, avoid normalizing it, and preserve a path to separation.
 
 ## Final checklist
 
-- Could the business rules survive a database, UI, or framework replacement?
-- Is the use case visible as a unit, with plain input and output models?
-- Are dependency arrows still pointing toward policy?
-- Are risky integrations isolated to adapters or infrastructure code?
+- Business rules independent from frameworks, databases, UI, services, devices, and vendors?
+- Dependencies point inward, with ports owned by inner policy and concrete details outside?
+- Entities guard invariants and focused use cases orchestrate one application action?
+- Boundaries explicit and enforced in code, tests, packages, or build rules?
+- Controllers, presenters, gateways, service listeners, and adapters humble?
+- Structure reveals use cases and business capabilities instead of generic technical buckets?
+- Core tests run fast without real delivery, persistence, network, external service, or hardware?
+- Details remain replaceable without rewriting business rules?

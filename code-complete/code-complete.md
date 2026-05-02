@@ -42,6 +42,25 @@ Do not optimize for cleverness, minimal keystrokes, or fashionable idioms at the
 
 ---
 
+## Construction Prerequisites and Decisions
+
+1. Do not treat construction as isolated typing; verify that requirements, architecture, major risks, and coding conventions are clear enough for the change.
+2. Resolve major construction decisions before large implementation work: language constraints, error policy, data representation, reuse strategy, integration approach, and testing approach.
+3. Use upstream uncertainty as a reason to build a small validated slice, not as an excuse for speculative code.
+4. Keep the software metaphor or design model only if it helps make concrete construction decisions.
+5. Measure twice before cutting when an early decision will be expensive to reverse.
+
+---
+
+## Pseudocode Programming Process
+
+1. For complex routines, sketch the routine in precise pseudocode or comments before filling in details.
+2. Refine pseudocode until it names the real steps at a consistent abstraction level.
+3. Convert clear pseudocode into code and keep only comments that still add intent, constraints, or rationale.
+4. Do not use pseudocode as a substitute for understanding the algorithm.
+
+---
+
 ## Routine Design Rules
 
 1. Routines should have one clear purpose.
@@ -65,7 +84,7 @@ Anti-patterns (MUST NOT):
 1. Use names that reveal purpose and meaning.
 2. Keep variable scope as small as practical.
 3. Initialize variables deliberately.
-4. Prefer constants or immutable values where mutation adds no value.
+4. Prefer named constants or stable values where a variable is not meant to change.
 5. Avoid magic numbers and unexplained sentinel values.
 6. Use stronger data types when primitives hide meaning.
 
@@ -73,6 +92,18 @@ Anti-patterns (MUST NOT):
 - reused loop/index/temp variables beyond their purpose
 - long-lived mutable locals carrying many meanings
 - values whose units or semantics are unclear
+
+---
+
+## Data Type Rules
+
+1. Choose data types that make invalid or ambiguous values harder to represent.
+2. Name constants for magic values, units, bounds, and sentinel meanings.
+3. Use booleans only for true binary meanings; replace flag fields with clearer states when needed.
+4. Use enumerations or named alternatives when a value belongs to a closed set.
+5. Use arrays, records, maps, and tables only where their shape communicates the data meaning.
+6. Encapsulate unusual data structures behind routines or types that reveal purpose.
+7. Keep units, ranges, precision, encoding, and ownership visible near the data they affect.
 
 ---
 
@@ -90,6 +121,18 @@ Anti-patterns (MUST NOT):
 - complicated loop exits with hidden state changes
 - control flow dependent on side effects in expressions
 - clever one-liners that obscure the logic
+
+---
+
+## Statement, Conditional, and Loop Rules
+
+1. Organize straight-line code so dependencies appear before use and related statements stay together.
+2. Keep conditionals positive and direct when possible.
+3. Put the normal path where readers can find it quickly.
+4. Use loops with clear initialization, termination, and update rules.
+5. Keep loop bodies focused; extract work when a loop hides several responsibilities.
+6. Avoid unusual control structures unless they are clearer than ordinary alternatives.
+7. Use table-driven methods when repeated branching is stable and the table can be validated.
 
 ---
 
@@ -185,6 +228,29 @@ Anti-patterns (MUST NOT):
 2. Integrate frequently enough to surface conflicts and misunderstanding early.
 3. Keep partial work from rotting in long-lived isolation.
 4. Review and improve code as part of construction, not only after it.
+
+---
+
+## Quality, Collaboration, Debugging, and Refactoring
+
+1. Use reviews, inspections, pair work, tests, and static checks according to the risk of the code.
+2. Treat debugging as diagnosis: reproduce, isolate, explain, fix, and verify rather than guessing.
+3. Fix the root cause when practical, not only the symptom.
+4. Add tests around defects so the same failure is easier to detect next time.
+5. Refactor when structure hides intent, duplicates knowledge, or raises defect probability.
+6. Keep refactoring separate from behavior changes when that improves reviewability.
+
+---
+
+## Performance, Integration, Tools, and Craftsmanship
+
+1. Do not tune performance until the requirement and evidence justify it.
+2. When tuning is justified, measure before and after, and keep clarity unless the tradeoff is explicit.
+3. Integrate frequently enough to expose construction conflicts early.
+4. Use programming tools, scripts, debuggers, profilers, editors, and build automation to reduce error-prone manual work.
+5. Keep layout and style consistent enough that readers can focus on meaning.
+6. Prefer self-documenting code, but add documentation where the code cannot express intent, constraints, or usage.
+7. Treat personal discipline, curiosity, and ability to withstand careful review as part of construction quality.
 
 ---
 

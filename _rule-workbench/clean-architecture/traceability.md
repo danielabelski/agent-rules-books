@@ -4,91 +4,95 @@ Canonical full source: [full.md](full.md)
 
 ## Compression decisions
 
-- Re-run under the generalized `PROCESS.md` on 2026-04-26 after adding `Process vs Book Diagnosis`.
-- This rerun identified book-specific misses, not a new process bug: the source explicitly treats inner ownership of ports and role-based naming as operational Clean Architecture pressure.
-- `mini.md` was strengthened to keep entity and invariant placement explicit, to preserve inner ownership of ports, and to preserve role-based naming and anti-god-service pressure as repeated micro-decisions.
-- `nano.md` stayed unchanged because the new misses belong in on-demand pressure, not in the always-on budget.
-- Detailed naming examples, output-shape prose, and repeated checklist wording stay compressed unless they change a concrete architectural decision.
+- Re-run under `_rule-workbench/PROCESS.md` on 2026-05-02 for book position 2 in alphabetical workbench order: `clean-architecture`.
+- Diagnosis: book-specific rerun, not a process bug. The current process already requires retaining decision-changing rules, conflict resolvers, micro-decisions, trigger rules, testing discipline, boundary ownership, and anti-shortcut guidance.
+- `mini.md` keeps the current source's operational Clean Architecture bias: inward dependencies, independent business rules, replaceable details, use-case-first structure, policy-owned ports, humble adapters, enforceable boundaries, incremental refactoring, and detail-free policy tests.
+- `nano.md` keeps only always-on reminders that block common model shortcuts: framework-first structure, database-shaped policy, direct volatile dependencies, layer bypass, generic service/utility dumping grounds, fake boundaries, and brittle policy tests.
+- No rule is marked `default`; no source rule was removed on the claim that agents reliably follow it without prompting.
+- Repeated examples of details, adapters, and forbidden patterns are merged when their operational consequence is the same: keep policy inward and detail translation outward.
 
 ## Mini mapping
 
 Decision rules:
 
-- `M1` Enforce the dependency rule: source dependencies point toward policy, never toward frameworks or delivery mechanisms. Source: `Non-Negotiable Rules` (19-25, 66-70), `Architecture Heuristics / Dependency Direction` (215-223), `Forbidden Patterns / Direction Violations` (333-337).
-- `M2` Keep the domain pure and put core invariants in entities or domain objects, not in controllers, jobs, repository code, or SQL. Source: `Non-Negotiable Rules` (26-29, 61-64), `Required Layer Responsibilities / Domain Layer` (76-96), `Forbidden Patterns / Database Leakage` (313-316), `Forbidden Patterns / Controller-Centric Logic` (318-321), `Refactoring Rules` (349-360).
-- `M3` Let the application layer coordinate use cases, transactions, and ports without becoming a dumping ground for policy. Source: `Non-Negotiable Rules` (56-59), `Required Layer Responsibilities / Application Layer` (97-115), `Architecture Heuristics / Policy vs Detail` (224-231).
-- `M4` Keep adapters responsible for translation between external formats and internal models. Source: `Non-Negotiable Rules` (41-49), `Required Layer Responsibilities / Interface Adapters Layer` (116-133), `Code Generation Rules / Use Plain Models at Boundaries` (177-181).
-- `M5` Treat infrastructure as replaceable detail, keep ports owned by inner layers and implemented outward, and keep wiring at the composition root. Source: `Required Layer Responsibilities / Infrastructure Layer` (134-153), `Code Generation Rules / Create Ports for Volatile Dependencies` (182-195), `Code Generation Rules / Keep Wiring in the Main Component` (196-200), `Code Generation Rules / Prefer Stable Dependencies` (201-204), `Architecture Heuristics / Stable Core, Replaceable Edge` (233-242), `Preferred Default Shapes / Preferred dependency pattern` (443-447).
-- `M6` Define the use case and its plain boundary models before wiring details. Source: `Code Generation Rules / Define the Use Case First` (160-176), `Code Generation Rules / Use Plain Models at Boundaries` (177-181), `Code Generation Rules / Keep Boundaries Visible` (206-209), `Preferred Default Shapes / Preferred use case shape` (436-441).
-- `M7` Prefer feature-oriented structure and role-based names so use-case ownership stays visible instead of dissolving into controller/service/repository buckets or generic escape hatches. Source: `Non-Negotiable Rules / Organize by Use Case` (51-55), `Architecture Heuristics / Feature First Structure` (244-257), `Naming Rules` (261-269), `Forbidden Patterns / Utility Dumping Grounds` (338-341), `Preferred Default Shapes / Preferred feature shape` (424-435).
-- `M8` Test the core without real infrastructure and add focused adapter tests where translation or integration behavior is the risk. Source: `Testing Rules / Core Tests First` (274-286), `Testing Rules / Adapter Tests` (287-295), `Testing Rules / Test Through Supported Boundaries` (297-300).
+- `M1` Preserve independent business rules, inward dependencies, testability, and replaceable details even when the immediate feature would be shorter without them. Source: `Purpose` (3-17), `Architecture Economics and Priority` (257-264), `Final Instruction` (506-515).
+- `M2` Source dependencies must point inward toward higher-level policy; core policy must not import volatile details. Source: `Non-Negotiable Rules` (21-24, 66-70), `Required Layer Responsibilities` (85-96, 106-115, 125-152), `Architecture Heuristics` (214-221), `Paradigm and Component Rules` (270-280), `Forbidden Patterns` (377-380), `Preferred Default Shapes` (487-490), `Final Instruction` (506-515).
+- `M3` Put enterprise rules and invariants in entities or equivalent domain objects; put application-specific orchestration in focused use cases. Source: `Non-Negotiable Rules` (26-29, 56-64), `Required Layer Responsibilities` (76-115), `Architecture Heuristics` (223-230), `Output Expectations` (421-427), `Review Checklist` (448-453).
+- `M4` Pass plain request and response models across use-case boundaries; do not pass framework, web, ORM, database, or response objects into or out of core policy. Source: `Non-Negotiable Rules` (26-44), `Application Layer` (98-115), `Code Generation Rules` (160-180), `Forbidden Patterns` (352-360), `Preferred Default Shapes` (480-485).
+- `M5` Treat frameworks, databases, web delivery, messaging, filesystems, clocks, service clients, networks, devices, and vendors as outer-layer details behind ports, gateways, presenters, mappers, or adapters. Source: `Non-Negotiable Rules` (31-49), `Required Layer Responsibilities` (117-152), `Code Generation Rules` (182-208), `Architecture Heuristics` (232-241), `Services, Distribution, and Embedded Boundaries` (296-302), `Refactoring Rules` (396-405), `Output Expectations` (421-427).
+- `M6` Inner layers own the interfaces they need; outer layers implement them; concrete wiring belongs in the composition root or outer-layer main component. Source: `Non-Negotiable Rules` (46-70), `Infrastructure Layer` (134-152), `Code Generation Rules` (182-203), `Preferred Default Shapes` (487-490).
+- `M7` Keep adapters humble: translate external formats to use-case calls and back instead of owning business decisions. Source: `Non-Negotiable Rules` (41-44), `Interface Adapters Layer` (117-132), `Infrastructure Layer` (134-152), `Services, Distribution, and Embedded Boundaries` (296-302), `Forbidden Patterns` (362-375), `Output Expectations` (434-440).
+- `M8` Organize by use case, feature, or business capability before generic technical buckets. Source: `Non-Negotiable Rules` (51-59), `Architecture Heuristics` (243-253), `Naming Rules` (306-313), `Output Expectations` (421-427), `Review Checklist` (457-459), `Preferred Default Shapes` (468-478).
+- `M9` Choose boundaries by volatility, policy importance, substitution value, testability, and cost; use the lightest enforceable boundary, including partial boundaries, when full separation is too expensive. Source: `Code Generation Rules` (205-208), `Architecture Economics and Priority` (257-264), `Boundary Cost, Deployment, and Operations` (284-292), `When Tradeoffs Are Necessary` (494-502).
+- `M10` Do not merge unrelated use cases or eliminate duplication when sharing would couple actors, change reasons, team ownership, deployment needs, or release pressure. Source: `Architecture Economics and Priority` (264), `Paradigm and Component Rules` (273-280), `Boundary Cost, Deployment, and Operations` (289-291), `Naming Rules` (306-313), `Forbidden Patterns` (367-385).
+- `M11` Use structured code, dependency inversion, role-sized interfaces, substitutable implementations, controlled mutation, acyclic components, and stability-directed dependencies to protect policy from volatile details. Source: `Paradigm and Component Rules` (268-280), `Code Generation Rules` (200-203), `Forbidden Patterns` (377-385).
+- `M12` Enforce boundaries with package structure, dependency rules, build constraints, tests, visibility, or narrow APIs. Source: `Code Generation Rules` (200-208), `Boundary Cost, Deployment, and Operations` (286-292), `Services, Distribution, and Embedded Boundaries` (298-302), `Forbidden Patterns` (372-385).
+- `M13` Test entities, use cases, and boundary contracts first, without real volatile details; test adapters separately at the seams. Source: `Non-Negotiable Rules` (36-39), `Testing Rules` (317-344), `Services, Distribution, and Embedded Boundaries` (301-302), `Refactoring Rules` (410-411), `Review Checklist` (456).
+- `M14` Preserve behavior while improving dependency direction; prefer incremental boundary extraction over rewrites and call out architectural debt when it cannot be fixed safely now. Source: `Refactoring Rules` (389-415), `Output Expectations` (429-440), `When Tradeoffs Are Necessary` (494-502).
 
 Trigger rules:
 
-- `M9` When framework or ORM types appear in domain or use-case code, stop and move translation to an adapter. Source: `Non-Negotiable Rules` (31-45), `Code Generation Rules / Use Plain Models at Boundaries` (177-181), `Forbidden Patterns / Framework Leakage` (308-312).
-- `M10` When a controller, handler, job, repository, or SQL path starts carrying business rules or invariant checks, move policy inward. Source: `Non-Negotiable Rules` (56-64), `Forbidden Patterns / Database Leakage` (313-316), `Forbidden Patterns / Controller-Centric Logic` (318-321), `Refactoring Rules` (349-360).
-- `M11` When adding a new external dependency, introduce a port if the core would otherwise learn vendor or transport details. Source: `Non-Negotiable Rules` (46-49), `Code Generation Rules / Create Ports for Volatile Dependencies` (182-195), `Code Generation Rules / Keep Boundaries Visible` (206-209).
-- `M12` When a cross-layer shortcut appears or a large `*Service` starts spanning multiple actions, split by use case and restore the boundary. Source: `Non-Negotiable Rules` (51-59, 66-70), `Forbidden Patterns / God Services` (323-326), `Forbidden Patterns / Layer Bypass` (328-331), `Forbidden Patterns / Utility Dumping Grounds` (338-341), `Refactoring Rules` (362-371).
+- `M15` When urgent delivery would skip architecture, state the future change, test, replacement, or operational cost before accepting the shortcut. Source: `Architecture Economics and Priority` (257-264), `When Tradeoffs Are Necessary` (494-502), `Final Instruction` (506-515).
+- `M16` When framework annotations, request/response objects, serializers, ORM rows, schemas, vendor SDKs, config, environment reads, device registers, or transport formats enter core policy, move translation outward. Source: `Non-Negotiable Rules` (26-49), `Required Layer Responsibilities` (85-152), `Code Generation Rules` (177-180), `Forbidden Patterns` (352-360), `Services, Distribution, and Embedded Boundaries` (301-302).
+- `M17` When controllers, jobs, handlers, views, presenters, gateways, repositories, SQL, service listeners, scripts, or hardware adapters contain business branching or validation, move the rule inward. Source: `Non-Negotiable Rules` (56-64), `Interface Adapters Layer` (117-132), `Infrastructure Layer` (149-152), `Services, Distribution, and Embedded Boundaries` (298-302), `Forbidden Patterns` (357-370), `Refactoring Rules` (393-405).
+- `M18` When a use case instantiates infrastructure, calls a volatile dependency directly, or depends on a concrete implementation, introduce a policy-owned port and wire the concrete detail at the edge. Source: `Code Generation Rules` (182-203), `Forbidden Patterns` (377-380), `Preferred Default Shapes` (487-490).
+- `M19` When a `*Service`, utility folder, shared module, base package, or generic `core` package becomes an escape hatch, split by use case, role, or ownership and restore dependency direction. Source: `Non-Negotiable Rules` (51-59), `Code Generation Rules` (200-203), `Naming Rules` (306-313), `Forbidden Patterns` (367-385), `Refactoring Rules` (406-408).
+- `M20` When an adapter bypasses a use case, a presenter reads persistence directly, or infrastructure is both imported by and importing inward code, restore the intended boundary. Source: `Interface Adapters Layer` (117-132), `Architecture Heuristics` (214-221), `Forbidden Patterns` (372-380), `Review Checklist` (448-460).
+- `M21` When service boundaries, process boundaries, remote calls, deployment boundaries, or embedded hardware appear, still verify source dependencies, data ownership, I/O cost, and policy independence. Source: `Boundary Cost, Deployment, and Operations` (284-292), `Services, Distribution, and Embedded Boundaries` (296-302), `Final Instruction` (508-513).
+- `M22` When tests need volatile details to verify business rules, move tests to use cases/entities with fakes or add a stable boundary contract. Source: `Testing Rules` (317-344), `Services, Distribution, and Embedded Boundaries` (301-302), `Refactoring Rules` (410-411), `Review Checklist` (456).
+- `M23` When a compromise is unavoidable, keep it at the outermost layer possible, document the violation, avoid normalizing it, and preserve a path to separation. Source: `When Tradeoffs Are Necessary` (494-502), `Output Expectations` (429-432), `Final Instruction` (506-515).
 
 Final checklist:
 
-- The checklist restates `M1`, `M2`, `M5`, `M6`, and `M8` as a final scan rather than introducing new rules.
+- The checklist restates `M1`, `M2`, `M3`, `M5`, `M6`, `M7`, `M8`, `M12`, and `M13` as a final scan rather than introducing independent rules.
 
 ## Nano mapping
 
 Decision rules:
 
-- `N1` Business rules must not depend on frameworks, databases, UI, or vendor SDKs. Source: `Non-Negotiable Rules` (19-45), `Architecture Heuristics / Dependency Direction` (215-223).
-- `N2` Domain owns policy and invariants, application orchestrates use cases, adapters translate, and infrastructure implements details. Source: `Non-Negotiable Rules` (56-64), `Required Layer Responsibilities` (74-153).
-- `N3` Define the use case and plain boundary models before wiring external details. Source: `Code Generation Rules / Define the Use Case First` (160-181), `Preferred Default Shapes / Preferred use case shape` (436-441).
-- `N4` Put volatile dependencies behind ports and keep composition at the edge. Source: `Non-Negotiable Rules` (46-49), `Code Generation Rules` (182-209), `Preferred Default Shapes / Preferred dependency pattern` (443-447).
-- `N5` Prefer feature and use-case structure over controller/service/repository buckets. Source: `Non-Negotiable Rules / Organize by Use Case` (51-55), `Architecture Heuristics / Feature First Structure` (244-257), `Preferred Default Shapes / Preferred feature shape` (424-435).
-- `N6` Test the core independently and test adapters at real boundaries. Source: `Testing Rules` (272-300).
+- `N1` Source dependencies point inward; domain and use cases must not import volatile details. Source: `Purpose` (3-17), `Non-Negotiable Rules` (21-24, 66-70), `Required Layer Responsibilities` (85-96, 106-115), `Forbidden Patterns` (377-380), `Final Instruction` (508-515).
+- `N2` Entities guard enterprise invariants; focused use cases orchestrate application actions with plain input and output models. Source: `Non-Negotiable Rules` (26-29, 56-64), `Required Layer Responsibilities` (76-115), `Code Generation Rules` (160-180), `Preferred Default Shapes` (480-485).
+- `N3` Volatile mechanisms sit behind policy-owned ports and outer-layer adapters. Source: `Non-Negotiable Rules` (31-49), `Code Generation Rules` (182-208), `Architecture Heuristics` (232-241), `Services, Distribution, and Embedded Boundaries` (296-302), `Preferred Default Shapes` (487-490).
+- `N4` Controllers, presenters, gateways, service listeners, mappers, and hardware adapters translate; they do not own business rules. Source: `Interface Adapters Layer` (117-132), `Services, Distribution, and Embedded Boundaries` (298-302), `Forbidden Patterns` (362-375), `Refactoring Rules` (393-405).
+- `N5` Organize by use case, feature, or business capability; avoid generic technical buckets, god services, shared utility escape hatches, and sideways coupling. Source: `Non-Negotiable Rules` (51-59), `Architecture Heuristics` (243-253), `Naming Rules` (306-313), `Forbidden Patterns` (367-385).
+- `N6` Choose the lightest enforceable boundary that preserves likely change independence; a service, package, diagram, or folder name is not enough. Source: `Architecture Economics and Priority` (257-264), `Boundary Cost, Deployment, and Operations` (284-292), `Services, Distribution, and Embedded Boundaries` (298-302), `When Tradeoffs Are Necessary` (494-502).
+- `N7` Test policy through entities, use cases, and boundary contracts without real volatile details. Source: `Testing Rules` (317-344), `Services, Distribution, and Embedded Boundaries` (301-302), `Review Checklist` (456).
 
 Trigger rules:
 
-- `N7` When framework or ORM types enter core code, move translation outward. Source: `Non-Negotiable Rules` (31-45), `Forbidden Patterns / Framework Leakage` (308-312).
-- `N8` When a controller, job, repository, or god service grows business rules, move them inward and split by use case. Source: `Non-Negotiable Rules` (56-64), `Forbidden Patterns / Controller-Centric Logic` (318-321), `Forbidden Patterns / God Services` (323-326), `Refactoring Rules` (349-365).
-- `N9` When a new dependency or shortcut would couple the core to a vendor or bypass the intended path, add a port and restore the boundary. Source: `Non-Negotiable Rules` (46-49, 66-70), `Code Generation Rules` (182-209), `Forbidden Patterns / Layer Bypass` (328-341), `When Tradeoffs Are Necessary` (450-456).
+- `N8` When framework, ORM, request, response, schema, transport, config, vendor, or hardware types enter core policy, move translation outward. Source: `Non-Negotiable Rules` (26-49), `Required Layer Responsibilities` (85-152), `Forbidden Patterns` (352-360), `Services, Distribution, and Embedded Boundaries` (301-302).
+- `N9` When edge or service classes grow business rules, move policy inward and split by use case. Source: `Non-Negotiable Rules` (56-64), `Interface Adapters Layer` (117-132), `Forbidden Patterns` (362-370), `Refactoring Rules` (393-408).
+- `N10` When core code constructs or calls volatile details directly, define an inward-owned port and wire the concrete implementation at the edge. Source: `Code Generation Rules` (182-203), `Forbidden Patterns` (377-380), `Preferred Default Shapes` (487-490).
+- `N11` When a shortcut bypasses a use case, crosses layers, creates a cycle, or hides coupling in `common` or `utils`, restore dependency direction and ownership. Source: `Code Generation Rules` (200-208), `Architecture Heuristics` (214-221), `Paradigm and Component Rules` (278-280), `Forbidden Patterns` (372-385).
+- `N12` When constraints force a compromise, keep it outermost, name the violation, and preserve a future path to separation. Source: `When Tradeoffs Are Necessary` (494-502), `Output Expectations` (429-432), `Final Instruction` (506-515).
 
 Final checklist:
 
-- The checklist restates `N1`, `N2`, `N3`, `N4`, and `N5` as a final scan rather than introducing new rules.
+- The checklist restates `N1`, `N2`, `N3`, `N4`, `N5`, `N6`, and `N7` as a final scan rather than introducing independent rules.
 
 ## Section coverage review
 
-- `Purpose` (3-15): framing merged into the `When to use`, `Primary bias to correct`, and `M1`/`N1`.
-- `Non-Negotiable Rules` (19-71): covered by `M1`-`M7`, `M9`-`M12`, and `N1`-`N5`, `N7`-`N9`.
-- `Required Layer Responsibilities / Domain Layer` (76-96): covered by `M2` and `N2`.
-- `Required Layer Responsibilities / Application Layer` (97-115): covered by `M3` and `N2`.
-- `Required Layer Responsibilities / Interface Adapters Layer` (116-133): covered by `M4` and `N2`.
-- `Required Layer Responsibilities / Infrastructure Layer` (134-153): covered by `M5` and `N2`.
-- `Code Generation Rules / Define the Use Case First` (160-176): covered by `M6` and `N3`.
-- `Code Generation Rules / Use Plain Models at Boundaries` (177-181): covered by `M4`, `M6`, `M9`, `N3`, and `N7`.
-- `Code Generation Rules / Create Ports for Volatile Dependencies` (182-195): covered by `M5`, `M11`, `N4`, and `N9`.
-- `Code Generation Rules / Keep Wiring in the Main Component` (196-200): covered by `M5` and `N4`.
-- `Code Generation Rules / Prefer Stable Dependencies` (201-204): covered by `M1`, `M5`, `N1`, and `N4`.
-- `Code Generation Rules / Keep Boundaries Visible` (206-209): covered by `M6`, `M11`, `N3`, and `N9`.
-- `Architecture Heuristics / Dependency Direction` (215-223): covered by `M1` and `N1`.
-- `Architecture Heuristics / Policy vs Detail` (224-231): covered by `M3`, `M4`, `M5`, and `N2`.
-- `Architecture Heuristics / Stable Core, Replaceable Edge` (233-242): covered by `M5` and `N4`.
-- `Architecture Heuristics / Feature First Structure` (244-257): covered by `M7` and `N5`.
-- `Naming Rules` (261-269): covered by `M7`; the full list of examples is compressed, but the anti-`*Service`/`Helper`/`Manager` pressure is retained.
-- `Testing Rules / Core Tests First` (274-286): covered by `M8` and `N6`.
-- `Testing Rules / Adapter Tests` (287-295): covered by `M8` and `N6`.
-- `Testing Rules / Test Through Supported Boundaries` (297-300): covered by `M8` and `N6`.
-- `Forbidden Patterns / Framework Leakage` (308-312): covered by `M9` and `N7`.
-- `Forbidden Patterns / Database Leakage` (313-316): covered by `M2`, `M10`, and `N8`.
-- `Forbidden Patterns / Controller-Centric Logic` (318-321): covered by `M10` and `N8`.
-- `Forbidden Patterns / God Services` (323-326): covered by `M12` and `N8`.
-- `Forbidden Patterns / Layer Bypass` (328-331): covered by `M12` and `N9`.
-- `Forbidden Patterns / Direction Violations` (333-337): covered by `M1` and `N1`.
-- `Forbidden Patterns / Utility Dumping Grounds` (338-341): covered by `M7`, `M12`, `N5`, and `N9`.
-- `Refactoring Rules` (345-371): covered by `M2`, `M4`, `M8`, `M10`, `M11`, `M12`, `N6`, `N8`, and `N9`.
-- `Output Expectations` (375-398): implementation shape is covered by `M5`, `M6`, and `M7`; review prompts are covered by `M9`-`M12`; standalone prose is intentionally lost.
-- `Review Checklist` (400-418): covered by `M1`-`M8` and `N1`-`N6`; collapsed into the final checklists.
-- `Preferred Default Shapes / Preferred feature shape` (424-435): covered by `M7` and `N5`.
-- `Preferred Default Shapes / Preferred use case shape` (436-441): covered by `M6` and `N3`.
-- `Preferred Default Shapes / Preferred dependency pattern` (443-447): covered by `M1`, `M5`, and `N4`.
-- `When Tradeoffs Are Necessary` (450-458): covered by `M11`, `M12`, and `N9`.
-- `Final Instruction` (462-471): covered by `M1`, `M5`, `M8`, `N1`, `N4`, and `N6`.
+- `Purpose` (3-17): covered by `M1`, `M2`, `N1`; binding keyword explanation is intentionally lost from compressed outputs because `full.md` remains the canonical policy source.
+- `Non-Negotiable Rules` (19-72): covered by `M2`-`M8`, `M13`, `M16`, `M17`, `M19`, `N1`-`N5`, `N8`, and `N9`.
+- `Required Layer Responsibilities` (74-154): covered by `M2`-`M7`, `M16`, `M17`, `N1`, `N2`, `N4`, and `N8`; exhaustive layer contents are merged into role rules.
+- `Code Generation Rules` (156-210): covered by `M4`-`M6`, `M8`, `M12`, `M18`, `M19`, `N2`, `N3`, `N10`, and `N11`; detail lists for gateway-like dependencies are merged into volatile-detail rules.
+- `Architecture Heuristics` (212-255): covered by `M2`, `M3`, `M5`, `M8`, `M20`, `N3`, `N5`, and `N11`; question lists are converted into operational checks and triggers.
+- `Architecture Economics and Priority` (257-264): covered by `M1`, `M9`, `M10`, `M15`, and `N6`.
+- `Paradigm and Component Rules` (268-280): covered by `M2`, `M10`, `M11`, `N11`; named principle labels are compressed into their operational consequences.
+- `Boundary Cost, Deployment, and Operations` (284-292): covered by `M9`, `M10`, `M12`, `M21`, and `N6`.
+- `Services, Distribution, and Embedded Boundaries` (296-302): covered by `M5`, `M7`, `M13`, `M21`, `M22`, `N3`, `N4`, `N6`, `N7`, and `N8`.
+- `Naming Rules` (306-313): covered by `M8`, `M10`, `M19`, and `N5`; individual naming examples are merged into role/use-case naming pressure.
+- `Testing Rules` (317-344): covered by `M13`, `M22`, and `N7`; adapter test examples are retained through seam-specific testing guidance.
+- `Forbidden Patterns` (348-386): covered by `M2`, `M4`, `M7`, `M10`-`M12`, `M16`-`M20`, `N1`, `N4`, `N5`, and `N8`-`N11`; pattern lists are compressed into triggers.
+- `Refactoring Rules` (389-417): covered by `M5`, `M7`, `M14`, `M17`, `M19`, `M22`, `N4`, and `N9`; ordered steps are merged into refactoring and trigger guidance.
+- `Output Expectations` (419-442): covered by `M3`, `M5`, `M8`, `M14`, `M17`, `M23`, `N12`; implementation/review lists are compressed into decision rules and final checks.
+- `Review Checklist` (444-462): covered by final checklists in `mini.md` and `nano.md`, with operational content also covered by `M2`, `M3`, `M5`-`M8`, `M12`, `M13`, and `M20`.
+- `Preferred Default Shapes` (466-492): covered by `M4`, `M6`, `M8`, `M18`, `N2`, `N3`, and `N10`; directory-shape examples are intentionally compressed to avoid format-over-content guidance.
+- `When Tradeoffs Are Necessary` (494-502): covered by `M9`, `M14`, `M15`, `M23`, `N6`, and `N12`.
+- `Final Instruction` (506-515): covered by `M1`, `M2`, `M21`, `M23`, `N1`, `N6`, and `N12`.
+
+## Omission notes
+
+- No source section is wholly omitted.
+- Exhaustive example lists are merged when they only enumerate details already covered by volatile-detail, adapter, boundary, or testing rules.
+- Binding language (`MUST`, `SHOULD`, `MUST NOT`) is intentionally not repeated in compressed outputs because the compressed files are operational attachments, while `full.md` remains the binding source of truth.

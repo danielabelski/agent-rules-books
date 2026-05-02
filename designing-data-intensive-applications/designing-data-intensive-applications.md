@@ -47,6 +47,17 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Scalability and Maintainability Rules
+
+1. Describe load with concrete parameters before changing architecture.
+2. Describe performance with latency, throughput, percentiles, and tail behavior where they matter.
+3. Do not claim scalability from node count alone; identify the bottleneck, access pattern, and contention point.
+4. Keep operability, simplicity, and evolvability as first-class design goals.
+5. Prefer designs that make production behavior inspectable and changeable over opaque clever mechanisms.
+6. Avoid accidental complexity from unnecessary distribution, premature heterogeneity, or hidden coupling.
+
+---
+
 ## Data Model and Storage Rules
 
 1. Choose storage shape based on access patterns, consistency needs, and update behavior.
@@ -66,6 +77,29 @@ Anti-patterns (MUST NOT):
 - many writable copies with no ownership
 - cache quietly becoming the real source of truth
 - denormalized copies with no repair strategy
+
+---
+
+## Query Model and Data Shape Rules
+
+1. Choose relational, document, graph, key-value, or analytical models according to relationships, query needs, update locality, and evolution pressure.
+2. Do not use a document model when many-to-one or many-to-many relationships require awkward duplication or application-side joins.
+3. Do not force a relational shape when data is naturally self-contained and usually accessed together.
+4. Use declarative query languages where they make intent clearer and leave optimization to the engine.
+5. Use graph models when relationships are first-class and traversal is central.
+6. Treat Cypher, SPARQL, Datalog, SQL, MapReduce, and application code as different expression choices with different maintainability and optimization tradeoffs.
+
+---
+
+## Storage Engine and Indexing Rules
+
+1. Match indexing strategy to write pattern, read pattern, range scans, update cost, and recovery needs.
+2. Use log-structured storage, SSTables, and LSM-tree style approaches when write throughput and sequential writes are the dominant fit.
+3. Use B-tree style indexes when ordered access, point lookups, and mature transactional behavior fit the workload.
+4. Treat secondary indexes as separate data structures with write amplification, partitioning, and consistency costs.
+5. Distinguish OLTP access from analytical workloads; do not force one layout to serve both well.
+6. Use column-oriented storage, compression, sort order, materialized views, or cubes only when analytical access patterns justify them.
+7. Keep in-memory assumptions explicit; memory residency is a performance strategy, not a durability model.
 
 ---
 
@@ -113,7 +147,7 @@ Anti-patterns (MUST NOT):
    - per key
    - per stream
    - per partition
-   - per aggregate
+   - per record or entity whose history is being updated
 4. Keep ordering-sensitive logic close to the key or stream that defines the order.
 
 Anti-patterns (MUST NOT):
@@ -159,10 +193,21 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Encoding and Data Flow Rules
+
+1. Choose encoding formats by compatibility needs, schema guarantees, readability, size, and language independence.
+2. Do not rely on language-specific serialization for long-lived or cross-service data.
+3. Treat JSON, XML, binary encodings, Thrift, Protocol Buffers, and Avro as contract choices with different schema-evolution tradeoffs.
+4. Define reader and writer compatibility during rolling upgrades.
+5. Keep database writes, service calls, and asynchronous messages explicit about who reads old and new formats during migration.
+6. Avoid RPC designs that hide network failure, version skew, latency, or partial failure behind local-call syntax.
+
+---
+
 ## Partitioning and Locality Rules
 
 1. Keep data and work colocated by the key that most often drives consistency or aggregation.
-2. Partition by a domain-relevant key, not by convenience alone.
+2. Partition by a workload-relevant key, not by convenience alone.
 3. Be explicit about hot-key risk and skew.
 4. Design cross-partition operations carefully.
 
@@ -173,12 +218,28 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Replication Rules
+
+1. Choose leader-follower, multi-leader, or leaderless replication according to write topology, failure tolerance, latency, and conflict handling.
+2. Be explicit about synchronous and asynchronous replication tradeoffs.
+3. Define behavior during node outages, follower catch-up, failover, and reconfiguration.
+4. Preserve read-your-writes, monotonic reads, and consistent prefix reads only when the product or workflow requires them and the design provides them.
+5. Do not rely on quorum formulas without checking stale reads, sloppy quorums, hinted handoff, and concurrent writes.
+6. Make conflict detection and resolution explicit for concurrent writes.
+
+---
+
 ## Transaction Rules
 
 1. Use local transactions where they solve a real consistency problem cleanly.
 2. Avoid distributed transactions as a default coordination strategy.
-3. Prefer outbox, idempotent consumers, and compensating workflows where cross-boundary coordination is required.
+3. When cross-boundary coordination is required, define the commit, recovery, reconciliation, and failure semantics explicitly.
 4. Make atomicity scope explicit.
+
+### Isolation and Invariants
+- Know whether read committed, snapshot isolation, serial execution, two-phase locking, or serializable snapshot isolation is required for the invariant.
+- Protect against lost updates, write skew, and phantoms where application correctness depends on them.
+- Do not accept weaker isolation for correctness-critical invariants without a deliberate design that preserves the invariant another way.
 
 Anti-patterns (MUST NOT):
 - multi-system two-phase coordination by default
@@ -198,6 +259,31 @@ Anti-patterns (MUST NOT):
 - no way to rebuild projections
 - no lag visibility
 - mixing primary writes directly into derived stores with no ownership model
+
+---
+
+## Distributed Fault, Clock, and Consensus Rules
+
+1. Treat network delay, packet loss, partitions, duplicated messages, and arbitrary pauses as normal distributed-system risks.
+2. Do not infer remote failure or success from timeout alone.
+3. Use monotonic clocks for measuring elapsed time; do not use wall clocks for ordering unless clock assumptions are explicit and safe.
+4. Do not rely on synchronized clocks for correctness unless uncertainty bounds and failure behavior are part of the design.
+5. Treat majority decisions, leases, locks, and leadership as assumptions that need a fault model.
+6. Use linearizability only where a single up-to-date value is required and the availability/latency cost is acceptable.
+7. Use total order broadcast, atomic commit, or consensus only when the coordination problem truly requires it.
+8. Make membership and coordination-service dependencies explicit; they are part of the system design, not invisible plumbing.
+
+---
+
+## Batch and Stream Processing Rules
+
+1. Design batch jobs so inputs, outputs, and intermediate state can be recomputed or recovered.
+2. Keep external side effects out of replayable jobs unless idempotency is explicit.
+3. Use MapReduce-style, dataflow, or high-level batch APIs according to join strategy, intermediate materialization, and operational needs.
+4. Distinguish event time, processing time, and ingestion time in stream processing.
+5. Define windowing, late data, joins, state storage, checkpoints, and fault tolerance for streams that affect correctness.
+6. Treat change data capture, event sourcing, and log-based synchronization as ways to derive and propagate data, not as magic consistency.
+7. Define at-most-once, at-least-once, or exactly-once processing guarantees for each source-to-sink path.
 
 ---
 
@@ -236,7 +322,7 @@ When reviewing code, actively look for:
 - readers and writers disagreeing on freshness requirements
 - stale or conflicting behavior treated as incidental instead of product design
 
-### Multi-Write Chaos
+### Uncoordinated Multi-Writes
 - writing to several authorities in one operation with no atomicity or repair strategy
 - side effects sent before durable state with no recovery path
 

@@ -55,7 +55,7 @@ Reject designs that sound like DDD but behave like generic CRUD plus renamed cla
 
 Anti-patterns (MUST NOT):
 - one global company model
-- shared `common-domain` package crossing all contexts
+- shared domain package crossing all contexts
 - context boundaries existing only in diagrams but not in code
 - context integration via direct imports of each other's domain classes
 
@@ -71,7 +71,7 @@ Anti-patterns (MUST NOT):
 
 Required behavior:
 - use local domain terms in class, method, event, and package names
-- remove technical placeholders like `Manager`, `Processor`, `Util`, `Data`, `Info` when a real domain term exists
+- remove technical placeholders when a real domain term exists
 
 ---
 
@@ -112,7 +112,7 @@ Anti-patterns (MUST NOT):
 ### Entities
 1. Use entities where identity and lifecycle matter.
 2. Entities must protect meaningful state transitions.
-3. Entity methods must express domain behavior, not generic mutation.
+3. Entity methods must express domain behavior, not generic state changes.
 4. Entities must not be passive ORM containers in behavior-rich domains.
 
 ### Value Objects
@@ -122,8 +122,21 @@ Anti-patterns (MUST NOT):
 4. Equality is by value, not identity.
 
 Required behavior:
-- model concepts such as `TenantId`, `ProductId`, `Money`, `Address`, `EmailAddress`, `DiscussionStatus`, `OrderQuantity`, `DateRange`
+- model local value concepts explicitly instead of passing raw primitives for meaningful identifiers, quantities, ranges, names, or descriptive whole values
 - keep invariant enforcement near the concept itself
+
+---
+
+## Domain and Transformation Service Rules
+
+1. Use a domain service for a domain-significant operation that requires multiple domain objects and fits no single entity or value object.
+2. Name domain services in the ubiquitous language.
+3. Use transformation services when domain information must be transformed without assigning behavior to the wrong object.
+4. Keep technical transformation, serialization, transport, and persistence mapping outside the domain model.
+
+Anti-patterns (MUST NOT):
+- moving behavior into services to avoid modeling entities or value objects
+- hiding technical mapping behind a domain-sounding service name
 
 ---
 
@@ -150,6 +163,13 @@ Anti-patterns (MUST NOT):
 3. Domain events are part of the model, not transport mechanics.
 4. Use events to coordinate across aggregates or contexts when immediate consistency is not required.
 5. Keep event payloads meaningful and local to the model.
+
+### Event Sourcing
+1. Use event sourcing only when storing the sequence of domain events is the right persistence model for the aggregate.
+2. Keep event streams consistent with aggregate identity and versioning.
+3. Rebuild state from events deterministically.
+4. Version events and upcasters or translators when event meaning evolves.
+5. Do not choose event sourcing just because domain events exist.
 
 Anti-patterns (MUST NOT):
 - using events for every property change
@@ -191,7 +211,7 @@ Preferred structure examples:
 
 ## Context Integration Rules
 
-### Anti-Corruption Layer
+### Anticorruption Layer
 Use when integrating with legacy systems or foreign models.
 
 Rules (MUST unless marked SHOULD or MUST NOT):
@@ -211,13 +231,14 @@ Anti-patterns (MUST NOT):
 
 ---
 
-## Multi-Tenancy and Identity Discipline
+## Client Representation and Scope Discipline
 
-Where tenancy, ownership, or partitioning exists:
-1. model tenant identity explicitly
-2. keep tenant scope visible in repositories and operations
-3. do not rely on ambient globals to infer ownership
-4. include context and tenant identity in commands and events where relevant
+1. Use DTOs, projections, use-case queries, rendition adapters, or mediators when client needs differ from aggregate shape.
+2. Expose REST resources as application-facing representations rather than aggregate internals.
+3. Tailor representations for different clients without changing the domain model for each client.
+4. Compose multiple bounded contexts at the application or integration layer, not by merging their models.
+5. Keep command behavior separate from query models when consistency, performance, or representation needs justify the split.
+6. Keep scope identifiers explicit where context or ownership affects invariants or access.
 
 ---
 
@@ -281,7 +302,7 @@ When reviewing or modifying code, actively look for:
 3. Test value object validation and behavior.
 4. Test domain events as outcomes of domain behavior.
 5. Test repositories as infrastructure separately from aggregate rules.
-6. Test anti-corruption and translation layers explicitly.
+6. Test anticorruption and translation layers explicitly.
 7. Test application services for orchestration, not for all domain decisions.
 
 ---

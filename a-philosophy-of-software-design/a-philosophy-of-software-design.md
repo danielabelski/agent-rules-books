@@ -87,8 +87,8 @@ Anti-patterns (MUST NOT):
 5. Encapsulate messy edge conditions and normalization logic.
 
 Anti-patterns (MUST NOT):
-- exposing internal collections for direct mutation
-- leaking SQL, HTTP, framework, or file-format details through domain APIs
+- exposing internal representation or state through module interfaces
+- leaking storage, protocol, framework, or file-format details through module interfaces
 - callers coordinating object internals across multiple modules
 
 ---
@@ -225,6 +225,56 @@ Rules (MUST unless marked SHOULD or MUST NOT):
 3. Do not pollute the main abstraction with every edge case.
 
 This is preferable to accreting conditionals into the core path forever.
+
+---
+
+## Combine or Separate Code
+
+1. Separate code only when the separation reduces complexity, hides a real design decision, or creates a stronger abstraction.
+2. Combine code when split pieces force readers to jump between shallow fragments to understand one idea.
+3. Keep related state, behavior, and invariants together when separating them would create change amplification.
+4. Do not preserve a boundary merely because it already exists if it exposes almost as much complexity as it hides.
+5. Prefer one coherent deeper module over several tiny modules that require callers to coordinate details.
+
+Anti-patterns (MUST NOT):
+- splitting code by execution phase when the stable concept is not temporal
+- separating normal and special cases so far apart that their shared invariant is hidden
+- adding helper layers that distribute one design decision across many files
+
+---
+
+## Design Alternatives and Comments-First Design
+
+1. For non-trivial design choices, compare at least two plausible designs before implementing the first one that works.
+2. Evaluate alternatives by interface simplicity, information hiding, special-case reduction, and future cognitive load.
+3. When an interface or abstraction is unclear, sketch the public contract and explanatory comments before committing to implementation.
+4. Use comments-first design to clarify abstraction boundaries, not to preserve vague or misleading code.
+5. Revise the abstraction when the comment needed to explain it becomes complicated.
+
+Anti-patterns (MUST NOT):
+- accepting the first design because it is locally convenient
+- using comments to justify a confusing interface instead of changing the interface
+- documenting implementation mechanics that callers should not need to know
+
+---
+
+## Naming, Consistency, and Obviousness
+
+1. Names must reveal the abstraction, not the internal mechanism.
+2. Use consistent names, argument order, error behavior, and interface conventions for related operations.
+3. Prefer obvious code where a reader can infer behavior from local structure and names.
+4. Remove non-obvious behavior unless it is hidden behind a clear contract.
+5. When code surprises a reader, treat that as complexity even if the code is short.
+
+---
+
+## Performance, Trends, and Tests
+
+1. Do not sacrifice module depth or information hiding for performance without evidence that the tradeoff matters.
+2. When performance matters, hide optimization details behind stable interfaces so callers do not inherit the complexity.
+3. Prefer measurements and targeted changes over broad speculative tuning.
+4. Do not adopt a trend, paradigm, pattern, or framework unless it reduces complexity in this codebase.
+5. Use tests to preserve behavior while changing structure, but do not let test convenience force shallow or leaky interfaces.
 
 ---
 

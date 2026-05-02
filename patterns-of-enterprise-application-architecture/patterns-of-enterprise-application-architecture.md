@@ -132,11 +132,11 @@ Rules (MUST unless marked SHOULD or MUST NOT):
 ## Persistence Pattern Rules
 
 ### Repository
-Use repositories to present a collection-like interface over domain or aggregate access.
+Use repositories to present a collection-like interface over domain object access.
 
 Rules (MUST unless marked SHOULD or MUST NOT):
 1. Repositories must speak in domain terms.
-2. Repository interfaces should reflect use cases or aggregate access patterns.
+2. Repository interfaces should reflect domain access needs rather than table shape.
 3. Repository implementations hide query, mapping, and storage details.
 4. Repositories must not become generic “everything” gateways.
 
@@ -186,6 +186,23 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Object-Relational Mapping Pattern Index
+
+- USE Identity Field when in-memory objects need stable database identity; keep identity mapping explicit.
+- USE Foreign Key Mapping when object references map to relational keys; avoid hiding expensive joins behind innocent traversal.
+- USE Association Table Mapping when many-to-many relationships need a separate relational table.
+- USE Dependent Mapping when child objects have no independent database identity outside their owner.
+- USE Embedded Value when a small value object can live inside the owning row without independent lifecycle.
+- USE Serialized LOB only when querying inside the value is not required and serialization versioning is controlled.
+- USE Single Table Inheritance when one table with nullable columns is simpler than multiple joins.
+- USE Class Table Inheritance when normalized subtype data is worth join complexity.
+- USE Concrete Table Inheritance when each concrete type can own its table without excessive duplication.
+- USE Inheritance Mappers to isolate inheritance persistence decisions from domain logic.
+- USE Metadata Mapping when mapping rules are regular enough to centralize safely; avoid it when metadata obscures exceptional behavior.
+- USE Query Object when query construction needs a composable object model instead of scattered SQL strings.
+
+---
+
 ## Concurrency and Transaction Rules
 
 ### Optimistic Offline Lock
@@ -194,7 +211,7 @@ Use when conflicts are possible but uncommon.
 Rules (MUST unless marked SHOULD or MUST NOT):
 - detect conflicting concurrent updates
 - fail safely and explicitly
-- surface retry or merge semantics intentionally
+- surface conflict resolution or merge semantics intentionally
 
 ### Pessimistic Locking
 Use only when contention is expected and the cost is justified.
@@ -204,6 +221,11 @@ Use only when contention is expected and the cost is justified.
 2. Avoid transactions that span remote calls when possible.
 3. Keep transactions short.
 4. Do not bury transaction ownership deep in helper classes.
+
+### Additional Offline Concurrency Patterns
+- USE Coarse-Grained Lock when related objects must be locked together to preserve a user-level edit.
+- USE Implicit Lock only when lock acquisition is reliably hidden without making concurrency invisible to maintainers.
+- Do not let implicit locking make transaction ownership or contention impossible to diagnose.
 
 ---
 
@@ -215,6 +237,15 @@ Use only when contention is expected and the cost is justified.
 4. Formatting, pagination, and UI interaction state belong outside domain logic.
 
 Choose Page Controller vs Front Controller pragmatically, but keep routing concerns out of business logic.
+
+### Presentation Pattern Index
+- USE Model View Controller to separate domain model, view, and controller responsibilities.
+- USE Page Controller when each page/action can be handled independently.
+- USE Front Controller when centralized request handling, authentication, routing, or dispatch is valuable.
+- USE Template View when server-side templates clearly express the response.
+- USE Transform View when transforming data into output is clearer than embedding logic in templates.
+- USE Two Step View when shared presentation structure should be separated from page-specific content.
+- USE Application Controller when flow and navigation decisions need a dedicated coordinator.
 
 ---
 
@@ -229,6 +260,25 @@ Anti-patterns (MUST NOT):
 - internal code shaped around partner API payloads
 - direct vendor DTOs used across the application
 - business logic embedded in serialization code
+
+---
+
+## Session State and Base Pattern Index
+
+- USE Client Session State only when client storage is acceptable and integrity/security implications are handled.
+- USE Server Session State when server-managed session data is needed and scaling/cleanup costs are explicit.
+- USE Database Session State when session durability or server-farm sharing outweighs database load.
+- USE Gateway to isolate access to an external resource or subsystem.
+- USE Mapper to move data between objects or layers while keeping both sides independent.
+- USE Layer Supertype only when shared layer behavior is real and stable.
+- USE Separated Interface when clients should depend on an interface in a different package from implementation details.
+- USE Registry sparingly for well-known objects; avoid turning it into global hidden dependency.
+- USE Value Object for small values where equality by value and immutability simplify code.
+- USE Money for currency amounts so rounding, currency, and arithmetic rules stay explicit.
+- USE Special Case to replace repeated null or exceptional handling with a named object.
+- USE Plugin when implementations must be selected or extended without changing core code.
+- USE Service Stub to test or run without a real remote service.
+- USE Record Set when tabular data is the natural interchange shape and object behavior is not needed.
 
 ---
 
@@ -307,7 +357,7 @@ When reviewing code, actively look for:
 ### Distributed Object Fantasy
 - pretending network calls are normal method calls
 
-### Transaction Chaos
+### Unclear Transaction Ownership
 - random save calls across layers
 - no clear transaction owner
 - long-running workflows treated as one immediate transaction

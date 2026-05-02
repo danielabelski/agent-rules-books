@@ -2,29 +2,38 @@
 
 ## When to use
 
-Use when you need a small always-on DDD bias that still changes modeling choices.
+Use as always-on DDD guidance when domain language, invariants, lifecycle, or integration boundaries affect implementation choices.
 
 ## Primary bias to correct
 
-Generic plumbing is not a domain model.
+Generic plumbing and DDD terminology are not a domain model.
 
 ## Decision rules
 
-- Use DDD only where the domain needs a deep model.
-- Use ubiquitous language and make implicit concepts explicit.
-- Model bounded contexts and do not share one model across different meanings.
-- Protect invariants inside expressive entities, value objects, and small aggregates.
-- Keep application orchestration thin, infrastructure outside, and translation explicit at boundaries.
-- Do not do fake DDD: no anemic model, ORM-driven design, or pattern cargo cult.
+- Keep model, code, tests, documents, and team language aligned inside each Bounded Context.
+- Make business behavior explicit in model code, not hidden in controllers, persistence, jobs, scripts, or framework glue.
+- Refine Ubiquitous Language when terms are fuzzy, and use only models that solve the problem and can be implemented.
+- Use tactical patterns for domain meaning: Entities for identity, Value Objects for value, Services for homeless operations, and Modules for conceptual cohesion.
+- Treat Aggregates as consistency and lifecycle boundaries; expose roots only and protect invariants inside the boundary.
+- Hide complex creation and persistence behind Factories and Repositories; design for the model first and storage second.
+- Define context boundaries and relationships explicitly before sharing terms, data, or behavior across systems.
+- Protect the Core Domain from generic subdomains, reusable mechanisms, infrastructure, framework pressure, and foreign models.
+- Refactor toward deeper insight: make important constraints, policies, processes, and calculations explicit domain concepts.
+- Test invariants, invalid construction, lifecycle transitions, and boundary translations in the Ubiquitous Language.
 
 ## Trigger rules
 
-- When language is fuzzy, refine the model before coding more flows.
-- When transactions sprawl, revisit the aggregate or context boundary.
-- When storage shape drives the model, add translation and reclaim the domain.
+- Fuzzy or inconsistent terms trigger language refinement and code renaming.
+- Procedural business rules in orchestration, SQL, jobs, or serializers trigger moving behavior into the model.
+- Sprawling transactions or cross-module changes trigger Aggregate and context-boundary review.
+- Foreign model, schema, API, or legacy pressure triggers translation or an explicit Conformist choice.
+- Supporting mechanisms obscuring distinctive value trigger Core Domain distillation.
 
 ## Final checklist
 
-- Real domain language?
-- Clear context boundary?
-- Invariants inside the model?
+- Domain behavior in the model?
+- One language per context?
+- Invariants protected by roots and values?
+- Integration relationship explicit?
+- Domain tests cover invalid states and translations?
+- Core Domain still visible?

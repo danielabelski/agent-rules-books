@@ -35,6 +35,16 @@ Reject both extremes:
 
 ---
 
+## Adoption Fit and Modeling Investment
+
+1. Use DDD when domain complexity, language ambiguity, business differentiation, or integration risk justify the modeling effort.
+2. Do not apply full tactical DDD to simple CRUD, generic subdomains, or problems whose complexity is mainly technical.
+3. Let business drivers decide where modeling effort goes.
+4. Reassess the model when the core business concern drifts, terms stop matching code, or supporting complexity hides the core.
+5. Use scenarios and acceptance tests to validate that the model expresses real business behavior.
+
+---
+
 ## Strategic Rules
 
 ### Start with Subdomains
@@ -67,6 +77,38 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Context Relationship Rules
+
+Choose context relationships deliberately:
+
+- USE Partnership only when teams can coordinate closely and share planning burden.
+- USE Shared Kernel only for a small stable overlap with joint ownership and tests.
+- USE Customer/Supplier when the upstream team can plan for downstream needs.
+- USE Conformist when adopting the upstream model is cheaper and safer than translation.
+- USE Anticorruption Layer when a foreign model would corrupt the local language.
+- USE Open Host Service when many clients need a stable protocol into one context.
+- USE Published Language when multiple systems need a documented interchange model.
+- USE Separate Ways when integration cost is higher than shared capability value.
+- TREAT Big Ball of Mud as a context to contain and translate around, not as a model to spread.
+
+Anti-patterns (MUST NOT):
+- claiming independent modeling while conforming silently
+- using Shared Kernel without governance
+- calling integration an anticorruption layer when no translation exists
+
+---
+
+## Integration Style Rules
+
+1. Use RPC only when request/response coupling, latency, versioning, and failure semantics are acceptable.
+2. Use REST resources as application-facing representations, not as leaked aggregate internals.
+3. Use messaging when asynchronous coordination fits the business process and consumers can handle lag, duplicates, and ordering limits.
+4. Decide whether domain events should carry enough information for consumers or require query-back.
+5. Keep integration contracts separate from internal models.
+6. Test translations at context boundaries.
+
+---
+
 ## Ubiquitous Language Rules
 
 1. Use domain terms from the current bounded context in code, tests, commands, events, and conversations.
@@ -76,12 +118,9 @@ Anti-patterns (MUST NOT):
 5. Prefer domain names over technical placeholders.
 
 Avoid:
-- `Manager`
-- `Handler`
-- `Processor`
-- `Data`
-- `EntityInfo`
-- `BusinessObject`
+- technical placeholders that conceal a business concept
+- names imported from another bounded context without translation
+- generic helper or utility names that end up carrying domain decisions
 
 ---
 
@@ -93,7 +132,7 @@ Use entities when identity and lifecycle matter.
 Rules (MUST unless marked SHOULD or MUST NOT):
 1. Entities must have explicit identity.
 2. Entities must protect meaningful state transitions.
-3. Do not expose unrestricted mutation by default.
+3. Do not expose unrestricted state changes by default.
 
 ### Value Objects
 Use value objects aggressively when a primitive hides meaning.
@@ -112,14 +151,6 @@ Rules (MUST unless marked SHOULD or MUST NOT):
 3. Reference other aggregates by identity.
 4. Avoid loading large object graphs.
 
-### Repositories
-Use repositories to access aggregates in domain terms.
-
-Rules (MUST unless marked SHOULD or MUST NOT):
-1. Repository contracts belong to the model or application that needs them.
-2. Repositories return domain objects or domain-shaped results.
-3. Repositories are not generic table CRUD bags.
-
 ### Domain Events
 Use domain events for meaningful facts.
 
@@ -127,15 +158,6 @@ Rules (MUST unless marked SHOULD or MUST NOT):
 1. Name events in the past tense.
 2. Use events when they clarify collaboration or integration.
 3. Do not publish trivial noise for every field change.
-
-### Domain Services
-Use a domain service only when behavior is domain-significant and fits no single entity or value object naturally.
-
-Anti-patterns (MUST NOT):
-- moving all behavior into services
-- creating services that are only wrappers around repositories
-
----
 
 ## Aggregate Minimalism Rules
 
@@ -169,13 +191,13 @@ Anti-patterns (MUST NOT):
 ## Architecture and Infrastructure Rules
 
 1. Infrastructure is a detail.
-2. Keep frameworks, ORM mechanics, serializers, HTTP requests, and vendor SDKs out of the domain model.
+2. Keep frameworks, persistence mechanics, REST resources, transport formats, and other technology concerns out of the domain model.
 3. Persist aggregates without letting persistence define the model.
 4. Translate transport and integration data at the boundary.
 
 Anti-patterns (MUST NOT):
 - persistence-first modeling
-- reusing DTOs as domain objects
+- reusing transport objects as domain objects
 - domain methods depending on framework types
 
 ---
@@ -204,7 +226,19 @@ Anti-patterns (MUST NOT):
 Anti-patterns (MUST NOT):
 - dismissing DDD because not every module needs it
 - over-modeling a generic subsystem
-- introducing aggregates, factories, repositories, and events before knowing why
+- introducing aggregates and events before knowing why
+
+---
+
+## Accelerated Modeling and Project Rules
+
+1. Use event storming or similar collaborative modeling when workflow, events, commands, policies, or team language are unclear.
+2. Timebox modeling work so it improves implementation instead of becoming detached analysis.
+3. Use modeling spikes to reduce uncertainty before committing to a model shape.
+4. Track modeling debt when code and language are known to be imperfect but intentionally deferred.
+5. Involve domain experts in scenario walkthroughs, terminology decisions, and acceptance criteria.
+6. Estimate DDD work by modeling uncertainty, integration risk, and implementation cost, not only by feature count.
+7. Treat team skill and access to domain experts as constraints on how much DDD ceremony the project can sustain.
 
 ---
 

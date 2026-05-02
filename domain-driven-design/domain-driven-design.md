@@ -24,8 +24,8 @@ Do not optimize primarily for:
 - fewer files
 - generic reuse
 - CRUD convenience
-- ORM convenience
-- controller convenience
+- object-relational mapping convenience
+- delivery-layer convenience
 - framework conventions
 - short-term speed at the cost of model clarity
 
@@ -41,7 +41,7 @@ DDD here does **not** mean:
 - wrapping CRUD in verbose abstractions
 - creating entities with only fields and setters
 - turning every concept into an aggregate
-- introducing domain events everywhere
+- introducing every DDD pattern everywhere
 - overengineering simple subdomains
 
 DDD here **does** mean:
@@ -147,19 +147,14 @@ DDD here **does** mean:
 1. Use the exact business terms used by domain experts inside a bounded context.
 2. One concept must have one name inside a bounded context.
 3. One name must not mean different concepts inside a bounded context.
-4. Method names, test names, events, and modules must use the same vocabulary as the domain.
+4. Method names, test names, and modules must use the same vocabulary as the domain.
 5. Rename code when the domain understanding improves.
 
 ### Required behavior (MUST)
-- Prefer `Quote`, `Policy`, `Settlement`, `Reservation`, `LedgerEntry`, `Claim`, `Invoice`.
-- Prefer methods like `approve()`, `expire()`, `settle()`, `reserve()`, `cancel()`, `renew()`.
-- Avoid generic names such as:
-  - `Manager`
-  - `Processor`
-  - `Handler`
-  - `Data`
-  - `Info`
-  - `Service` when a more precise domain name exists
+- Prefer names from the active bounded context; in a shipping model, terms such as `Cargo`, `Itinerary`, `Handling Event`, and `Route Specification` should appear directly.
+- Prefer operation names that express the domain action, such as changing a cargo destination, adding a handling event, checking allocation, or applying an overbooking policy.
+- Avoid technical placeholders when a precise domain term exists.
+- Avoid names imported from another bounded context without translation.
 
 ### Anti-patterns (MUST NOT)
 - Using technical names where the business has precise names
@@ -209,6 +204,22 @@ DDD here **does** mean:
 
 ---
 
+## Layered Architecture and Smart UI
+
+### Rules (MUST unless marked SHOULD or MUST NOT)
+1. Keep the domain layer as the place where the model and business rules live.
+2. Separate presentation, application coordination, domain behavior, and infrastructure when the domain is complex enough to need model-driven design.
+3. Let application code coordinate tasks without owning domain decisions.
+4. Keep infrastructure services and framework concerns outside domain objects.
+5. Use Smart UI only for simple applications where rich domain abstraction, reuse, integration, and deep business rules are not important.
+
+### Anti-patterns (MUST NOT)
+- UI screens, database tables, or framework annotations defining the domain vocabulary
+- UI, application coordination, jobs, or scripts carrying domain rules while domain objects stay passive
+- choosing Smart UI when the business behavior needs reuse or abstraction
+
+---
+
 ## Bounded Contexts
 
 ### Rules (MUST unless marked SHOULD or MUST NOT)
@@ -221,7 +232,7 @@ DDD here **does** mean:
 ### Required behavior (MUST)
 - Keep package, module, or namespace ownership explicit.
 - Model `Customer` separately in different contexts if meanings differ.
-- Prefer context-specific contracts, IDs, published events, or anti-corruption layers over shared classes.
+- Prefer context-specific contracts, IDs, published language, or anticorruption layers over shared classes.
 
 ### Anti-patterns (MUST NOT)
 - One giant company-wide domain model
@@ -272,6 +283,12 @@ Use context relationship patterns intentionally:
 - `Open Host Service` when a context exposes a stable integration protocol.
 - `Published Language` when contexts need a documented exchange language.
 
+### Context Transformations
+1. Move from Separate Ways to Shared Kernel only when the overlap is small, valuable, and worth coordination.
+2. Move from Shared Kernel to Continuous Integration only when teams are ready to share one model frequently.
+3. Phase out legacy systems by protecting the new model and replacing responsibilities incrementally through translations.
+4. Evolve Open Host Service toward Published Language when interchange stability is needed beyond one service.
+
 ### Required behavior (MUST)
 - Make context maps visible in package structure, integration adapters, documentation, or tests.
 - Name adapters after the relationship they implement when that improves clarity.
@@ -279,7 +296,7 @@ Use context relationship patterns intentionally:
 
 ### Anti-patterns (MUST NOT)
 - Accidental shared kernels with no ownership rules
-- Calling every integration an anti-corruption layer without translation
+- Calling every integration an anticorruption layer without translation
 - Letting upstream APIs silently define downstream domain language
 - Treating context mapping as architecture documentation only, not code structure
 
@@ -309,7 +326,7 @@ Use these patterns when they clarify priority and investment:
 ### Anti-patterns (MUST NOT)
 - Spending equal modeling effort on every subsystem
 - Letting technical mechanisms dominate the core model
-- Hiding the core behind generic `common`, `shared`, or `platform` packages
+- Hiding the core behind generic shared packages
 - Refactoring peripheral code while the core remains unclear
 
 ---
@@ -377,19 +394,20 @@ Use these patterns deliberately:
 ### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Entities must have explicit identity.
 2. Entities must protect their own valid state transitions.
-3. Entities must expose intention-revealing behavior, not arbitrary mutation.
+3. Entities must expose intention-revealing behavior, not arbitrary state changes.
 4. Entities must not be treated as passive records in behavior-rich domains.
 
 ### Required behavior (MUST)
-- Prefer `order.cancel(reason)`, `account.withdraw(amount)`, `subscription.renew(untilDate)`.
-- Hide direct mutation behind methods that encode domain meaning.
+- Prefer methods that tell an entity what domain action to perform.
+- In a shipping model, express destination changes and handling-event additions as model operations rather than procedural data edits.
+- Hide direct state changes behind methods that encode domain meaning.
 - Keep identity stable and explicit.
 
 ### Anti-patterns (MUST NOT)
 - Public setters for every field
 - Application services manually editing all entity state
-- Controllers deciding which transitions are valid
-- Entities used only as ORM shells
+- UI or application code deciding which transitions are valid
+- Entities used only as persistence shells
 
 ---
 
@@ -409,20 +427,15 @@ Use these patterns deliberately:
 5. Replace primitive obsession aggressively where the concept matters.
 
 ### Required behavior (MUST)
-Use value objects for concepts such as:
-- `Money`
-- `EmailAddress`
-- `DateRange`
-- `Percentage`
-- `PolicyNumber`
-- `ReservationWindow`
-- `Quantity`
-- `Currency`
+- Use value objects for descriptive concepts whose attributes together carry domain meaning.
+- Name value objects after the domain concept, not the primitive representation.
+- Keep validation and side-effect-free operations for the value near the value itself.
+- Replace raw primitives when a named quantity, range, code, measurement, or descriptive whole value matters to the model.
 
 ### Anti-patterns (MUST NOT)
-- Repeating email validation across handlers
-- Passing raw decimals for money
-- Passing raw strings for account identifiers
+- Repeating the same value validation across handlers
+- Passing raw primitives for named domain quantities, ranges, codes, or measurements
+- Passing raw strings for meaningful identifiers
 - Letting invalid values exist temporarily without an explicit model for incompleteness
 
 ---
@@ -448,7 +461,7 @@ Use value objects for concepts such as:
 
 ### Anti-patterns (MUST NOT)
 - `models`, `services`, `utils`, and `helpers` as the dominant structure
-- Associations created only because the ORM supports them
+- Associations created only because the persistence mechanism supports them
 - Object graphs that make aggregate boundaries invisible
 - Modules grouped by technical artifact while domain concepts are scattered
 
@@ -464,17 +477,17 @@ Aggregates are **consistency boundaries**, not just object graphs.
 2. Keep aggregates as small as possible.
 3. All modifications that affect aggregate invariants must go through the aggregate root.
 4. Reference other aggregates by identity unless stronger consistency is truly required.
-5. Modify one aggregate per transaction by default.
+5. Keep transactional boundaries aligned with invariants; do not expand transactions across aggregates merely for convenience.
 
 ### Required behavior (MUST)
 - Put invariant-protecting methods on the aggregate root.
 - Keep internal members encapsulated.
-- Prefer eventual consistency across aggregates when possible.
+- Handle consistency across aggregate boundaries deliberately when the invariant does not belong inside one aggregate.
 - Model transactional boundaries deliberately.
 
 ### Anti-patterns (MUST NOT)
-- Large graph aggregates built for ORM convenience
-- Aggregate roots exposing internal collections for arbitrary external mutation
+- Large graph aggregates built for object-relational mapping convenience
+- Aggregate roots exposing internal collections for arbitrary external state changes
 - Transactions modifying many aggregates because object references make it easy
 - Confusing parent-child object structure with aggregate boundaries
 
@@ -497,9 +510,9 @@ Aggregates are **consistency boundaries**, not just object graphs.
 - Domain services should coordinate domain concepts, not infrastructure details.
 
 ### Anti-patterns (MUST NOT)
-- `OrderService` containing all order rules
-- `BillingService` containing dozens of unrelated policies
-- “Domain services” that are only wrappers for repositories or SDKs
+- a single `*Service` containing all rules for a model area
+- a service containing dozens of unrelated policies
+- “Domain services” that are only wrappers for repositories or external technical clients
 - Extracting behavior from entities prematurely
 
 ---
@@ -514,14 +527,14 @@ Aggregates are **consistency boundaries**, not just object graphs.
 
 ### Required behavior (MUST)
 - Extract repeated conditionals into named domain concepts.
-- Prefer `EligibleForRenewal`, `RouteSatisfiesPolicy`, or `InvoiceIsOverdue` over anonymous boolean expressions.
+- Prefer named concepts such as route specifications, overbooking policies, or allocation rules over anonymous boolean expressions.
 - Keep persistence querying concerns separate from domain specifications unless the project deliberately provides translation.
 - Use specifications to clarify policy, validation, selection, and compatibility rules.
 
 ### Anti-patterns (MUST NOT)
 - Complex business conditions duplicated across services
 - Boolean flags that hide a named domain rule
-- Specifications that are just ORM query builders
+- Specifications that are just persistence query builders
 - Processes represented only as scripts or transaction handlers when the business treats them as concepts
 
 ---
@@ -544,10 +557,12 @@ Repositories provide access to aggregates as part of the model.
 - Prefer focused repository methods over giant generic CRUD interfaces when domain intent matters.
 - Keep reconstitution paths separate from normal creation paths when that protects invariants.
 - Make client code independent of repository implementation details, while repository implementers understand those details.
+- Express query criteria as specifications or model concepts when the criteria are domain rules.
+- Return domain objects or collections without exposing database structure.
 
 ### Anti-patterns (MUST NOT)
 - Generic repository abstractions that erase domain meaning
-- Returning ORM models directly into the domain
+- Returning persistence records directly into the domain
 - Putting business rules into repository implementations
 - Creating one repository per table with no relation to aggregate design
 - Letting relational database design dictate object identity, associations, or aggregate boundaries
@@ -565,63 +580,37 @@ Repositories provide access to aggregates as part of the model.
 ### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Factories must create valid objects.
 2. Factories must encode domain creation rules, not technical object assembly.
-3. Controllers and mappers must not contain business construction logic.
+3. Clients and mappers must not contain business construction logic.
+4. Choose the factory site where creation ownership fits the model.
+5. Use constructors directly when creation is simple, intention-revealing, and does not expose complex invariants.
+6. Treat reconstitution from storage separately from new-object creation.
 
 ### Anti-patterns (MUST NOT)
 - Building invalid objects first and fixing them later
 - Letting endpoints stitch together aggregates directly
 - Using a factory only to hide a trivial constructor
 
----
-
-## Domain Events
-
-### Purpose
-Domain events represent meaningful facts that occurred in the domain.
-
-### Rules (MUST unless marked SHOULD or MUST NOT)
-1. Emit domain events only for meaningful domain facts.
-2. Event names must be in the past tense.
-3. Event payloads must contain domain-relevant facts.
-4. Domain events must not become a generic escape hatch for poor modeling.
-5. Prefer direct modeling first, events second.
-
-### Required behavior (MUST)
-Examples:
-- `OrderPlaced`
-- `InvoiceIssued`
-- `PaymentCaptured`
-- `ReservationExpired`
-
-### Anti-patterns (MUST NOT)
-- Event names like `DoInvoice`, `ProcessPayment`, `HandleReservation`
-- Publishing events for every setter-like change
-- Using events to hide missing aggregate boundaries
-- Leaking framework transport objects into event payloads
-
----
-
 ## Application Layer
 
 ### Purpose
-The application layer orchestrates use cases.
+The application layer coordinates application tasks.
 It does not replace the domain model.
 
 ### Rules (MUST unless marked SHOULD or MUST NOT)
-1. Application services or use cases load aggregates, call domain behavior, persist results, and coordinate side effects.
+1. Application services load aggregates, call domain behavior, persist results, and coordinate side effects.
 2. Application services must not hold core business invariants that belong in the domain.
 3. Application services must speak the ubiquitous language.
 4. Application services may coordinate transactions and integration publication, but should not become procedural god classes.
 
 ### Required behavior (MUST)
-- Keep one use case focused on one application action.
+- Keep each application operation focused on one application action.
 - Let domain objects make domain decisions.
 - Keep orchestration distinct from business rules.
 
 ### Anti-patterns (MUST NOT)
 - Application services containing all branching business logic
-- Use cases manipulating entity internals directly
-- Repositories, controllers, and application services all implementing overlapping rules
+- Application services manipulating entity internals directly
+- Repositories, UI handlers, and application services all implementing overlapping rules
 
 ---
 
@@ -629,15 +618,15 @@ It does not replace the domain model.
 
 ### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Infrastructure is subordinate to the model.
-2. ORM mappings, serializers, SDK clients, HTTP clients, brokers, caches, and framework types must stay out of the domain model.
+2. Object-relational mappings, serializers, external technical clients, delivery mechanisms, messaging details, caches, and framework types must stay out of the domain model.
 3. Infrastructure must adapt to the model, not the reverse.
 4. Persistence shape must not define the domain shape.
 
 ### Anti-patterns (MUST NOT)
 - Naming domain concepts after database tables
 - Designing aggregates around lazy loading
-- Adding methods to entities only because the ORM needs them
-- Letting transport DTOs become domain objects
+- Adding methods to entities only because the persistence mechanism needs them
+- Letting transport representations become domain objects
 
 ---
 
@@ -651,12 +640,12 @@ It does not replace the domain model.
 
 ### Required behavior (MUST)
 - Translate external IDs, statuses, and vocabularies explicitly.
-- Map transport DTOs to local commands or domain inputs.
+- Map transport representations to local commands or domain inputs.
 - Keep persistence models and integration models outside the core domain.
 
 ### Anti-patterns (MUST NOT)
 - Passing external API models deep into the domain
-- Reusing one DTO as HTTP input, ORM record, domain object, and event
+- Reusing one representation as delivery input, persistence record, domain object, and integration message
 - Adopting vendor status codes as native domain terminology
 
 ---
@@ -671,6 +660,8 @@ It does not replace the domain model.
 5. Use standalone classes where a concept can be understood without unnecessary dependencies.
 6. Favor operations that are closed under meaningful domain types when that improves clarity.
 7. Use declarative design when it makes rules easier to read, combine, and verify.
+8. Combine specifications with AND, OR, or NOT only while each component meaning remains readable.
+9. Use subsumption when one specification or category includes another and that relationship matters.
 
 ### Required behavior (MUST)
 - Name methods after what the business is trying to accomplish.
@@ -682,7 +673,7 @@ It does not replace the domain model.
 ### Anti-patterns (MUST NOT)
 - Technically named APIs that hide intent
 - Methods that both ask a question and mutate domain state
-- Invariants expressed only in comments or controller validation
+- Invariants expressed only in comments or UI/application validation
 - Declarative frameworks that obscure rather than clarify business rules
 
 ---
@@ -693,6 +684,8 @@ It does not replace the domain model.
 1. Use prior domain modeling knowledge when it fits the current domain.
 2. Do not force an analysis pattern when local language contradicts it.
 3. Adapt patterns to the bounded context rather than importing them wholesale.
+4. Search domain literature, prior art, and established formalisms when the team lacks concepts for a good model.
+5. Use exploration teams for hard modeling problems only when their findings are tested in code and returned to the main team.
 
 ### Design Patterns in the Model
 Use design patterns only when they express the domain model:
@@ -720,12 +713,12 @@ When generating code, always do the following in order.
 Before writing code, identify:
 - the bounded context
 - the domain term
-- whether the concept is an entity, value object, aggregate, domain service, repository, factory, or event
+- whether the concept is an entity, value object, aggregate, domain service, repository, factory, or specification
 - which invariants matter
 
 Do not start from:
-- the controller
-- the ORM model
+- delivery code
+- the persistence model
 - the database schema
 - the REST shape
 unless the task is purely infrastructural.
@@ -743,10 +736,10 @@ Do not default to procedural services operating on passive records.
 Wrap primitives when meaning, validation, unit semantics, or invariants matter.
 
 ### 4. Protect invariants at the model boundary
-Do not rely on UI validation, controller validation, or repository validation as the primary protection for business rules.
+Do not rely on UI validation, application validation, or repository validation as the primary protection for business rules.
 
 ### 5. Keep the model persistence-ignorant
-Do not shape types or boundaries primarily for ORM convenience.
+Do not shape types or boundaries primarily for object-relational mapping convenience.
 
 ### 6. Keep bounded contexts visible in structure
 Prefer feature or context ownership in modules and packages.
@@ -773,11 +766,11 @@ When reviewing or modifying code, actively look for:
 - one term used with multiple meanings
 
 ### Model problems
-- anemic entities
+- passive entities
 - missing value objects
 - invalid construction
 - missing invariants
-- domain logic spread across controllers, handlers, or repositories
+- domain logic spread across delivery handlers, application coordination, or repositories
 
 ### Boundary problems
 - bounded context bleeding
@@ -788,7 +781,7 @@ When reviewing or modifying code, actively look for:
 
 ### Aggregate problems
 - oversized aggregates
-- aggregate roots exposing internal mutation
+- aggregate roots exposing internal state changes
 - direct object references across aggregates where identity should be used
 - transactions spanning many aggregates by default
 
@@ -798,7 +791,7 @@ When reviewing or modifying code, actively look for:
 - application services replacing the whole domain model
 
 ### Infrastructure problems
-- ORM-first modeling
+- persistence-first modeling
 - transport shapes defining the domain
 - persistence rules embedded in business logic
 
@@ -819,21 +812,22 @@ Prioritize tests for:
 - aggregate behavior
 - domain services
 - specifications and explicit constraints
-- domain events
-- application use cases
+- application-layer orchestration
 - context translation and anticorruption layers
 
 ### Rules (MUST unless marked SHOULD or MUST NOT)
 1. Tests must read in the ubiquitous language.
 2. Tests must verify allowed and forbidden state transitions.
 3. Tests must verify that invalid objects cannot be created through supported paths.
-4. Tests must verify translation behavior where anti-corruption layers exist.
+4. Tests must verify translation behavior where anticorruption layers exist.
 5. Infrastructure tests must stay separate from domain tests.
 6. Tests for the core domain should read like executable examples of the model.
+7. Test context boundaries so translations preserve intended meaning.
+8. Test that one context does not silently break another context's assumptions.
 
 ### Anti-patterns (MUST NOT)
-- Tests named in transport or controller vocabulary instead of domain vocabulary
-- Tests that verify ORM details instead of domain meaning
+- Tests named in transport or delivery vocabulary instead of domain vocabulary
+- Tests that verify persistence details instead of domain meaning
 - Missing tests for invalid transitions and invariant protection
 - Tests that validate generic plumbing while leaving core policy untested
 
@@ -843,15 +837,15 @@ Prioritize tests for:
 
 Do not generate or keep these patterns unless explicitly required and justified.
 
-### Anemic Domain Model
+### Passive Domain Model
 - entities with fields and setters but no real behavior in a complex domain
-- all rules living in use cases or controllers
+- all rules living in application services or UI handlers
 
 ### Smart UI
-- controllers or views making domain decisions
+- UI or application code making domain decisions
 - request handlers enforcing core invariants
 
-### ORM-Driven Design
+### Persistence-Driven Design
 - aggregate boundaries chosen for persistence convenience
 - entities shaped around table structures
 - domain types depending on persistence mechanics
@@ -865,17 +859,17 @@ Do not generate or keep these patterns unless explicitly required and justified.
 - common abstractions that erase business distinctions
 
 ### God Services
-- `CustomerService`, `OrderService`, `BillingService` containing many unrelated policies and workflows
+- single `*Service` classes containing many unrelated policies and workflows
 - procedural orchestration replacing domain behavior
 
 ### Invalid Construction
 - partially initialized aggregates
-- public mutation that bypasses invariants
+- public state changes that bypass invariants
 - allowing impossible states because later code will fix them
 
 ### Fake DDD
 - renaming CRUD layers without changing the model
-- adding repositories, events, and services without real domain need
+- adding repositories, factories, and services without real domain need
 - over-modeling simple supporting subdomains
 
 ### Context Map Blindness
@@ -900,8 +894,8 @@ When changing existing code:
 4. Redraw aggregate boundaries where invariants are unclear or transactional scope is too large.
 5. Separate bounded contexts that are currently bleeding together.
 6. Add translation layers where foreign models leak into the domain.
-7. Break up god services into use cases plus richer domain behavior.
-8. Remove ORM and transport assumptions from the model.
+7. Break up god services into focused application services plus richer domain behavior.
+8. Remove persistence and transport assumptions from the model.
 9. Extract explicit constraints, specifications, and policies from repeated conditionals.
 10. Clarify context relationships when integration code is ambiguous.
 11. Distill the core domain out of supporting mechanisms when strategic logic is buried.
@@ -921,8 +915,7 @@ When asked to implement a feature, default to producing:
 - specifications or policies when named rules must be evaluated or combined
 - repositories for aggregate persistence
 - factories when creation is non-trivial
-- domain events only when a meaningful fact occurred
-- application services or use cases for orchestration
+- application services for orchestration
 - explicit translation at external boundaries
 - visible context relationship choices when integrating with other models
 - simpler supporting or generic subdomain designs when rich modeling is not justified
@@ -930,7 +923,7 @@ When asked to implement a feature, default to producing:
 When asked to review code:
 - identify model-language mismatch
 - identify missing value objects
-- identify anemic model symptoms
+- identify passive data-structure model symptoms
 - identify bad aggregate boundaries
 - identify context leakage
 - identify infrastructure-driven modeling
@@ -961,13 +954,13 @@ Before finalizing any change, verify:
 - Are repositories aligned to aggregates rather than tables?
 - Are specifications, policies, or explicit constraints used where repeated rules need names?
 - Are application services orchestrating rather than owning all rules?
-- Is the domain model protected from transport, ORM, and vendor models?
+- Is the domain model protected from transport, persistence, and vendor models?
 - Are context boundaries translated explicitly?
 - Is the context map relationship clear for integrations?
 - Is the core domain visible and protected from generic mechanisms?
 - Are large-scale structures helping rather than freezing the model?
 - Did we avoid god services?
-- Did we avoid an anemic model where the domain is complex?
+- Did we avoid passive domain objects where the domain is complex?
 - Did we avoid over-modeling where the domain is simple?
 
 If any answer is no, revise before shipping.

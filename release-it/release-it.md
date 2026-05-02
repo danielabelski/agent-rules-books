@@ -9,7 +9,7 @@ All code generation, edits, and reviews must optimize for:
 - production readiness
 - failure isolation
 - graceful degradation
-- backpressure and overload protection
+- back pressure and overload protection
 - timeouts and retries with discipline
 - observability
 - survivability over ideal-path elegance
@@ -46,6 +46,16 @@ The code must assume these conditions, not merely tolerate them by accident.
 
 ---
 
+## Production Readiness and Release Risk Rules
+
+1. Do not treat QA success or feature completion as proof of production readiness.
+2. Design deployment, operations, security, observability, and rollback as part of the system.
+3. Reduce release risk through small exposure steps, compatibility discipline, and reversible changes.
+4. Make version, build, configuration, dependency, and runtime state visible enough to diagnose a live instance.
+5. Validate critical configuration at startup and make configuration changes auditable and reversible.
+
+---
+
 ## Dependency Protection Rules
 
 ### Timeouts Are Mandatory
@@ -55,7 +65,7 @@ The code must assume these conditions, not merely tolerate them by accident.
 4. Infinite waits are forbidden.
 
 ### Retries Must Be Disciplined
-1. Retry only where the operation is safe or idempotent.
+1. Retry only where repeated attempts are safe for the caller and provider.
 2. Bound retry count and total retry time.
 3. Add jitter/backoff to avoid synchronized retry storms.
 4. Do not retry validation errors or permanent failures.
@@ -80,7 +90,7 @@ Anti-patterns (MUST NOT):
 
 ## Load and Capacity Rules
 
-### Backpressure
+### Back Pressure
 1. The system must have a strategy for overload.
 2. Reject, defer, queue, or degrade intentionally.
 3. Unbounded acceptance of work is forbidden.
@@ -91,7 +101,7 @@ Anti-patterns (MUST NOT):
 3. Know what happens when producers outpace consumers.
 4. Define dead-letter or poison-message handling explicitly.
 
-### Rate Limiting and Admission Control
+### Demand Control
 1. Protect scarce resources with limits.
 2. Prefer early rejection over total collapse.
 3. Reserve capacity for critical traffic when appropriate.
@@ -101,6 +111,14 @@ Anti-patterns (MUST NOT):
 2. Shed low-value work first.
 3. Preserve core functions whenever possible.
 
+### Additional Stability Patterns
+- USE Steady State design so routine operation does not require manual cleanup, unbounded growth, or periodic rescue.
+- USE Fail Fast when continuing would hold scarce resources or hide an unrecoverable dependency problem.
+- USE Let It Crash only when supervisors, isolation, and restart behavior make crashing safer than limping.
+- USE Handshaking between instances, load balancers, and dependencies so traffic reaches only ready components.
+- USE Decoupling Middleware when it reduces direct failure propagation; monitor the middleware as a dependency.
+- USE Governors to cap expensive behavior before it harms the rest of the system.
+
 Anti-patterns (MUST NOT):
 - unbounded queues
 - accepting work with no plan to finish it
@@ -108,25 +126,25 @@ Anti-patterns (MUST NOT):
 
 ---
 
-## State and Data Safety Rules
+## Runtime State and Restart Safety Rules
 
-1. Design state transitions to be restart-safe where possible.
-2. Make operations idempotent when retries or duplicate delivery are possible.
-3. Use durable handoff for important asynchronous work.
-4. Avoid partial updates with unclear compensation strategy.
-5. Validate assumptions at system boundaries.
+1. Make runtime state visible through logs, metrics, health endpoints, administrative interfaces, and diagnostic data.
+2. Validate external responses by status, content type, shape, and semantics before trusting them.
+3. Make deployment and operational automation idempotent or restartable where practical.
+4. Avoid partial deployment or migration steps without a rollback or roll-forward path.
+5. Validate operational assumptions at system boundaries.
 
-### Idempotency
+### Restartable Automation
 Required when:
-- clients may retry
-- jobs may rerun
-- events may redeliver
-- timeouts may obscure whether work completed
+- deployments touch many machines
+- scripts may be rerun after partial failure
+- migrations run while old and new application versions coexist
+- operational procedures must be repeatable under release pressure
 
 Anti-patterns (MUST NOT):
-- duplicate charge/order/send operations on retry
-- side effects before durable state change with no recovery plan
-- hidden dependence on “exactly once”
+- one-shot deployment scripts that cannot safely resume
+- manual repair steps with no recorded state
+- side effects before a durable release checkpoint with no recovery plan
 
 ---
 
@@ -193,13 +211,35 @@ Anti-patterns (MUST NOT):
 
 ---
 
+## Incidents, Capacity, and Runtime Control
+
+1. After incidents, identify the failure chain, missing defenses, detection gaps, and design changes.
+2. For performance or capacity incidents, inspect demand, saturation, latency distribution, queue age, dependency behavior, and traffic concentration.
+3. Provide administrative interfaces or operational controls only with authorization, auditability, safe defaults, and clear stop mechanisms.
+4. Keep process code, scripts, and automation observable enough that operators can see what changed and why.
+5. Treat control planes and delivery tooling as production systems when they can affect production.
+
+---
+
 ## Deployment and Startup Rules
 
 1. Startup must fail fast on missing critical configuration.
-2. Readiness must reflect actual ability to serve.
-3. Liveness must not mask deadlocks or stuck subsystems.
+2. Health checks must reflect actual ability to serve.
+3. Health checks must not mask deadlocks or stuck subsystems.
 4. Avoid expensive or destructive startup work in request-serving processes when possible.
 5. Migrations and one-time jobs must be deliberate, observable, and recoverable.
+
+---
+
+## Interconnect, Routing, Security, and Chaos Rules
+
+1. Keep DNS, service discovery, routing, and load balancing health-aware and current.
+2. Design interconnects to avoid concentrated demand, hidden single points of failure, and uncontrolled fan-out.
+3. Treat hostile traffic, abusive users, and malformed requests as production load cases.
+4. Include security in production readiness: secrets, permissions, administrative access, dependency trust, and input handling.
+5. Use production tests, launch checks, capacity tests, and game days to validate operational assumptions.
+6. Run chaos or disaster simulations only with a hypothesis, limited blast radius, observability, stop condition, and recovery path.
+7. Feed findings from chaos and disaster work back into design, operations, and tests.
 
 ---
 
@@ -209,7 +249,7 @@ Anti-patterns (MUST NOT):
 2. Return clear retryable vs non-retryable outcomes.
 3. Prefer coarse-grained, resilient interactions over fragile chattiness.
 4. Use versioning and compatibility discipline for long-lived contracts.
-5. Document idempotency expectations clearly.
+5. Document retry, timeout, version, and compatibility expectations clearly.
 
 ---
 
@@ -227,13 +267,13 @@ Anti-patterns (MUST NOT):
 
 ---
 
-## Background Work Rules
+## Scheduled and Background Work Rules
 
-1. Background jobs must be restart-safe.
-2. Job handlers must tolerate duplicate delivery or re-execution where applicable.
+1. Spread scheduled work so demand does not concentrate at the same instant.
+2. Do not set all periodic jobs to run on the same obvious clock boundary.
 3. Failure and retry policy must be explicit.
-4. Poison work items must not loop forever.
-5. Long-running jobs need progress, timeout, and cancellation strategy.
+4. Retried work must use increasing backoff where synchronized retry pulses would create load.
+5. Long-running work needs bounded waits, progress visibility, timeout, and cancellation strategy.
 
 ---
 
@@ -241,15 +281,14 @@ Anti-patterns (MUST NOT):
 
 When reviewing code, actively look for:
 - outbound calls with no timeout
-- retries without idempotency
+- retries without backoff, limits, or a clear failure policy
 - no backoff or jitter
 - unbounded queues or buffers
 - shared resource pools with no isolation
 - no overload strategy
 - no failure visibility
-- hidden duplicate side effects
 - health checks that say nothing meaningful
-- background jobs that are not restart-safe
+- scheduled jobs concentrating load at the same instant
 - caches treated as always available
 
 ---
@@ -262,7 +301,7 @@ When reviewing code, actively look for:
 
 ### Retry Storms
 - retries at every layer
-- retries on non-idempotent actions
+- retries with no increasing backoff or limits
 - synchronized retries without jitter
 
 ### Collapse by Queue
@@ -286,10 +325,10 @@ When reviewing code, actively look for:
 When generating code, default to:
 1. explicit timeout for every remote dependency
 2. explicit retry policy only where safe
-3. idempotent handling where retries or duplicates are possible
+3. restartable deployment and operational automation where practical
 4. bounded resources and queues
 5. clear failure paths
-6. useful telemetry hooks
+6. useful diagnostic hooks
 7. graceful degradation or fast failure where appropriate
 
 Avoid by default:
@@ -298,18 +337,18 @@ Avoid by default:
 - unbounded buffering
 - best-effort logging with no metrics
 - fragile startup sequences
-- assuming exactly-once delivery
+- one-shot release automation with no restart path
 
 ---
 
 ## Testing Rules
 
 1. Test timeout behavior.
-2. Test retry boundaries and idempotency.
+2. Test retry, backoff, and failure boundaries.
 3. Test degraded dependency scenarios.
 4. Test overload and queue saturation behavior where practical.
-5. Test duplicate delivery or repeated execution for background work.
-6. Test startup and readiness failure modes.
+5. Test restartable deployment or operational automation where practical.
+6. Test startup and health-check failure modes.
 
 ---
 
@@ -318,13 +357,13 @@ Avoid by default:
 Before finalizing any change, verify:
 - Does every remote call have an explicit timeout?
 - Are retries bounded and safe?
-- Is the operation idempotent where retries or duplicates are possible?
+- Are deployment and operational scripts restartable or idempotent where practical?
 - Is there an overload strategy?
 - Are queues and resource pools bounded?
 - Is failure isolated from unrelated work?
-- Is there enough telemetry to diagnose issues?
-- Are health/readiness signals meaningful?
-- Can background work be retried safely?
+- Are there enough diagnostics to investigate issues?
+- Are health signals meaningful?
+- Are scheduled and background workloads bounded and paced safely?
 - Did we preserve the core service under likely failure scenarios?
 
 If any answer is no, revise before shipping.

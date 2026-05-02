@@ -99,7 +99,7 @@ This file defines mandatory working rules for this repository. Follow these inst
 - Use DTO-like structures as simple carriers when appropriate.
 - Avoid train-wreck call chains and unnecessary knowledge of internal structure.
 - Respect loose coupling and local boundaries.
-- Keep persistence concerns from leaking across the domain model unless the chosen architecture explicitly requires it.
+- Keep persistence, framework, and third-party details from obscuring business behavior or core logic.
 
 ## Class and module design
 
@@ -120,7 +120,7 @@ This file defines mandatory working rules for this repository. Follow these inst
 - Use error types or exception classes that support caller decisions.
 - Do not return `null` or equivalent absence sentinels when a safer model exists.
 - Do not pass `null` or equivalent invalid states unless the API explicitly models that case.
-- Prefer safe defaults, explicit optionality, empty objects, or typed results as appropriate.
+- Prefer exceptions, special cases, empty objects, or explicit optionality according to the codebase's language and conventions.
 - Make resource cleanup and shutdown paths correct and visible.
 
 ## Boundaries and external dependencies
@@ -130,6 +130,17 @@ This file defines mandatory working rules for this repository. Follow these inst
 - Create narrow interfaces around dependencies.
 - Add learning tests or focused integration tests for tricky external behavior.
 - When a dependency does not exist yet, define interfaces from local needs, not from guesses about future implementations.
+
+## System construction rules
+
+- Separate constructing a system from using it.
+- Keep object graph assembly, dependency injection, factories, and framework bootstrapping out of ordinary business behavior.
+- Put startup wiring in an explicit main or composition area.
+- Use factories when construction policy is meaningful or complex.
+- Do not let cross-cutting concerns obscure ordinary code flow.
+- Use standards, frameworks, proxies, or AOP-style mechanisms only when they add demonstrable value.
+- Test-drive architectural decisions with executable slices, not only diagrams or configuration.
+- Use domain-specific languages only when they make system intent clearer than general-purpose code.
 
 ## Tests
 
@@ -145,6 +156,19 @@ This file defines mandatory working rules for this repository. Follow these inst
 - Do not ship code changes without proportionate validation.
 - When fixing a bug, add a test that would have caught it, when feasible.
 
+## TDD and clean test rules
+
+- Prefer writing a failing test before production code when the behavior can be specified clearly.
+- Do not write production behavior beyond what a failing test or explicit requirement justifies.
+- Keep tests small enough that a failure names one behavior or one concept.
+- Prefer one assert or one conceptual assertion per test when that improves clarity.
+- Use test names and test data that reveal the business or technical behavior under test.
+- Build a small testing vocabulary or helper DSL when repeated setup hides intent.
+- Keep test code clean; dirty tests reduce the ability to change production code safely.
+- Avoid tests that require multiple manual steps to run.
+- Use coverage patterns to find untested risk, not as a substitute for meaningful assertions.
+- Treat ignored, flaky, or skipped tests as unresolved questions.
+
 ## Concurrency and async work
 
 - Do not introduce concurrency unless it provides a real benefit.
@@ -154,6 +178,12 @@ This file defines mandatory working rules for this repository. Follow these inst
 - Keep synchronized or locked sections as small as possible.
 - Be explicit about shutdown, cancellation, timeouts, and cleanup.
 - Test concurrent behavior carefully where it matters.
+- Know the execution model before changing concurrent code.
+- Avoid dependencies between synchronized methods.
+- Get non-concurrent behavior correct before adding threading.
+- Make threaded code pluggable and tunable when its policy or concurrency level may vary.
+- Run concurrency-sensitive tests under varied thread counts, schedules, and platforms where practical.
+- Treat spurious failures as possible concurrency defects until evidence says otherwise.
 
 ## Refactoring rules
 
@@ -165,6 +195,14 @@ This file defines mandatory working rules for this repository. Follow these inst
 - Extract code when doing so improves cohesion and clarity.
 - Inline abstractions that no longer earn their cost.
 - Prefer the simplest design that passes all relevant tests.
+
+## Emergent design and successive refinement
+
+- Prefer designs that run all relevant tests, remove duplication, express intent, and use the fewest necessary classes and methods.
+- Refine code through working drafts rather than expecting the first version to be clean.
+- When code starts rough, keep improving names, structure, and tests until intent is clear.
+- Do not start a grand redesign when incremental refinement can recover the design safely.
+- Use the Boy Scout Rule on touched code, but keep cleanup proportional to the task.
 
 ## Smells to detect and eliminate
 
@@ -187,8 +225,21 @@ Actively look for and fix these issues when touching code:
 - unnecessary indirection
 - accidental complexity
 - coupling that spreads change broadly
+- build or tests requiring more than one manual step
+- code at the wrong level of abstraction
+- base classes depending on derivatives
+- transitive navigation through object internals
+- artificial coupling between unrelated concepts
+- hidden logical dependencies
+- unimplemented obvious behavior
+- incorrect boundary behavior
+- overridden safeties
+- magic numbers without named meaning
+- negative conditionals that obscure intent
+- ignored tests and insufficient boundary tests
+- functions that require readers to understand an algorithm before they can trust the name
 
-## Change workflow
+## Change Process
 
 For every non-trivial task:
 

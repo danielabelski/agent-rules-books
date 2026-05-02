@@ -160,7 +160,7 @@ When modifying code, actively look for these smells.
 ### Naming Refactorings
 - Rename variables to reveal intent.
 - Rename functions to describe behavior, not mechanism.
-- Rename types and modules to align with domain language.
+- Rename types and modules to align with problem-domain terminology.
 - Rename before deeper refactoring when bad names block understanding.
 
 ### Extraction Refactorings
@@ -185,6 +185,73 @@ When modifying code, actively look for these smells.
 - Replace magic values with named constants or domain types.
 - Introduce parameter objects for repeated argument groups.
 - Replace raw collections with named abstractions when behavior accumulates around them.
+
+---
+
+## Refactoring Catalog Index
+
+### Composing Methods
+- USE Extract Method when a code fragment has a coherent purpose and a useful name.
+- USE Inline Method when a method body is clearer than its indirection.
+- USE Inline Temp when a temporary variable obscures a direct expression.
+- USE Replace Temp with Query when a calculated value deserves a named query and can be reused safely.
+- USE Introduce Explaining Variable when a complex expression needs named parts.
+- USE Split Temporary Variable when one variable carries multiple meanings.
+- USE Remove Assignments to Parameters when parameter mutation obscures input meaning.
+- USE Replace Method with Method Object when local state prevents clean extraction.
+- USE Substitute Algorithm when a clearer algorithm can replace a tangled one without changing behavior.
+
+### Moving Features
+- USE Move Method or Move Field when behavior or state belongs more naturally to another object.
+- USE Extract Class when one class has more than one reason to change.
+- USE Inline Class when a class no longer earns its existence.
+- USE Hide Delegate when clients know too much about an object's collaborator.
+- USE Remove Middle Man when a forwarding object no longer hides useful detail.
+- USE Introduce Foreign Method only when you cannot edit the class that should own the behavior.
+- USE Introduce Local Extension when repeated foreign methods need a local, coherent extension point.
+
+### Organizing Data
+- USE Self Encapsulate Field when direct field access blocks flexibility.
+- USE Replace Data Value with Object when a primitive carries behavior, validation, or meaning.
+- USE Change Value to Reference when identity and shared updates matter.
+- USE Change Reference to Value when value semantics simplify ownership.
+- USE Replace Array with Object when positions in a collection have names or rules.
+- USE Duplicate Observed Data only when UI or framework synchronization forces it; keep synchronization explicit.
+- USE Change Unidirectional Association to Bidirectional only when traversal is needed both ways.
+- USE Change Bidirectional Association to Unidirectional when one direction is unnecessary coupling.
+- USE Encapsulate Collection when external mutation can bypass invariants.
+- USE Replace Record with Data Class when raw records need named access and behavior can grow safely.
+- USE Replace Type Code with Class, Subclasses, or State/Strategy according to whether behavior varies by type.
+- USE Replace Subclass with Fields when subclass variation is only data.
+
+### Simplifying Calls and Conditionals
+- USE Decompose Conditional, Consolidate Conditional Expression, and Consolidate Duplicate Conditional Fragments to make branching intent visible.
+- USE Remove Control Flag when loop or conditional state can be expressed directly.
+- USE Replace Nested Conditional with Guard Clauses when it clarifies the normal path.
+- USE Replace Conditional with Polymorphism only when repeated type-based behavior justifies it.
+- USE Introduce Null Object when repeated null behavior has a stable meaning.
+- USE Introduce Assertion when an assumption should be explicit during development.
+- USE Rename Method, Add Parameter, Remove Parameter, Parameterize Method, or Replace Parameter with Explicit Methods to make caller intent clearer.
+- USE Preserve Whole Object when callers pass several values from the same object.
+- USE Replace Parameter with Method when the receiver can obtain the value itself without hidden coupling.
+- USE Remove Setting Method when post-construction mutation should not be allowed.
+- USE Hide Method when public surface exposes unnecessary operations.
+- USE Replace Constructor with Factory Method when creation intent or subtype selection needs a name.
+- USE Encapsulate Downcast when callers should not own cast details.
+- USE Replace Error Code with Exception or Replace Exception with Test according to the expected failure model.
+
+### Generalization and Big Refactorings
+- USE Pull Up Field, Pull Up Method, or Pull Up Constructor Body when duplicated superclass behavior is real.
+- USE Push Down Method or Push Down Field when only some subclasses need the feature.
+- USE Extract Subclass, Extract Superclass, or Extract Interface only when callers or variation points justify them.
+- USE Collapse Hierarchy when inheritance no longer adds meaning.
+- USE Form Template Method when similar algorithms differ in controlled steps.
+- USE Replace Inheritance with Delegation when inheritance couples unrelated responsibilities.
+- USE Replace Delegation with Inheritance only when the subtype relationship is genuine and stable.
+- USE Tease Apart Inheritance when one hierarchy mixes multiple variation axes.
+- USE Convert Procedural Design to Objects when data and behavior need clearer ownership.
+- USE Separate Domain from Presentation when UI and policy are tangled.
+- USE Extract Hierarchy when several types share behavior with meaningful variation.
 
 ---
 

@@ -21,51 +21,51 @@ Treat this file as a binding implementation policy: `MUST` is binding, `SHOULD` 
 1. **Follow the Dependency Rule**
    - Source code dependencies must point inward, toward higher-level policies.
    - Inner layers must not import or depend on outer layers.
-   - Business rules must not depend on frameworks, web handlers, ORMs, database drivers, UI libraries, SDKs, queues, or vendor APIs.
+   - Business rules must not depend on frameworks, web handlers, database drivers, UI libraries, queues, external services, or other details.
 
 2. **Keep Business Rules Pure**
    - Entities and use cases must contain business policy.
-   - Business rules must not read HTTP requests, environment variables, framework context, ORM models, or raw SQL rows directly.
+   - Business rules must not read web requests, environment variables, framework context, database-bound structures, or database rows directly.
    - Pass plain data into use cases through request models or arguments.
 
 3. **Treat Frameworks as Details**
    - Frameworks are tools, not the foundation of the design.
-   - Keep framework annotations, decorators, controllers, routes, middleware, serializers, and ORM artifacts at the edges.
+   - Keep framework annotations, decorators, controllers, routes, middleware, serializers, and database artifacts at the edges.
    - Do not let framework types leak into core policies.
 
 4. **Treat the Database as a Detail**
    - Do not shape the domain model around tables.
-   - Use repositories or gateways to isolate persistence.
+   - Use gateways to isolate persistence.
    - Business rules must work without a real database.
 
 5. **Treat the Web as a Detail**
-   - Controllers and endpoints translate HTTP into input models for use cases.
-   - Use cases must not know about HTTP, JSON transport, status codes, cookies, headers, or routing.
+   - Controllers and endpoints translate delivery input into input models for use cases.
+   - Use cases must not know about web transport, status codes, cookies, headers, or routing.
    - Presenters or response mappers translate use case output for delivery mechanisms.
 
 6. **Use Explicit Boundaries**
    - Define interfaces at architectural seams.
-   - External systems, persistence, messaging, file systems, clocks, and vendor SDKs must sit behind boundaries.
+   - External systems, persistence, messaging, file systems, clocks, and service clients must sit behind boundaries.
    - Prefer adapters over direct calls from policy code to implementation details.
 
 7. **Organize by Use Case**
    - Prefer feature and use-case oriented structure over generic technical buckets.
    - The architecture should scream the domain and application intent.
-   - Avoid codebases dominated by folders like `utils`, `helpers`, `common`, `services`, or `misc`.
+   - Avoid codebases dominated by generic technical buckets that do not reveal use cases or business purpose.
 
 8. **Use Cases Must Orchestrate**
-   - A use case coordinates entities, repositories, and gateways.
-   - A use case should not contain delivery concerns, ORM concerns, or presentation formatting concerns.
+   - A use case coordinates entities and gateways.
+   - A use case should not contain delivery concerns, database concerns, or presentation formatting concerns.
    - A use case should represent one application action.
 
 9. **Entities Must Guard Invariants**
    - Critical domain rules belong in entities or equivalent domain objects.
    - Entities must protect invariants and consistency.
-   - Do not leave core rules in controllers, jobs, handlers, or SQL scripts.
+   - Do not leave core rules in controllers, jobs, handlers, or database scripts.
 
 10. **Outer Layers May Depend on Inner Layers, Never the Reverse**
     - Controllers may depend on use cases.
-    - Repositories may implement interfaces defined by the use case or domain layer.
+   - Gateways may implement interfaces defined by the use case or domain layer.
     - Presenters may implement output boundaries owned by inner layers.
     - Never invert this relationship accidentally.
 
@@ -76,10 +76,11 @@ Treat this file as a binding implementation policy: `MUST` is binding, `SHOULD` 
 ### Domain Layer
 Contains:
 - entities
-- value objects
-- domain services only if truly necessary
+- enterprise business rules
 - domain invariants
 - core business rules
+
+These may be implemented with plain objects, functions, modules, or other structures. Clean Architecture requires independent business rules; it does not require a specific domain modeling style.
 
 Must:
 - be framework free
@@ -89,8 +90,8 @@ Must:
 
 Must not:
 - import web libraries
-- import ORM types
-- import SDK clients
+- import database access types
+- import external service clients
 - perform I/O
 - read configuration directly
 
@@ -109,7 +110,7 @@ Must:
 
 Must not:
 - contain controller logic
-- contain SQL
+- contain database access details
 - return framework response types
 - format UI strings unless explicitly part of a presenter boundary
 
@@ -118,7 +119,6 @@ Contains:
 - controllers
 - presenters
 - view models
-- repository implementations
 - gateway adapters
 - mappers between external and internal models
 
@@ -129,14 +129,14 @@ Must:
 
 Must not:
 - move business policy out of the use case or domain layer
-- bypass use cases to call repositories directly unless explicitly justified by architecture
+- bypass use cases to call gateways directly unless explicitly justified by architecture
 
 ### Infrastructure Layer
 Contains:
 - framework bootstrap
-- dependency injection wiring
+- object graph and component wiring
 - database access details
-- SDK integrations
+- external service integrations
 - message bus clients
 - filesystem implementations
 - network clients
@@ -170,18 +170,17 @@ Prefer this order:
 2. use case
 3. boundary interfaces
 4. presenter contract
-5. repository or gateway contract
+5. gateway contract
 6. adapters
 7. framework wiring
 
 ### 2. Use Plain Models at Boundaries
 - Use request and response models owned by the application layer.
-- Do not pass ORM entities, HTTP requests, or framework DTOs into core logic.
+- Do not pass database-bound entities, web requests, or framework-bound data structures into core logic.
 - Do not return framework objects from use cases.
 
 ### 3. Create Ports for Volatile Dependencies
 Introduce interfaces for:
-- repositories
 - gateways
 - mailers
 - payment providers
@@ -196,7 +195,7 @@ Do not call volatile details directly from core use cases.
 ### 4. Keep Wiring in the Main Component
 - Object construction belongs in the composition root.
 - Do not instantiate infrastructure dependencies inside use cases or entities.
-- Use dependency injection, explicit factories, or composition in the outer layer.
+- Use explicit construction, factories, or composition in the outer layer.
 
 ### 5. Prefer Stable Dependencies
 - Inner layers own the abstractions they need.
@@ -243,28 +242,74 @@ without rewriting business rules.
 
 ### Feature First Structure
 Prefer:
-- `orders/place_order`
-- `orders/cancel_order`
-- `billing/pay_invoice`
-- `users/register_user`
+- feature/use-case names
+- business-capability/use-case names
+- names that reveal the application's use cases
 
 Over:
-- `controllers`
-- `services`
-- `repositories`
-- `utils`
+- generic controller, service, or gateway buckets
+- generic technical buckets
 
 Technical subfolders are acceptable only when they do not obscure use-case ownership.
+
+---
+
+## Architecture Economics and Priority
+
+1. Treat architecture as a way to keep future change cost proportional to the scope of change.
+2. Do not sacrifice important architectural work merely because urgent feature work is louder.
+3. Preserve options around frameworks, databases, delivery mechanisms, and deployment topology until evidence justifies commitment.
+4. Choose boundaries by volatility, policy importance, substitution value, testability, and cost.
+5. Do not overbuild boundaries whose cost exceeds the option value they preserve.
+6. Revisit architecture when change shape, team ownership, deployment needs, or operational constraints reveal rising cost.
+
+---
+
+## Paradigm and Component Rules
+
+1. Use structured programming to make behavior decomposable and testable.
+2. Use polymorphism to invert dependencies when high-level policy must not know low-level details.
+3. Use immutability or controlled mutation when it protects policy from accidental state coupling.
+4. Apply SRP by separating code that changes for different actors or reasons.
+5. Apply the Open-Closed Principle by protecting stable policy from volatile extension details.
+6. Apply LSP by ensuring substitutable implementations preserve caller expectations.
+7. Apply ISP by keeping interfaces focused on what each client actually needs.
+8. Apply DIP by making source dependencies point toward stable policy and abstractions.
+9. Group components by cohesion and release pressure; do not group unrelated policy just because it shares a technical layer.
+10. Avoid component cycles; break cycles before they harden into deployment or test bottlenecks.
+11. Balance stability and abstraction: stable components should not depend on unstable details, and abstract components should have concrete reason to exist.
+
+---
+
+## Boundary Cost, Deployment, and Operations
+
+1. A boundary may be a source boundary, deployment boundary, process boundary, service boundary, or partial boundary.
+2. Choose the lightest boundary that preserves the needed independence.
+3. Use partial boundaries when a full deployment/runtime split is too expensive but future separation is valuable.
+4. Keep development, deployment, operation, and maintenance concerns visible without letting them own business policy.
+5. Do not combine unrelated use cases just because operational wiring is easier.
+6. Do not eliminate duplication when the shared code would couple use cases that change for different actors.
+7. Make architectural boundaries enforceable through package structure, tests, dependency rules, or build constraints.
+
+---
+
+## Services, Distribution, and Embedded Boundaries
+
+1. A service is not automatically an architectural boundary; source dependencies and data ownership still decide coupling.
+2. Remote calls must be treated as I/O boundaries, not as local method calls.
+3. Keep service listeners humble: translate external messages into use case calls and return through output boundaries.
+4. Keep embedded and hardware details behind interfaces so policy can be tested without the target device.
+5. Do not let real-time, firmware, database, web, or framework concerns pull policy outward.
 
 ---
 
 ## Naming Rules
 
 - Name modules and packages after business capabilities or use cases.
-- Name use cases with verbs: `PlaceOrder`, `RegisterUser`, `WithdrawFunds`.
-- Name ports by role: `OrderRepository`, `PaymentGateway`, `Clock`, `UserPresenter`.
-- Name adapters by detail: `SqlOrderRepository`, `StripePaymentGateway`, `HttpUserController`.
-- Avoid vague names such as `Manager`, `Processor`, `Service`, `Helper`, `Util`, `Common`.
+- Name use cases with action verbs from the application's use cases.
+- Name ports by the role they play for the use case.
+- Name adapters by the external detail or delivery mechanism they adapt.
+- Avoid vague technical names when a use case, policy, boundary, presenter, controller, gateway, or entity role is more precise.
 - If a class is named `Service`, justify why it is not a use case, adapter, or domain object.
 
 ---
@@ -274,7 +319,6 @@ Technical subfolders are acceptable only when they do not obscure use-case owner
 ### Core Tests First
 Prioritize tests for:
 - entities
-- value objects
 - use cases
 - boundary contracts
 
@@ -287,10 +331,10 @@ These tests must:
 ### Adapter Tests
 Test adapters separately for:
 - mapping correctness
-- repository behavior
+- gateway behavior
 - controller translation
 - presenter formatting
-- integration with framework or SDK
+- integration with framework or external service
 
 Do not use slow integration tests as a substitute for testing business rules.
 
@@ -306,19 +350,19 @@ Do not use slow integration tests as a substitute for testing business rules.
 Do not generate or keep code that does any of the following unless explicitly required and justified.
 
 ### Framework Leakage
-- domain entities annotated with ORM or web framework metadata when avoidable
-- use cases depending on `Request`, `Response`, `HttpContext`, controller base classes, framework sessions, or middleware objects
-- application layer importing serializer or ORM base classes
+- domain entities annotated with database or web framework metadata when avoidable
+- use cases depending on `Request`, `Response`, controller base classes, framework sessions, or middleware objects
+- application layer importing serializer or database base classes
 
 ### Database Leakage
-- use cases returning table rows or ORM entities
-- domain rules embedded in repository implementations or SQL
+- use cases returning table rows or database-bound entities
+- domain rules embedded in gateway implementations or database access
 - domain objects designed primarily around persistence convenience
 
 ### Controller-Centric Logic
 - controllers containing branching business rules
 - controllers performing validation that belongs to business policy
-- controllers calling repositories directly instead of use cases
+- controllers calling gateways directly instead of use cases
 
 ### God Services
 - large `*Service` classes that create, fetch, validate, persist, publish, and present everything
@@ -326,17 +370,17 @@ Do not generate or keep code that does any of the following unless explicitly re
 - application services that become dumping grounds
 
 ### Layer Bypass
-- controllers bypassing use cases to call repositories
+- controllers bypassing use cases to call gateways
 - presenters reading directly from databases
 - infrastructure code importing inward and also being imported by domain code
 
 ### Direction Violations
-- repository interfaces defined in infrastructure and consumed by core policy
+- gateway interfaces defined in infrastructure and consumed by core policy
 - entities importing adapters
 - use cases depending on concrete implementations
 
 ### Utility Dumping Grounds
-- `utils`, `helpers`, `shared`, `common`, `base`, `core` used as architecture escape hatches
+- generic utility, shared, base, or core folders used as architecture escape hatches
 - generic abstractions with no clear ownership
 - convenience modules that hide bad dependency direction
 
@@ -347,17 +391,17 @@ Do not generate or keep code that does any of the following unless explicitly re
 When modifying existing code:
 
 1. **Move business rules inward**
-   - Extract domain logic from controllers, handlers, views, repository classes, and jobs.
+   - Extract domain logic from controllers, handlers, views, gateway classes, and jobs.
 
 2. **Introduce boundaries around details**
-   - Wrap external SDKs, database access, message buses, filesystem operations, and clocks.
+   - Wrap external services, database access, message buses, filesystem operations, and clocks.
 
 3. **Replace concrete dependencies with ports**
    - Define interfaces in inner layers.
    - Implement them in outer layers.
 
 4. **Separate translation from policy**
-   - Request parsing, DTO mapping, serialization, and presentation formatting belong outside core business rules.
+   - Request parsing, data mapping, serialization, and presentation formatting belong outside core business rules.
 
 5. **Break up god services**
    - Split by use case.
@@ -405,13 +449,13 @@ Before finalizing any change, verify:
 - Are use cases independent from delivery and persistence details?
 - Do source dependencies point inward?
 - Are controllers thin?
-- Are repositories just persistence adapters?
+- Are gateways just persistence adapters?
 - Are entities guarding domain invariants?
 - Are ports owned by inner layers?
 - Is composition happening at the edge?
 - Can core tests run without the web framework and database?
 - Does the project structure reflect the domain and use cases?
-- Did we avoid `utils`/`helpers` dumping grounds?
+- Did we avoid generic utility dumping grounds?
 - Did we avoid creating another god service?
 - Did we keep details replaceable?
 
@@ -422,22 +466,22 @@ If any answer is no, revise the design before shipping.
 ## Preferred Default Shapes
 
 ### Preferred feature shape
-- `domain/`
-- `application/`
-- `adapters/`
-- `infrastructure/`
+- domain
+- application
+- adapters
+- infrastructure
 
 Or, if feature-oriented:
-- `orders/domain/`
-- `orders/application/`
-- `orders/adapters/`
-- `orders/infrastructure/`
+- feature/domain
+- feature/application
+- feature/adapters
+- feature/infrastructure
 
 ### Preferred use case shape
-- `command` or request model
-- `use case`
-- `output boundary` or response model
-- `ports`
+- request model
+- use case
+- output boundary or response model
+- ports
 - adapter implementations outside
 
 ### Preferred dependency pattern
