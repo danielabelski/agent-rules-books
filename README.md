@@ -1,6 +1,7 @@
-# 📚 AGENTS Book Rules
-
-[![Version](https://img.shields.io/badge/version-v0.2-blue)](#changelog)
+<h1>
+  📚 AGENTS Book Rules
+  <a href="#changelog"><img src="https://img.shields.io/badge/version-v0.2-blue?style=for-the-badge" alt="Version v0.2" height="32"></a>
+</h1>
 
 ![AGENTS Book Rules](books-ai-rules.png)
 
