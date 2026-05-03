@@ -1,4 +1,4 @@
-# Domain-Driven Design Distilled: Nano
+# OBEY Domain-Driven Design Distilled by Vaughn Vernon
 
 ## When to use
 

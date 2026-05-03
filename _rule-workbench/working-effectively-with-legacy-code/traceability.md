@@ -1,4 +1,4 @@
-# Working Effectively with Legacy Code Traceability
+# OBEY Working Effectively with Legacy Code by Michael Feathers
 
 Canonical full source: [full.md](full.md)
 

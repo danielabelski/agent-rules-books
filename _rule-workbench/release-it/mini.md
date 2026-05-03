@@ -1,4 +1,4 @@
-# Release It!: Mini
+# OBEY Release It! by Michael T. Nygard
 
 ## When to use
 

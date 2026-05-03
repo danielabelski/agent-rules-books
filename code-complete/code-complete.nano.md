@@ -1,4 +1,4 @@
-# Code Complete: Nano
+# OBEY Code Complete by Steve McConnell
 
 ## When to use
 

@@ -1,4 +1,4 @@
-# Domain-Driven Design Distilled: Mini
+# OBEY Domain-Driven Design Distilled by Vaughn Vernon
 
 ## When to use
 

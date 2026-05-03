@@ -1,4 +1,4 @@
-# Patterns of Enterprise Application Architecture Traceability
+# OBEY Patterns of Enterprise Application Architecture by Martin Fowler
 
 Canonical full source: [full.md](full.md)
 

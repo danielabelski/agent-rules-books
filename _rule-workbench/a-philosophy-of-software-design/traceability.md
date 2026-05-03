@@ -1,4 +1,4 @@
-# A Philosophy of Software Design Traceability
+# OBEY A Philosophy of Software Design by John Ousterhout
 
 Canonical full source: [full.md](full.md)
 

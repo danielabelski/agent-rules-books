@@ -1,4 +1,4 @@
-# A Philosophy of Software Design: Nano
+# OBEY A Philosophy of Software Design by John Ousterhout
 
 ## When to use
 

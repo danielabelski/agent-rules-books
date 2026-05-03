@@ -1,4 +1,4 @@
-# Domain-Driven Design: Nano
+# OBEY Domain-Driven Design by Eric Evans
 
 ## When to use
 

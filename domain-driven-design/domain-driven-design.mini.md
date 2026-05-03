@@ -1,4 +1,4 @@
-# Domain-Driven Design: Mini
+# OBEY Domain-Driven Design by Eric Evans
 
 ## When to use
 

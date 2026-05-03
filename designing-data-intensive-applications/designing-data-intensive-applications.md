@@ -1,4 +1,4 @@
-# Designing Data-Intensive Applications
+# OBEY Designing Data-Intensive Applications by Martin Kleppmann
 
 ## Purpose
 

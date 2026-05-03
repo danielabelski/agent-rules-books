@@ -1,4 +1,4 @@
-# Clean Architecture: Mini
+# OBEY Clean Architecture by Robert C. Martin
 
 ## When to use
 

@@ -1,4 +1,4 @@
-# Designing Data-Intensive Applications: Mini
+# OBEY Designing Data-Intensive Applications by Martin Kleppmann
 
 ## When to use
 

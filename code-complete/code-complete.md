@@ -1,4 +1,4 @@
-# Code Complete
+# OBEY Code Complete by Steve McConnell
 
 ## Purpose
 

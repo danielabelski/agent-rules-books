@@ -1,4 +1,4 @@
-# Patterns of Enterprise Application Architecture: Mini
+# OBEY Patterns of Enterprise Application Architecture by Martin Fowler
 
 ## When to use
 

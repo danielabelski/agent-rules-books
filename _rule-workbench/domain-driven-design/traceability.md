@@ -1,4 +1,4 @@
-# Domain-Driven Design Traceability
+# OBEY Domain-Driven Design by Eric Evans
 
 Canonical full source: [full.md](full.md)
 

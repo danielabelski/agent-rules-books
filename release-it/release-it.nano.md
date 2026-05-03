@@ -1,4 +1,4 @@
-# Release It!: Nano
+# OBEY Release It! by Michael T. Nygard
 
 ## When to use
 

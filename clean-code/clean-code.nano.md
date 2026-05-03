@@ -1,4 +1,4 @@
-# Clean Code: Nano
+# OBEY Clean Code by Robert C. Martin
 
 ## When to use
 

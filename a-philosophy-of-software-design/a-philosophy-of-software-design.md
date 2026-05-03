@@ -1,4 +1,4 @@
-# A Philosophy of Software Design
+# OBEY A Philosophy of Software Design by John Ousterhout
 
 ## Purpose
 

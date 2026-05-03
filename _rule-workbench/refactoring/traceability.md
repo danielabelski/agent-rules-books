@@ -1,4 +1,4 @@
-# Refactoring Traceability
+# OBEY Refactoring by Martin Fowler
 
 Canonical full source: [full.md](full.md)
 

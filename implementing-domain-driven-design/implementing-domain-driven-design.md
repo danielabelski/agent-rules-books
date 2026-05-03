@@ -1,4 +1,4 @@
-# Implementing Domain-Driven Design
+# OBEY Implementing Domain-Driven Design by Vaughn Vernon
 
 ## Purpose
 

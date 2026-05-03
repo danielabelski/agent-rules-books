@@ -1,4 +1,4 @@
-# Patterns of Enterprise Application Architecture
+# OBEY Patterns of Enterprise Application Architecture by Martin Fowler
 
 ## Purpose
 

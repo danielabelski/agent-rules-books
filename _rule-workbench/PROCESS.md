@@ -22,6 +22,30 @@ This process should generalize across books. If review of one book exposes a rec
 - `mini.md`: on-demand compressed version
 - `nano.md`: compact fallback version for very tight always-on context budgets
 
+## Heading Format
+
+All generated or updated rule files for a book must use the same first-level heading:
+
+```markdown
+# OBEY {book name} by {author name}
+```
+
+If the source has no clear author, omit the author suffix:
+
+```markdown
+# OBEY {source name}
+```
+
+Apply this heading to:
+
+- the canonical full file in the book directory
+- `_rule-workbench/<book>/mini.md`
+- `_rule-workbench/<book>/nano.md`
+- `_rule-workbench/<book>/traceability.md`
+- released `<book>/<book>.mini.md` and `<book>/<book>.nano.md` when release is run
+
+Do not add version labels such as `Mini`, `Nano`, or `Traceability` to the H1. Put version-specific context in body text or lower-level headings if needed.
+
 ## Rule Classification
 
 For each source section, classify rules before compressing:
@@ -123,7 +147,7 @@ If the finding is a `book-specific miss`:
 
 Use the same structure for `mini.md` and `nano.md`:
 
-1. title
+1. the required `# OBEY ...` title
 2. when to use
 3. primary bias to correct
 4. decision rules
@@ -134,6 +158,8 @@ Use the same structure for `mini.md` and `nano.md`:
 
 Before considering a book done:
 
+- all H1 headings follow `# OBEY {book name} by {author name}` or `# OBEY {source name}` when no author is known
+- `mini.md`, `nano.md`, and `traceability.md` do not add version labels to the H1
 - the canonical full source is untouched
 - each retained rule changes a real agent decision, a repeated local implementation choice, or blocks a known failure mode
 - each omitted section or rule has a traceable disposition: `covered by Mx`, `covered by Nx`, or `intentionally lost`

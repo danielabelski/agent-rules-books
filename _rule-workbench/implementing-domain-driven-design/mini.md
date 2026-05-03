@@ -1,4 +1,4 @@
-# Implementing Domain-Driven Design: Mini
+# OBEY Implementing Domain-Driven Design by Vaughn Vernon
 
 ## When to use
 

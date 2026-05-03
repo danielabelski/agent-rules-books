@@ -1,4 +1,4 @@
-# Release It! Traceability
+# OBEY Release It! by Michael T. Nygard
 
 Canonical full source: [full.md](full.md)
 

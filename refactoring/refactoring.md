@@ -1,4 +1,4 @@
-# Refactoring
+# OBEY Refactoring by Martin Fowler
 
 ## Purpose
 

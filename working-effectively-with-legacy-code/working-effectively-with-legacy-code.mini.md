@@ -1,4 +1,4 @@
-# Working Effectively with Legacy Code: Mini
+# OBEY Working Effectively with Legacy Code by Michael Feathers
 
 ## When to use
 

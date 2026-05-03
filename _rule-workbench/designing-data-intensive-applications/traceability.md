@@ -1,4 +1,4 @@
-# Designing Data-Intensive Applications Traceability
+# OBEY Designing Data-Intensive Applications by Martin Kleppmann
 
 Canonical full source: [full.md](full.md)
 

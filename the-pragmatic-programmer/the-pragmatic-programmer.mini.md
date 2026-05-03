@@ -1,4 +1,4 @@
-# The Pragmatic Programmer: Mini
+# OBEY The Pragmatic Programmer by Andrew Hunt and David Thomas
 
 ## When to use
 

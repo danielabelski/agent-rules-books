@@ -1,4 +1,4 @@
-# Domain-Driven Design Distilled Traceability
+# OBEY Domain-Driven Design Distilled by Vaughn Vernon
 
 Canonical full source: [full.md](full.md)
 

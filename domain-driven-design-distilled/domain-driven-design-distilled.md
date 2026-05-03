@@ -1,4 +1,4 @@
-# Domain-Driven Design Distilled
+# OBEY Domain-Driven Design Distilled by Vaughn Vernon
 
 ## Purpose
 

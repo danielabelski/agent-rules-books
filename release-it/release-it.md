@@ -1,4 +1,4 @@
-# Release It!
+# OBEY Release It! by Michael T. Nygard
 
 ## Purpose
 

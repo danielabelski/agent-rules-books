@@ -1,4 +1,4 @@
-# Clean Architecture Traceability
+# OBEY Clean Architecture by Robert C. Martin
 
 Canonical full source: [full.md](full.md)
 

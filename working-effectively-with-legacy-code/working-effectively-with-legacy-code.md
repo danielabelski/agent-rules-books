@@ -1,4 +1,4 @@
-# Working Effectively with Legacy Code
+# OBEY Working Effectively with Legacy Code by Michael Feathers
 
 ## Purpose
 

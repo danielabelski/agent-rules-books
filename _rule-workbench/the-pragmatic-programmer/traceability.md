@@ -1,4 +1,4 @@
-# The Pragmatic Programmer Traceability
+# OBEY The Pragmatic Programmer by Andrew Hunt and David Thomas
 
 Canonical full source: [full.md](full.md)
 

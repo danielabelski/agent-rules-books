@@ -1,4 +1,4 @@
-# Implementing Domain-Driven Design: Nano
+# OBEY Implementing Domain-Driven Design by Vaughn Vernon
 
 ## When to use
 

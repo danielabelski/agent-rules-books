@@ -1,4 +1,4 @@
-# Code Complete Traceability
+# OBEY Code Complete by Steve McConnell
 
 Canonical full source: [full.md](full.md)
 

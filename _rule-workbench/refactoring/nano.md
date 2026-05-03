@@ -1,4 +1,4 @@
-# Refactoring: Nano
+# OBEY Refactoring by Martin Fowler
 
 ## When to use
 

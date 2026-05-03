@@ -1,4 +1,4 @@
-# Implementing Domain-Driven Design Traceability
+# OBEY Implementing Domain-Driven Design by Vaughn Vernon
 
 Canonical full source: [full.md](full.md)
 
