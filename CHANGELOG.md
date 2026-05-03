@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.4 - 2026-05-03
+
+Commit: [`63cbe8c`](https://github.com/ciembor/agent-rules-books/commit/63cbe8c)
+
+- Added a new `Refactoring.Guru` rule set based on the public Refactoring.Guru refactoring process, code smell catalog, and refactoring technique catalog.
+- Added full, `mini`, and `nano` releases for `refactoring-guru`, plus workbench traceability and a canonical workbench `full.md` symlink.
+- Standardized all released and workbench rule headings to the `# OBEY {name} by {author}` format, omitting `by` when no clear author exists.
+- Removed `Mini`, `Nano`, and `Traceability` suffixes from rule-file H1 headings while keeping version context in filenames and body structure.
+- Updated the README release matrix metrics after the heading changes and added `Refactoring.Guru` to the Books section.
+- Updated `_rule-workbench/PROCESS.md` so future compression runs preserve the standardized heading format.
+
 ## v0.3 - 2026-05-02
 
 Commit: [`bd62818`](https://github.com/ciembor/agent-rules-books/commit/bd62818)

@@ -1,6 +1,6 @@
 <h1>
   📚 AGENTS Book Rules
-  <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.3-blue?style=for-the-badge" alt="Version v0.3" height="32"></a>
+  <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.4-blue?style=for-the-badge" alt="Version v0.4" height="32"></a>
 </h1>
 
 ![AGENTS Book Rules](books-ai-rules.png)
