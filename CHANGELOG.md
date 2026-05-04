@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.5 - 2026-05-04
+
+Commit: [`01d1fab`](https://github.com/ciembor/agent-rules-books/commit/01d1fab)
+
+- Added compatibility check in the CHECK_COMPATIBILITY.md.
+- Added compatibility matrix in the COMPATIBILITY.md
+- Each compatibility comparison has now it's own `.md` file in the `_compatibility`.
+
 ## v0.4 - 2026-05-03
 
 Commit: [`63cbe8c`](https://github.com/ciembor/agent-rules-books/commit/63cbe8c)
