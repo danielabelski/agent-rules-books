@@ -1,6 +1,6 @@
 <h1>
   📚 AGENTS Book Rules
-  <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.4-blue?style=for-the-badge" alt="Version v0.4" height="32"></a>
+  <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.5-blue?style=for-the-badge" alt="Version v0.5" height="32"></a>
 </h1>
 
 ![AGENTS Book Rules](books-ai-rules.png)
@@ -139,11 +139,13 @@ Choose rules based on the task:
 - everyday code quality: `clean-code`, `code-complete`
 - architecture and boundaries: `clean-architecture`, `domain-driven-design`, `patterns-of-enterprise-application-architecture`
 - domain modeling: `domain-driven-design`, `domain-driven-design-distilled`, `implementing-domain-driven-design`
-- refactoring: `refactoring`, `a-philosophy-of-software-design`
+- refactoring: `refactoring`, `a-philosophy-of-software-design`, `refactoring-guru`
 - legacy code: `working-effectively-with-legacy-code`, optionally `refactoring`
 - production systems: `release-it`
 - data systems: `designing-data-intensive-applications`
 - general engineering style: `clean-code`, `code-complete`, `the-pragmatic-programmer`
+
+Check rules compatibility in the [COMPATIBILITY.md](/COMPATIBILITY.md).
 
 ## Adding a Book
 
