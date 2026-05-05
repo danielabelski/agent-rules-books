@@ -169,7 +169,7 @@ The files in this repository are practical engineering instructions written for 
 
 ## Related searches
 
-**AI coding agent rules**, **AGENTS.md** examples, Claude Code rules, Cursor rules, Codex rules, GitHub Copilot custom instructions, CLAUDE.md, software engineering rules for AI coding assistants, Clean Code rules for AI, Refactoring rules for AI agents, Domain-Driven Design rules, Clean Architecture rules.
+**AI coding agent rules**, **AGENTS.md** examples, Claude Code rules, Cursor rules, Codex rules, GitHub Copilot custom instructions, **CLAUDE.md**, software engineering **rules for AI coding** assistants, Clean Code rules for AI, **Refactoring** rules for AI agents, **Domain-Driven Design rules**, Clean **Architecture rules**.
 
 ## License
 
