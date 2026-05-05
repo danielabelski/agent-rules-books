@@ -1,7 +1,11 @@
 <h1>
-  📚 AGENTS Book Rules
+  📚 # AI AGENTS.md Rules from Programming Books
   <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.5-blue?style=for-the-badge" alt="Version v0.5" height="32"></a>
 </h1>
+
+<h2>
+  ## AGENTS.md rules for Codex, Cursor, Claude Code, distilled from classic software engineering books.
+</h2>
 
 ![AGENTS Book Rules](books-ai-rules.png)
 
@@ -166,6 +170,10 @@ Workflow:
 These rules are inspired by the books listed above. They are not official materials from the authors or publishers, and they are not a substitute for reading the books.
 
 The files in this repository are practical engineering instructions written for AI coding tools. They intentionally avoid reproducing book text. Use them as lightweight working agreements, not as summaries or study notes.
+
+## Related searches
+
+**AI coding agent rules**, **AGENTS.md** examples, Claude Code rules, Cursor rules, Codex rules, GitHub Copilot custom instructions, CLAUDE.md, software engineering rules for AI coding assistants, Clean Code rules for AI, Refactoring rules for AI agents, Domain-Driven Design rules, Clean Architecture rules.
 
 ## License
 
