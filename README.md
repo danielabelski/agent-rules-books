@@ -1,11 +1,7 @@
-<h1>
-  📚 # AI AGENTS.md Rules from Programming Books
-  <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.5-blue?style=for-the-badge" alt="Version v0.5" height="32"></a>
-</h1>
 
-<h2>
-  ## AGENTS.md rules for Codex, Cursor, Claude Code, distilled from classic software engineering books.
-</h2>
+# 📚 AI AGENTS.md Rules from Programming Books <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.5-blue?style=for-the-badge" alt="Version v0.5" height="32"></a>
+
+### AGENTS.md rules for Codex, Cursor, Claude Code, distilled from classic software engineering books.
 
 ![AGENTS Book Rules](books-ai-rules.png)
 
