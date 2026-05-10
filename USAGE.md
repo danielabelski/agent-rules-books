@@ -200,6 +200,8 @@ project/
 
 Example `CLAUDE.md`:
 
+Import the shared root `AGENTS.md` baseline by adding this line to `CLAUDE.md` in order to reuse the same project-wide rules in Claude Code.
+
 ```md
 @AGENTS.md
 

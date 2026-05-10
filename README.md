@@ -1,15 +1,29 @@
+<div align="center">
+  <img src="books-ai-rules.png" alt="AI agent rules from programming books" width="800" />
+  <h1 align="center">AI AGENTS Rules from Programming Books v0.5</h1>
 
-# 📚 AI AGENTS Rules from Programming Books <a href="CHANGELOG.md"><img align="right" src="https://img.shields.io/badge/version-v0.5-blue?style=for-the-badge" alt="Version v0.5" height="48"></a>
+  <p align="center">
+    AGENTS.md rules / skills for Codex, Cursor, Claude Code, distilled from classic software engineering books about refactoring, architecture, DDD and code quality.
+    <br />
+    <a href="#about">About</a>
+    ·
+    <a href="#release-matrix">Release Matrix</a>
+    ·
+    <a href="USAGE.md">Usage</a>
+    ·
+    <a href="COMPATIBILITY.md">Books Compatibility</a>
+    ·
+    <a href="#books-list">Books List</a>
+  </p>
+</div>
 
-### AGENTS.md rules / skills for Codex, Cursor, Claude Code, distilled from classic software engineering books about refactoring, architecture, DDD and code quality.
+## About
 
-![AGENTS Book Rules](books-ai-rules.png)
+This repository contains ready-to-use rule sets inspired by well-known books on software design, architecture, refactoring, legacy code, reliability, and data-intensive systems.
 
 MIT licensed universal project rules for coding agents.
 
 Website: [ciembor.github.io/agent-rules-books](https://ciembor.github.io/agent-rules-books/)
-
-This repository contains ready-to-use rule sets inspired by well-known books on software design, architecture, refactoring, legacy code, reliability, and data-intensive systems.
 
 For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAGE.md). It covers always-on vs on-demand usage, skills, scoped rules, MCP or RAG patterns, and the preferred setup for each editor.
 
@@ -48,7 +62,7 @@ Metrics:
 | [Working Effectively with Legacy Code](working-effectively-with-legacy-code/) | [full](working-effectively-with-legacy-code/working-effectively-with-legacy-code.md) | 371 | 193 | 13817 B | [mini](working-effectively-with-legacy-code/working-effectively-with-legacy-code.mini.md) | 50 | 32 | 5707 B | [nano](working-effectively-with-legacy-code/working-effectively-with-legacy-code.nano.md) | 35 | 17 | 1792 B |
 | [Refactoring.Guru](refactoring-guru/) | [full](refactoring-guru/refactoring-guru.md) | 765 | 478 | 62561 B | [mini](refactoring-guru/refactoring-guru.mini.md) | 64 | 46 | 6287 B | [nano](refactoring-guru/refactoring-guru.nano.md) | 41 | 23 | 2593 B |
 
-## Books
+## Books List
 
 ### [A Philosophy of Software Design](https://www.goodreads.com/book/show/39996759-a-philosophy-of-software-design)
 
