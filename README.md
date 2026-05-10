@@ -7,6 +7,8 @@
 
 MIT licensed universal project rules for coding agents.
 
+Website: [ciembor.github.io/agent-rules-books](https://ciembor.github.io/agent-rules-books/)
+
 This repository contains ready-to-use rule sets inspired by well-known books on software design, architecture, refactoring, legacy code, reliability, and data-intensive systems.
 
 For editor-specific setup in Codex, Claude Code, and Cursor, see [USAGE.md](USAGE.md). It covers always-on vs on-demand usage, skills, scoped rules, MCP or RAG patterns, and the preferred setup for each editor.

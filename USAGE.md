@@ -2,18 +2,19 @@
 
 This repository ships three versions of every rule set:
 
-- `mini`: the recommended version for most real task use
+- `mini`: the recommended version for most real task use, especially as a focused skill
 - `nano`: the compact fallback for very tight context budgets
-- `full`: the complete reference version
+- `full`: the complete reference version, best used as reference material for deep skills, audits, and focused sessions
 
 ## Start Here
 
 Use the smallest mechanism that still changes the agent's decisions.
 
 - Start with one primary rule set.
-- Use `mini` by default when one book should shape the agent's decisions.
+- Prefer skills for book-specific guidance. A `mini` file is usually the right skill body.
+- Use `mini` by default when one book should shape the agent's decisions for a specific task.
 - Use `nano` only when the rule set must be extremely small, permanently always-on, or portable across tools with tight context budgets.
-- Use `full` for audits, one-off deep sessions, or for deriving smaller scoped rules.
+- Use `full` for audits, one-off deep sessions, skill reference files, or for deriving smaller scoped rules.
 - Prefer scoped, on-demand, or retrieval-based loading over global loading.
 - Treat memories as helpers, not as the canonical source of truth.
 
@@ -21,19 +22,44 @@ Use the smallest mechanism that still changes the agent's decisions.
 
 | Pattern | Best for | Repo version | Notes |
 | --- | --- | --- | --- |
-| Always-on project rule | Stable defaults that should affect most tasks | `mini` | Use `nano` only if `mini` is too large for the tool or project. |
+| Skill or command | Refactoring passes, reviews, migrations, reliability work, DDD modeling, legacy changes | `mini`, optionally backed by `full` | Best default for most book-specific guidance. |
+| Always-on project rule | Stable defaults that should affect most tasks | `mini` or `nano` | Use one carefully chosen `mini`; use `nano` if `mini` is too large for the tool or project. |
 | Scoped rule | One directory, file type, or subsystem | `mini` or `nano` | Prefer `mini`; use `nano` for tiny path-scoped reminders. |
 | On-demand rule | Refactoring passes, reviews, migrations, reliability work | `mini` | Invoke only when the task matches. |
-| Skill or command | Multi-step procedures, checklists, workflows with examples | Usually derived from `mini` | Better than storing procedures in a global rule file. |
 | Retrieval or MCP | Large reference material, changing docs, external systems | `full` or source material outside the prompt | Use when the content is too large or too rarely needed for always-on context. |
+
+## Skills First
+
+Use skills when the rule set should activate for a kind of work rather than every message in the project.
+
+Good skill candidates:
+
+- `refactoring.mini.md` for a refactoring pass
+- `working-effectively-with-legacy-code.mini.md` for risky legacy changes
+- `domain-driven-design.mini.md` for modeling-heavy work
+- `release-it.mini.md` for production reliability changes
+- `designing-data-intensive-applications.mini.md` for data consistency, events, streams, and schema evolution
+
+Recommended skill shape:
+
+```text
+project/
+  .agents/
+    skills/
+      refactoring-pass/
+        SKILL.md        # derived from refactoring.mini.md
+        reference.md    # optional link or copy of refactoring.md
+```
+
+Keep the active skill concise. Put long examples, full rule files, and traceability material in reference files or retrieval, not in always-on project instructions.
 
 ## Mini vs Nano
 
-`mini` is the optimal default for most agent work. It usually contains enough of the book's decision pressure, trigger rules, and tradeoff handling to change implementation choices without bringing in the full source.
+`mini` is the optimal default for most agent work and the best starting point for skills. It usually contains enough of the book's decision pressure, trigger rules, and tradeoff handling to change implementation choices without bringing in the full source.
 
 Use `mini` when:
 
-- you are choosing one primary book for a project or task
+- you are choosing one primary book for a task, skill, or small project-wide baseline
 - you want a stable repo-wide engineering bias and the context budget can afford it
 - the task is a review, refactor, migration, design pass, production fix, or modeling-heavy change
 - the rule set should prevent subtle shortcuts, not just remind the agent of the headline thesis
@@ -44,6 +70,13 @@ Use `nano` when:
 - the same baseline must travel across several editors with different limits
 - you only need the smallest reminder of a book's bias
 - `mini` would compete with more important project-specific context
+
+Use `full` when:
+
+- the skill needs a deep reference file
+- you are auditing a rule set or deriving a smaller skill
+- the task is a focused one-off session with enough context budget
+- you need traceability back to the book's structure and bias
 
 ## Portable Baseline
 
@@ -74,23 +107,23 @@ This gives you one cross-tool source for the base layer, while still allowing ea
 
 Use Codex in two layers:
 
-1. Put one `mini` rule set in the project layer when you want a book to shape most tasks.
-2. Use skills, nested instructions, or focused sessions for stronger and narrower guidance.
+1. Use skills for book-specific workflows such as refactoring, legacy changes, production reviews, and domain modeling.
+2. Put one `mini` rule set in the project layer only when you want a book to shape most tasks.
 3. Fall back to `nano` only when the always-on project layer must stay extremely small.
 
 Preferred order:
 
-1. Use root `AGENTS.md` for the project-wide base layer.
-2. Use `model_instructions_file` if you want Codex to point at a chosen file without renaming it to `AGENTS.md`.
-3. Add nested `AGENTS.md` or `AGENTS.override.md` only where a subtree genuinely needs different pressure.
-4. Turn procedures, checklists, and reference-heavy workflows into skills.
+1. Turn procedures, checklists, and book-specific workflows into skills.
+2. Use root `AGENTS.md` for the project-wide base layer.
+3. Use `model_instructions_file` if you want Codex to point at a chosen file without renaming it to `AGENTS.md`.
+4. Add nested `AGENTS.md` or `AGENTS.override.md` only where a subtree genuinely needs different pressure.
 5. Use MCP or retrieval for large reference corpora instead of stuffing them into the always-on file.
 
 ### Recommended version mapping
 
-- `mini`: project-wide default in `AGENTS.md` or `model_instructions_file`, plus skills, nested rule files, or focused sessions
+- `mini`: preferred skill body; also usable as project-wide default in `AGENTS.md` or `model_instructions_file`
 - `nano`: compact fallback for very tight always-on budgets
-- `full`: reference only
+- `full`: skill reference, audit source, or focused-session reference
 
 ### Recommended structure
 
@@ -140,18 +173,19 @@ Preferred order:
 
 1. Keep root `CLAUDE.md` short.
 2. If you want one shared cross-tool base file, put the chosen repo file at `AGENTS.md` and import it from `CLAUDE.md`.
-3. Use one `mini` rule set for always-on project context when the file stays short enough for the team.
-4. Use `.claude/rules/` or path-scoped skills for `mini`.
-5. Use `nano` only when the shared root file has to be much smaller.
-6. Put procedures, large checklists, and long references into skills instead of the root `CLAUDE.md`.
-7. Use `disable-model-invocation: true` for side-effectful manual workflows such as deploy or release flows.
-8. Use subagents or `context: fork` skills when a side task would otherwise flood the main context.
+3. Use Claude Code skills for book-specific workflows.
+4. Use one `mini` rule set for always-on project context when the file stays short enough for the team.
+5. Use `.claude/rules/` or path-scoped skills for `mini`.
+6. Use `nano` only when the shared root file has to be much smaller.
+7. Put procedures, large checklists, and long references into skills instead of the root `CLAUDE.md`.
+8. Use `disable-model-invocation: true` for side-effectful manual workflows such as deploy or release flows.
+9. Use subagents or `context: fork` skills when a side task would otherwise flood the main context.
 
 ### Recommended version mapping
 
-- `mini`: imported from `CLAUDE.md`, written directly into it, or split into `.claude/rules/` and `.claude/skills/`
+- `mini`: preferred `.claude/skills/` body; also usable in `.claude/rules/` or a short imported base file
 - `nano`: compact fallback for very tight root context
-- `full`: reference only, or a narrowly imported file for a specific session
+- `full`: skill reference, audit source, or narrowly imported file for a specific session
 
 ### Recommended structure
 
@@ -274,10 +308,11 @@ If your team already has a RAG system, keep the long reference material there an
 
 ## Decision Guide
 
+- Need a task-specific book bias: create or invoke a skill from the relevant `mini` rule set.
 - Need a steady repo-wide bias: use one `mini` rule set.
 - Need an extremely small always-on baseline: use `nano`.
-- Need stronger guidance for a specific task: load the relevant `mini` rule set on demand.
-- Need a multi-step workflow: create a skill or command.
+- Need stronger guidance for a specific task: load the relevant `mini` rule set as a skill or on-demand rule.
+- Need a multi-step workflow: create a skill or command, with `full` as optional reference.
 - Need subsystem-specific pressure: use scoped rules or nested files.
 - Need long reference material: use retrieval, indexing, or MCP.
 - Need more than one book: keep one primary always-on rule set and move the rest to on-demand mechanisms.
