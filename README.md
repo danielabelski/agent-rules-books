@@ -1,15 +1,15 @@
 <div align="center">
   <img src="books-ai-rules.png" alt="AI agent rules from programming books" width="800" />
-  <h1 align="center">AI AGENTS Rules from Programming Books v0.5</h1>
+  <h1 align="center">AI agents Rules / Skills from<br />Programming Books v0.5</h1>
 
   <p align="center">
-    <strong>AGENTS.md rules</strong> / <strong>skills</strong> for Codex, Cursor, Claude Code, distilled from classic software engineering books about refactoring, architecture, DDD and code quality.
+    <strong>AGENTS.md rules</strong> / <strong>skills</strong> for <strong>Codex</strong>, <strong>Cursor</strong>, <strong>Claude Code</strong>, distilled from classic <strong>software engineering book</strong> about refactoring, architecture, DDD and code quality.
   </p>
 
   <p align="center">
     <a href="#about">About</a>
     ·
-    <a href="#release-matrix">Release Matrix</a>
+    <a href="#release-matrix">Rules / Skills</a>
     ·
     <a href="USAGE.md">Usage</a>
     ·
