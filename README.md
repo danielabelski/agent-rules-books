@@ -150,7 +150,7 @@ The book explains how to safely change difficult, poorly tested code: characteri
 For choosing rule sets, skills, and delivery patterns, see [USAGE.md](docs/USAGE.md). For combining multiple books, see [COMPATIBILITY.md](docs/COMPATIBILITY.md). For the book extraction workflow, see [ADDING_THE_BOOK.md](docs/ADDING_THE_BOOK.md).
 
 ## Does it work?
-The first validation experiment used [vibe-coded-crap](https://github.com/ciembor/vibe-coded-crap), a deliberately generated helpdesk CLI project. Its README describes the project as vibe-coded code generated with Codex, GPT-5.4 mini, reasoning medium, through continuous development across 80 tasks from `BACKLOG.md`. The project exists specifically for testing different `AGENTS.md` files and skills in refactoring workflows.
+The first validation experiment used [vibe-coded-crap](https://github.com/ciembor/vibe-coded-crap), a deliberately generated helpdesk CLI project. The project as vibe-coded application generated with Codex, GPT-5.4 mini, reasoning medium, through continuous development across 80 tasks from `BACKLOG.md`. The project exists specifically for testing different `AGENTS.md` files and skills in refactoring workflows.
 
 The experiment compared two separate refactors of the same application, both focused on [A Philosophy of Software Design](a-philosophy-of-software-design/):
 
